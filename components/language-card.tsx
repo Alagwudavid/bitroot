@@ -10,6 +10,7 @@ interface LanguageCardProps {
   language: {
     name: string
     flag: string
+    country: string
     level: string
     progress: number
     lessons: number
@@ -31,11 +32,12 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
           <PopoverTrigger asChild>
             <div className="flex flex-row items-center gap-2">
-              <div className="w-12 h-12 p-2 rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
                 <img 
-                  src={`https://flagcdn.com/w40/${getCountryCode(language.name)}.png`} 
-                  alt={`${language.name} flag`}
-                  className="w-8 h-6 object-cover rounded"
+                  src={`https://flagcdn.com/w80/${language.flag}.png`} 
+                  srcSet={`https://flagcdn.com/w160/${language.flag}.png 2x`} 
+                  alt={`${language.country} flag`}
+                  className="w-full h-full object-cover rounded"
                 />
               </div>
               <div
@@ -45,7 +47,7 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
               >
                 <span className="text-xl line-clamp-1">{language.name}</span>
                 <div>
-                  <h3 className="text-xm font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">{language.flag}</h3>
+                  <h3 className="text-xm font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">{language.country}</h3>
                 </div>
               </div>
             </div>
@@ -112,19 +114,3 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
     </Card>
   )
 }
-
-// Helper function to get country codes for flags
-function getCountryCode(languageName: string): string {
-  const countryMap: { [key: string]: string } = {
-    'Swahili': 'tz', // Tanzania
-    'Yoruba': 'ng',  // Nigeria
-    'Amharic': 'et', // Ethiopia
-    'Hausa': 'ng',   // Nigeria
-    'Igbo': 'ng',    // Nigeria
-    'Zulu': 'za',    // South Africa
-  }
-  
-  return countryMap[languageName] || 'un' // Default to UN flag if not found
-}
-
-export { LanguageCard }

@@ -29,8 +29,12 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
       )}
     >
       {!isMobile && (
-        <div className="p-6 h-11 w-11 shrink-0">
-          {/* <h1 className="text-2xl font-bold text-[#fcf300] dark:text-[#8ddeed] theme-aware">Bitroot</h1> */}
+        <div className="mt-4 mb-5 h-11 w-11 shrink-0 overflow-hidden">
+          <img 
+                  src={`https://flagcdn.com/w80/ng.png`} 
+                  alt={`Nigeria flag`}
+                  className="w-full h-full object-cover rounded"
+                />
         </div>
       )}
 
@@ -44,7 +48,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
           {menuItems.map((item) => {
             const Icon = item.icon
             return (
-              <li key={item.id} className={cn(isMobile ? "flex-1" : "w-full")}>
+              <li key={item.id} className={"w-full"}>
                 <button
                   onClick={() => onPageChange(item.id)}
                   className={cn(
@@ -52,11 +56,11 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
                     currentPage === item.id
                       ? "bg-[#1e96fc] dark:bg-[#7037e4] text-white shadow-lg"
                       : "text-gray-300 dark:text-[#fafafa]/70 hover:bg-[#1e96fc]/20 dark:hover:bg-[#7037e4]/20 hover:text-white",
-                    isMobile ? "flex-col text-xs" : "flex-row",
+                    isMobile ? "flex-col text-xs" : "flex-col",
                   )}
                 >
                   <Icon className="w-5 h-5" />
-                  <span className={cn("font-medium", isMobile ? "text-xs line-clamp-1" : "")}>{item.label}</span>
+                  <span className={"font-medium line-clamp-1 text-xs"}>{item.label}</span>
                 </button>
               </li>
             )

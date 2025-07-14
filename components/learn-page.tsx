@@ -14,7 +14,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
   const languages = [
     {
       name: "Swahili",
-      flag: "Tanzania",
+      flag: "tz",
+      country: "Tanzania",
       level: "Beginner",
       progress: 0,
       lessons: 24,
@@ -22,7 +23,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Yoruba",
-      flag: "Nigeria",
+      flag: "ng",
+      country: "Nigeria",
       level: "Beginner",
       progress: 15,
       lessons: 32,
@@ -30,7 +32,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Amharic",
-      flag: "Ethiopia",
+      flag: "et",
+      country: "Ethiopia",
       level: "Beginner",
       progress: 0,
       lessons: 28,
@@ -38,7 +41,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Hausa",
-      flag: "Nigeria",
+      flag: "ng",
+      country: "Nigeria",
       level: "Beginner",
       progress: 0,
       lessons: 26,
@@ -46,7 +50,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Igbo",
-      flag: "Nigeria",
+      flag: "ng",
+      country: "Nigeria",
       level: "Beginner",
       progress: 0,
       lessons: 30,
@@ -54,7 +59,8 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Zulu",
-      flag: "South-Africa",
+      flag: "za",
+      country: "South-Africa",
       level: "Beginner",
       progress: 0,
       lessons: 25,
@@ -74,7 +80,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
       {continueLearningLanguages.length > 0 && (
         <div className="mb-10">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-4">Continue Learning</h2>
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {continueLearningLanguages.map((language) => (
               <LanguageCard
                 key={language.name}
@@ -89,7 +95,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
 
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-4">New Languages</h2>
-        <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {newLanguages.map((language) => (
             <LanguageCard
               key={language.name}

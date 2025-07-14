@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useIsMobile } from "@/components/ui/use-mobile" // Import useIsMobile
+import { cn } from "@/lib/utils"
 
 interface TopNavigationProps {
   currentLanguage: string
@@ -22,6 +24,7 @@ interface TopNavigationProps {
 export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange }: TopNavigationProps) {
   const { theme, setTheme } = useTheme()
   const [isLanguageOpen, setIsLanguageOpen] = useState(false)
+  const isMobile = useIsMobile() // Use the hook to detect mobile
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
@@ -42,11 +45,13 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
   return (
     <>
       <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 theme-aware">
-        <div className="flex items-center space-x-4">
-          {/* <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Bitroot</h2> */}
+        <div className={"flex items-center space-x-4"}>
+            <span className={cn("",
+          isMobile
+          ? "flex"
+          : "hidden",)}>Bitroot</span>
         </div>
-        <div className="flex items-center space-x-4">
-          {/* Language Switcher */}
+        {/* <div className="flex items-center space-x-4">
           <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
             <DropdownMenuTrigger asChild>
               <Button
@@ -69,8 +74,7 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-
-        </div>
+        </div> */}
         <div className="flex items-center space-x-4">
           {/* User Dropdown */}
           <DropdownMenu>
