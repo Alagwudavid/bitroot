@@ -50,7 +50,7 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
                   src={`/bitrootText.png`} 
                   alt={`Bitroot logo`}
                   className={
-                        cn("w-full h-16 object-cover rounded",
+                        cn("w-full h-10 object-cover rounded",
                           isMobile
                           ? "flex"
                           : "hidden",
