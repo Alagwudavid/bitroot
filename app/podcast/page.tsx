@@ -1,16 +1,33 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Play, Pause, SkipBack, SkipForward, Volume2, Heart, MoreHorizontal } from "lucide-react"
-import { useState } from "react"
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Play,
+  Pause,
+  SkipBack,
+  SkipForward,
+  Volume2,
+  Heart,
+  MoreHorizontal,
+} from "lucide-react";
+import { useState } from "react";
 
-export function PodcastPage() {
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTrack, setCurrentTrack] = useState(null)
+export default function PodcastPage() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState(null);
 
-  const categories = ["Podcasts", "Stories", "Culture", "History", "Language Tips", "Music", "News", "Education"]
+  const categories = [
+    "Podcasts",
+    "Stories",
+    "Culture",
+    "History",
+    "Language Tips",
+    "Music",
+    "News",
+    "Education",
+  ];
 
   const featuredPodcasts = [
     {
@@ -55,7 +72,7 @@ export function PodcastPage() {
       duration: "35:20",
       category: "History",
     },
-  ]
+  ];
 
   const recentlyPlayed = [
     {
@@ -76,7 +93,7 @@ export function PodcastPage() {
       image: "/placeholder.svg?height=150&width=150",
       duration: "12:15",
     },
-  ]
+  ];
 
   const popularSeries = [
     {
@@ -109,7 +126,7 @@ export function PodcastPage() {
       episodes: 12,
       image: "/placeholder.svg?height=120&width=120",
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-[#030318] dark:via-[#0d1117] dark:to-[#030318] text-white">
@@ -118,12 +135,15 @@ export function PodcastPage() {
         <div className="flex items-center space-x-6 mb-6">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-[#fcf300] dark:bg-[#8ddeed] rounded-lg flex items-center justify-center">
-              <span className="text-[#072ac8] dark:text-[#030318] font-bold text-lg">A</span>
+              <span className="text-[#072ac8] dark:text-[#030318] font-bold text-lg">
+                A
+              </span>
             </div>
-            <span className="text-xl font-semibold dark:text-[#fafafa]">Bitroot Podcasts</span>
+            <span className="text-xl font-semibold dark:text-[#fafafa]">
+              Bitroot Podcasts
+            </span>
           </div>
         </div>
-
         {/* Categories */}
         <div className="flex space-x-3 overflow-x-auto pb-2">
           {categories.map((category) => (
@@ -137,17 +157,18 @@ export function PodcastPage() {
           ))}
         </div>
       </div>
-
       <div className="p-6 space-y-8">
         {/* Listen Again Section */}
         <section>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Listen again</h2>
-            <Button variant="ghost" className="text-gray-400 hover:text-white rounded-xl">
+            <Button
+              variant="ghost"
+              className="text-gray-400 hover:text-white rounded-xl"
+            >
               More
             </Button>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {featuredPodcasts.map((podcast, index) => (
               <Card
@@ -165,36 +186,43 @@ export function PodcastPage() {
                       size="icon"
                       className="absolute bottom-2 right-2 bg-[#1e96fc] dark:bg-[#7037e4] hover:bg-[#072ac8] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                       onClick={() => {
-                        setCurrentTrack(podcast)
-                        setIsPlaying(!isPlaying)
+                        setCurrentTrack(podcast);
+                        setIsPlaying(!isPlaying);
                       }}
                     >
                       <Play className="w-4 h-4" />
                     </Button>
                   </div>
-                  <h3 className="font-semibold text-sm mb-1 truncate dark:text-[#fafafa]">{podcast.title}</h3>
-                  <p className="text-gray-400 dark:text-[#fafafa]/60 text-xs mb-1 truncate">{podcast.artist}</p>
+                  <h3 className="font-semibold text-sm mb-1 truncate dark:text-[#fafafa]">
+                    {podcast.title}
+                  </h3>
+                  <p className="text-gray-400 dark:text-[#fafafa]/60 text-xs mb-1 truncate">
+                    {podcast.artist}
+                  </p>
                   <div className="flex items-center justify-between">
                     <Badge className="bg-[#fcf300] text-[#072ac8] dark:bg-[#8ddeed] dark:text-[#030318] text-xs rounded-full">
                       {podcast.category}
                     </Badge>
-                    <span className="text-xs text-gray-500 dark:text-[#fafafa]/50">{podcast.duration}</span>
+                    <span className="text-xs text-gray-500 dark:text-[#fafafa]/50">
+                      {podcast.duration}
+                    </span>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
         </section>
-
         {/* Popular Series Section */}
         <section>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold">Popular Series</h2>
-            <Button variant="ghost" className="text-gray-400 hover:text-white rounded-xl">
+            <Button
+              variant="ghost"
+              className="text-gray-400 hover:text-white rounded-xl"
+            >
               More
             </Button>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {popularSeries.map((series, index) => (
               <Card
@@ -207,15 +235,18 @@ export function PodcastPage() {
                     alt={series.title}
                     className="w-full aspect-square object-cover rounded-xl mb-3"
                   />
-                  <h3 className="font-semibold text-sm mb-1 truncate">{series.title}</h3>
-                  <p className="text-gray-400 text-xs">{series.episodes} episodes</p>
+                  <h3 className="font-semibold text-sm mb-1 truncate">
+                    {series.title}
+                  </h3>
+                  <p className="text-gray-400 text-xs">
+                    {series.episodes} episodes
+                  </p>
                 </CardContent>
               </Card>
             ))}
           </div>
         </section>
       </div>
-
       {/* Bottom Player */}
       {currentTrack && (
         <div className="fixed bottom-0 left-0 right-0 bg-gray-900 dark:bg-[#0d1117] border-t border-gray-700 dark:border-[#7037e4]/30 p-4">
@@ -227,8 +258,12 @@ export function PodcastPage() {
                 className="w-12 h-12 rounded-lg"
               />
               <div>
-                <h4 className="font-medium text-sm dark:text-[#fafafa]">{currentTrack.title}</h4>
-                <p className="text-gray-400 dark:text-[#fafafa]/60 text-xs">{currentTrack.artist}</p>
+                <h4 className="font-medium text-sm dark:text-[#fafafa]">
+                  {currentTrack.title}
+                </h4>
+                <p className="text-gray-400 dark:text-[#fafafa]/60 text-xs">
+                  {currentTrack.artist}
+                </p>
               </div>
               <Button
                 size="icon"
@@ -238,7 +273,6 @@ export function PodcastPage() {
                 <Heart className="w-4 h-4" />
               </Button>
             </div>
-
             <div className="flex items-center space-x-4">
               <Button
                 size="icon"
@@ -249,10 +283,15 @@ export function PodcastPage() {
               </Button>
               <Button
                 size="icon"
-                className="bg-[#1e96fc] dark:bg-[#7037e4] hover:bg-[#072ac8] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] rounded-full"
+                variant="ghost"
+                className="bg-[#fcf300] text-[#072ac8] dark:bg-[#8ddeed] dark:text-[#030318] rounded-full"
                 onClick={() => setIsPlaying(!isPlaying)}
               >
-                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+                {isPlaying ? (
+                  <Pause className="w-5 h-5" />
+                ) : (
+                  <Play className="w-5 h-5" />
+                )}
               </Button>
               <Button
                 size="icon"
@@ -261,27 +300,24 @@ export function PodcastPage() {
               >
                 <SkipForward className="w-5 h-5" />
               </Button>
-            </div>
-
-            <div className="flex items-center space-x-4">
               <Button
                 size="icon"
                 variant="ghost"
                 className="text-gray-400 dark:text-[#fafafa]/60 hover:text-white dark:hover:text-[#8ddeed]"
               >
-                <Volume2 className="w-4 h-4" />
+                <Volume2 className="w-5 h-5" />
               </Button>
               <Button
                 size="icon"
                 variant="ghost"
                 className="text-gray-400 dark:text-[#fafafa]/60 hover:text-white dark:hover:text-[#8ddeed]"
               >
-                <MoreHorizontal className="w-4 h-4" />
+                <MoreHorizontal className="w-5 h-5" />
               </Button>
             </div>
           </div>
         </div>
       )}
     </div>
-  )
+  );
 }

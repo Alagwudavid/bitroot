@@ -1,16 +1,16 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Play, Clock, Users, Search, BookOpen, Star, Eye } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Play, Clock, Users, Search, BookOpen, Star, Eye } from "lucide-react";
 
-export function CoursesPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("all")
+export default function CoursesPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
     { id: "all", label: "All Courses" },
@@ -19,7 +19,7 @@ export function CoursesPage() {
     { id: "advanced", label: "Advanced" },
     { id: "culture", label: "Culture" },
     { id: "business", label: "Business" },
-  ]
+  ];
 
   const featuredCourses = [
     {
@@ -33,7 +33,8 @@ export function CoursesPage() {
       rating: 4.8,
       price: "Free",
       category: "beginner",
-      description: "Master the basics of Swahili with this comprehensive course designed for complete beginners.",
+      description:
+        "Master the basics of Swahili with this comprehensive course designed for complete beginners.",
     },
     {
       id: 2,
@@ -46,7 +47,8 @@ export function CoursesPage() {
       rating: 4.9,
       price: "$49",
       category: "business",
-      description: "Learn professional Yoruba for business settings and formal communications.",
+      description:
+        "Learn professional Yoruba for business settings and formal communications.",
     },
     {
       id: 3,
@@ -59,7 +61,8 @@ export function CoursesPage() {
       rating: 4.7,
       price: "$29",
       category: "culture",
-      description: "Explore Ethiopian culture while learning Amharic language fundamentals.",
+      description:
+        "Explore Ethiopian culture while learning Amharic language fundamentals.",
     },
     {
       id: 4,
@@ -72,7 +75,8 @@ export function CoursesPage() {
       rating: 4.6,
       price: "$39",
       category: "advanced",
-      description: "Deep dive into complex Hausa grammar structures and advanced language concepts.",
+      description:
+        "Deep dive into complex Hausa grammar structures and advanced language concepts.",
     },
     {
       id: 5,
@@ -85,7 +89,8 @@ export function CoursesPage() {
       rating: 4.8,
       price: "$35",
       category: "intermediate",
-      description: "Build upon your Igbo foundation with intermediate-level conversations and grammar.",
+      description:
+        "Build upon your Igbo foundation with intermediate-level conversations and grammar.",
     },
     {
       id: 6,
@@ -98,9 +103,10 @@ export function CoursesPage() {
       rating: 4.9,
       price: "$25",
       category: "beginner",
-      description: "Perfect your Zulu pronunciation with expert guidance and practice exercises.",
+      description:
+        "Perfect your Zulu pronunciation with expert guidance and practice exercises.",
     },
-  ]
+  ];
 
   const playlists = [
     {
@@ -135,24 +141,28 @@ export function CoursesPage() {
       description: "Master authentic pronunciation",
       duration: "4 hours",
     },
-  ]
+  ];
 
   const filteredCourses = featuredCourses.filter((course) => {
     const matchesSearch =
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.instructor.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "all" || course.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+      course.instructor.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "all" || course.category === selectedCategory;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">Language Learning Courses</h1>
-        <p className="text-gray-600 dark:text-[#fafafa]/70">Comprehensive video courses to master African languages</p>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
+          Language Learning Courses
+        </h1>
+        <p className="text-gray-600 dark:text-[#fafafa]/70">
+          Comprehensive video courses to master African languages
+        </p>
       </div>
-
       {/* Search and Filters */}
       <div className="flex flex-col md:flex-row gap-4 mb-8">
         <div className="relative flex-1">
@@ -181,7 +191,6 @@ export function CoursesPage() {
           ))}
         </div>
       </div>
-
       <Tabs defaultValue="courses" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2 max-w-md rounded-xl dark:bg-[#0d1117]">
           <TabsTrigger value="courses" className="rounded-xl">
@@ -191,7 +200,6 @@ export function CoursesPage() {
             Playlists
           </TabsTrigger>
         </TabsList>
-
         <TabsContent value="courses" className="space-y-6">
           {/* Featured Course */}
           <Card className="rounded-2xl overflow-hidden dark:bg-[#0d1117] dark:border-[#7037e4]/30">
@@ -203,18 +211,25 @@ export function CoursesPage() {
                   className="w-full h-64 lg:h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <Button size="lg" className="rounded-full bg-white/90 hover:bg-white text-black">
+                  <Button
+                    size="lg"
+                    className="rounded-full bg-white/90 hover:bg-white text-black"
+                  >
                     <Play className="w-6 h-6 mr-2" />
                     Watch Preview
                   </Button>
                 </div>
               </div>
               <CardContent className="p-8">
-                <Badge className="bg-[#fcf300] text-[#072ac8] hover:bg-[#ffc600] mb-4">Featured Course</Badge>
+                <Badge className="bg-[#fcf300] text-[#072ac8] hover:bg-[#ffc600] mb-4">
+                  Featured Course
+                </Badge>
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
                   {featuredCourses[0].title}
                 </h2>
-                <p className="text-gray-600 dark:text-[#fafafa]/70 mb-4">{featuredCourses[0].description}</p>
+                <p className="text-gray-600 dark:text-[#fafafa]/70 mb-4">
+                  {featuredCourses[0].description}
+                </p>
                 <div className="flex items-center space-x-4 mb-4 text-sm text-gray-500 dark:text-[#fafafa]/60">
                   <div className="flex items-center space-x-1">
                     <Clock className="w-4 h-4" />
@@ -226,14 +241,18 @@ export function CoursesPage() {
                   </div>
                   <div className="flex items-center space-x-1">
                     <Users className="w-4 h-4" />
-                    <span>{featuredCourses[0].students.toLocaleString()} students</span>
+                    <span>
+                      {featuredCourses[0].students.toLocaleString()} students
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-1">
                       <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="font-medium">{featuredCourses[0].rating}</span>
+                      <span className="font-medium">
+                        {featuredCourses[0].rating}
+                      </span>
                     </div>
                     <span className="text-2xl font-bold text-[#072ac8] dark:text-[#8ddeed]">
                       {featuredCourses[0].price}
@@ -246,54 +265,53 @@ export function CoursesPage() {
               </CardContent>
             </div>
           </Card>
-
           {/* Course Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.slice(1).map((course) => (
+            {filteredCourses.map((course) => (
               <Card
                 key={course.id}
-                className="rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200 dark:bg-[#0d1117] dark:border-[#7037e4]/30 dark:hover:border-[#7037e4]"
+                className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30 hover:shadow-lg transition-all duration-200"
               >
-                <div className="relative">
-                  <img
-                    src={course.thumbnail || "/placeholder.svg"}
-                    alt={course.title}
-                    className="w-full h-48 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/20 opacity-0 hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <Button size="sm" className="rounded-full bg-white/90 hover:bg-white text-black">
-                      <Play className="w-4 h-4" />
-                    </Button>
+                <img
+                  src={course.thumbnail || "/placeholder.svg"}
+                  alt={course.title}
+                  className="w-full h-40 object-cover rounded-t-2xl"
+                />
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
+                    {course.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-2">
+                    {course.description}
+                  </p>
+                  <div className="flex items-center space-x-2 mb-2 text-sm text-gray-500 dark:text-[#fafafa]/60">
+                    <span>{course.instructor}</span>
+                    <span>•</span>
+                    <span>{course.duration}</span>
                   </div>
-                  <Badge className="absolute top-3 left-3 bg-black/70 text-white">{course.duration}</Badge>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-800 dark:text-[#fafafa] mb-2 line-clamp-2">{course.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-[#fafafa]/70 mb-2">by {course.instructor}</p>
-                  <p className="text-xs text-gray-500 dark:text-[#fafafa]/60 mb-3 line-clamp-2">{course.description}</p>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-[#fafafa]/60">
-                      <div className="flex items-center space-x-1">
-                        <BookOpen className="w-3 h-3" />
-                        <span>{course.lessons}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Users className="w-3 h-3" />
-                        <span>{course.students.toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-3 h-3 text-yellow-400 fill-current" />
-                      <span className="text-xs font-medium">{course.rating}</span>
-                    </div>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Badge className="bg-[#fcf300] text-[#072ac8] hover:bg-[#ffc600]">
+                      {course.category}
+                    </Badge>
+                    <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
+                      {course.lessons} lessons
+                    </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-[#072ac8] dark:text-[#8ddeed]">{course.price}</span>
-                    <Button
-                      size="sm"
-                      className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]"
-                    >
-                      Enroll
+                    <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
+                      {course.students.toLocaleString()} students
+                    </span>
+                    <span className="text-xs text-yellow-500 flex items-center">
+                      <Star className="w-4 h-4 mr-1" />
+                      {course.rating}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between mt-4">
+                    <span className="text-lg font-bold text-[#072ac8] dark:text-[#8ddeed]">
+                      {course.price}
+                    </span>
+                    <Button className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]">
+                      View Course
                     </Button>
                   </div>
                 </CardContent>
@@ -301,40 +319,33 @@ export function CoursesPage() {
             ))}
           </div>
         </TabsContent>
-
         <TabsContent value="playlists" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {playlists.map((playlist) => (
               <Card
                 key={playlist.id}
-                className="rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-200 dark:bg-[#0d1117] dark:border-[#7037e4]/30 dark:hover:border-[#7037e4]"
+                className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30 hover:shadow-lg transition-all duration-200"
               >
-                <div className="relative">
-                  <img
-                    src={playlist.thumbnail || "/placeholder.svg"}
-                    alt={playlist.title}
-                    className="w-full h-32 object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <Play className="w-8 h-8 mx-auto mb-1" />
-                      <span className="text-sm font-medium">{playlist.videos} videos</span>
-                    </div>
+                <img
+                  src={playlist.thumbnail || "/placeholder.svg"}
+                  alt={playlist.title}
+                  className="w-full h-32 object-cover rounded-t-2xl"
+                />
+                <CardContent className="p-6">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
+                    {playlist.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-2">
+                    {playlist.description}
+                  </p>
+                  <div className="flex items-center space-x-2 mb-2 text-sm text-gray-500 dark:text-[#fafafa]/60">
+                    <span>{playlist.videos} videos</span>
+                    <span>•</span>
+                    <span>{playlist.duration}</span>
                   </div>
-                </div>
-                <CardContent className="p-4">
-                  <h3 className="font-semibold text-gray-800 dark:text-[#fafafa] mb-2">{playlist.title}</h3>
-                  <p className="text-sm text-gray-600 dark:text-[#fafafa]/70 mb-3">{playlist.description}</p>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-1 text-xs text-gray-500 dark:text-[#fafafa]/60">
-                      <Clock className="w-3 h-3" />
-                      <span>{playlist.duration}</span>
-                    </div>
-                    <Button size="sm" variant="outline" className="rounded-xl dark:border-[#7037e4]/30 bg-transparent">
-                      <Eye className="w-3 h-3 mr-1" />
-                      View
-                    </Button>
-                  </div>
+                  <Button className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]">
+                    View Playlist
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -342,5 +353,5 @@ export function CoursesPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

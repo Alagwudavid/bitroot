@@ -1,121 +1,167 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { ChevronDown, User, Settings, LogOut, Sun, Moon, Monitor, Crown } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import {
+  ChevronDown,
+  User,
+  Settings,
+  LogOut,
+  Sun,
+  Moon,
+  Monitor,
+  Crown,
+} from "lucide-react";
+import { useTheme } from "next-themes";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { useIsMobile } from "@/components/ui/use-mobile" // Import useIsMobile
-import { cn } from "@/lib/utils"
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useIsMobile } from "@/components/ui/use-mobile";
+import { cn } from "@/lib/utils";
 
-interface TopNavigationProps {
-  currentLanguage: string
-  onLanguageChange: (language: string) => void
-  onPageChange?: (page: string) => void
-}
-
-export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange }: TopNavigationProps) {
-  const { theme, setTheme } = useTheme()
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false)
-  const isMobile = useIsMobile() // Use the hook to detect mobile
+export function TopNavigation() {
+  const { theme, setTheme } = useTheme();
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState("us");
+  const isMobile = useIsMobile();
+  const router = useRouter();
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
-      // Handle system theme changes with animation
       if (theme === "system") {
-        setTheme("system")
+        setTheme("system");
       }
-    }
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [theme, setTheme]);
 
-    mediaQuery.addEventListener("change", handleChange)
-    return () => mediaQuery.removeEventListener("change", handleChange)
-  }, [theme, setTheme])
-
-  const languages = ["English", "Swahili", "Yoruba", "Amharic", "Hausa", "Igbo", "Zulu", "French"]
+  const languages = [
+    { id: 1, label: "English", flag: "us" },
+    { id: 2, label: "Swahili", flag: "tz" },
+    { id: 3, label: "Yoruba", flag: "ng" },
+    { id: 4, label: "Amharic", flag: "et" },
+    { id: 5, label: "Hausa", flag: "ng" },
+    { id: 6, label: "Igbo", flag: "ng" },
+    { id: 7, label: "Zulu", flag: "za" },
+    { id: 8, label: "French", flag: "fr" },
+  ];
 
   return (
     <>
       <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 theme-aware">
         <div className={"flex items-center space-x-4"}>
-            <img 
-                  src={`/bitrootText.png`} 
-                  alt={`Bitroot logo`}
-                  className={
-                        cn("w-full h-10 object-cover rounded",
-                          isMobile
-                          ? "flex"
-                          : "hidden",
-                        )}
-                />
+          <img
+            src={`/bitrootText.png`}
+            alt={`Bitroot logo`}
+            className={cn(
+              "w-full h-10 object-cover rounded",
+              isMobile ? "flex" : "hidden"
+            )}
+          />
         </div>
         <div className="flex items-center space-x-4">
-          <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="outline"
-                className="rounded-xl border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
-              >
-                {currentLanguage}
-                <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48 rounded-xl theme-aware cursor-pointer">
-              {languages.map((language) => (
-                <DropdownMenuItem
-                  key={language}
-                  onClick={() => onLanguageChange(language)}
-                  className="rounded-lg theme-aware"
-                >
-                  {language}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-        <div className="flex items-center space-x-4">
-          <Button className="bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] font-semibold rounded-xl px-4">
+          <Button className={cn("font-semibold rounded-xl px-4", isMobile ? "" : "bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] ")}>
             <Crown className="w-4 h-4 mr-2" />
-            PREMIUM
+            <span className="hidden md:block">PREMIUM</span>
           </Button>
+          <div className="flex items-center space-x-4">
+            <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="rounded-lg px-1 md:px-2 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
+                >
+                    <div className="w-8 h-6 rounded-md md:mr-1 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                      <img 
+                        src={`https://flagcdn.com/w80/${currentLanguage}.png`} 
+                        srcSet={`https://flagcdn.com/w160/${currentLanguage}.png 2x`} 
+                        alt={`${currentLanguage} flag`}
+                        className="w-full h-full object-cover rounded"
+                      />
+                    </div>
+                    <span className="hidden md:block">{currentLanguage.toUpperCase()}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 rounded-xl theme-aware cursor-pointer">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.id}
+                    onClick={() => setCurrentLanguage(language.flag)}
+                    className="rounded-lg theme-aware"
+                  >
+                    <div className="w-10 h-8 rounded-lg mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                      <img 
+                        src={`https://flagcdn.com/w80/${language.flag}.png`} 
+                        srcSet={`https://flagcdn.com/w160/${language.flag}.png 2x`} 
+                        alt={`${language.label} flag`}
+                        className="w-full h-full object-cover rounded"
+                      />
+                    </div>
+                    {language.label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Button
+                variant="ghost"
+                className="relative h-10 w-10 rounded-full"
+              >
                 <Avatar className="h-10 w-10">
                   <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                  <AvatarFallback className="bg-[#1e96fc] text-white">U</AvatarFallback>
+                  <AvatarFallback className="bg-[#1e96fc] text-white">
+                    U
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 rounded-xl theme-aware" align="end">
-              <DropdownMenuItem onClick={() => onPageChange?.("profile")} className="rounded-lg theme-aware">
+            <DropdownMenuContent
+              className="w-56 rounded-xl theme-aware"
+              align="end"
+            >
+              <DropdownMenuItem
+                onClick={() => router.push("/profile")}
+                className="rounded-lg theme-aware"
+              >
                 <User className="mr-2 h-4 w-4" />
                 Profile
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onPageChange?.("settings")} className="rounded-lg theme-aware">
+              <DropdownMenuItem
+                onClick={() => router.push("/settings")}
+                className="rounded-lg theme-aware"
+              >
                 <Settings className="mr-2 h-4 w-4" />
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => setTheme("light")} className="rounded-lg theme-aware">
+              <DropdownMenuItem
+                onClick={() => setTheme("light")}
+                className="rounded-lg theme-aware"
+              >
                 <Sun className="mr-2 h-4 w-4" />
                 Light mode
               </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => setTheme("dark")} className="rounded-lg theme-aware">
+              <DropdownMenuItem
+                onClick={() => setTheme("dark")}
+                className="rounded-lg theme-aware"
+              >
                 <Moon className="mr-2 h-4 w-4" />
                 Dark mode
               </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => setTheme("system")} className="rounded-lg theme-aware">
+              <DropdownMenuItem
+                onClick={() => setTheme("system")}
+                className="rounded-lg theme-aware"
+              >
                 <Monitor className="mr-2 h-4 w-4" />
                 System
               </DropdownMenuItem>
@@ -129,5 +175,5 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
         </div>
       </header>
     </>
-  )
+  );
 }
