@@ -31,7 +31,13 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
         <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
           <PopoverTrigger asChild>
             <div className="flex flex-row items-center gap-2">
-              <div className="w-12 h-12 p-2 rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318]"></div>
+              <div className="w-12 h-12 p-2 rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                <img 
+                  src={`https://flagcdn.com/w40/${getCountryCode(language.name)}.png`} 
+                  alt={`${language.name} flag`}
+                  className="w-8 h-6 object-cover rounded"
+                />
+              </div>
               <div
                 className="flex flex-col items-start mb-2 cursor-pointer"
                 onMouseEnter={() => setIsPopoverOpen(true)}
@@ -92,3 +98,19 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
     </Card>
   )
 }
+
+// Helper function to get country codes for flags
+function getCountryCode(languageName: string): string {
+  const countryMap: { [key: string]: string } = {
+    'Swahili': 'tz', // Tanzania
+    'Yoruba': 'ng',  // Nigeria
+    'Amharic': 'et', // Ethiopia
+    'Hausa': 'ng',   // Nigeria
+    'Igbo': 'ng',    // Nigeria
+    'Zulu': 'za',    // South Africa
+  }
+  
+  return countryMap[languageName] || 'un' // Default to UN flag if not found
+}
+
+export { LanguageCard }
