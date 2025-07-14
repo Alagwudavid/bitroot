@@ -1,9 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Play, Star, Clock } from "lucide-react"
+import { LanguageCard } from "./language-card" // Import the new LanguageCard component
 
 interface LearnPageProps {
   onLanguageSelect: (language: string) => void
@@ -74,60 +73,12 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {languages.map((language) => (
-          <Card
+          <LanguageCard
             key={language.name}
-            className="rounded-2xl border-2 hover:border-[#1e96fc] dark:hover:border-[#7037e4] dark:bg-[#0d1117] dark:border-[#7037e4]/30 transition-all duration-200 cursor-pointer group hover:shadow-lg"
-            onClick={() => setSelectedLanguage(language.name)}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <span className="text-3xl">{language.flag}</span>
-                  <div>
-                    <h3 className="text-xl font-semibold text-gray-800 dark:text-[#fafafa]">{language.name}</h3>
-                    <p className="text-sm text-gray-500 dark:text-[#fafafa]/60">{language.level}</p>
-                  </div>
-                </div>
-                {language.progress > 0 && (
-                  <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="text-sm font-medium">{language.progress}%</span>
-                  </div>
-                )}
-              </div>
-
-              <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-4">{language.description}</p>
-
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
-                  <Clock className="w-4 h-4" />
-                  <span className="text-sm">{language.lessons} lessons</span>
-                </div>
-              </div>
-
-              {language.progress > 0 && (
-                <div className="mb-4">
-                  <div className="w-full bg-gray-200 dark:bg-[#030318] rounded-full h-2">
-                    <div
-                      className="bg-[#1e96fc] dark:bg-[#7037e4] h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${language.progress}%` }}
-                    ></div>
-                  </div>
-                </div>
-              )}
-
-              <Button
-                className="w-full rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318]"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  onLanguageSelect(language.name)
-                }}
-              >
-                <Play className="w-4 h-4 mr-2" />
-                {language.progress > 0 ? "Continue" : "Start Learning"}
-              </Button>
-            </CardContent>
-          </Card>
+            language={language}
+            onLanguageSelect={onLanguageSelect}
+            onCardClick={setSelectedLanguage}
+          />
         ))}
       </div>
 
