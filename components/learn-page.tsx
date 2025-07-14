@@ -14,7 +14,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
   const languages = [
     {
       name: "Swahili",
-      flag: "🇹🇿",
+      flag: "Tazania",
       level: "Beginner",
       progress: 0,
       lessons: 24,
@@ -22,7 +22,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Yoruba",
-      flag: "🇳🇬",
+      flag: "Nigeria",
       level: "Beginner",
       progress: 15,
       lessons: 32,
@@ -30,7 +30,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Amharic",
-      flag: "🇪🇹",
+      flag: "Ethiopia",
       level: "Beginner",
       progress: 0,
       lessons: 28,
@@ -38,7 +38,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Hausa",
-      flag: "🇳🇬",
+      flag: "Nigeria",
       level: "Beginner",
       progress: 0,
       lessons: 26,
@@ -46,7 +46,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Igbo",
-      flag: "🇳🇬",
+      flag: "Nigeria",
       level: "Beginner",
       progress: 0,
       lessons: 30,
@@ -54,7 +54,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
     {
       name: "Zulu",
-      flag: "🇿🇦",
+      flag: "South-Africa",
       level: "Beginner",
       progress: 0,
       lessons: 25,
@@ -66,12 +66,9 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">Select a language to proceed</h1>
-        <p className="text-gray-600 dark:text-[#fafafa]/70">
-          Choose from our collection of African languages and start your learning journey
-        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {languages.map((language) => (
           <LanguageCard
             key={language.name}
