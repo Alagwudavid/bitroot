@@ -31,7 +31,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
       {!isMobile && (
         <div className="mt-4 mb-5 h-11 w-11 shrink-0 overflow-hidden">
           <img 
-                  src={`https://flagcdn.com/w80/ng.png`} 
+                  src={`/original_light.png`} 
                   alt={`Nigeria flag`}
                   className="w-full h-full object-cover rounded"
                 />
