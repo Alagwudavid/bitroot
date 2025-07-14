@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { LanguageCard } from "./language-card" // Import the new LanguageCard component
+import { LanguageCard } from "./language-card"
 
 interface LearnPageProps {
   onLanguageSelect: (language: string) => void
@@ -14,7 +14,7 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
   const languages = [
     {
       name: "Swahili",
-      flag: "Tazania",
+      flag: "Tanzania",
       level: "Beginner",
       progress: 0,
       lessons: 24,
@@ -62,21 +62,43 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
     },
   ]
 
+  const continueLearningLanguages = languages.filter((lang) => lang.progress > 0)
+  const newLanguages = languages.filter((lang) => lang.progress === 0)
+
   return (
     <div className="p-6 max-w-6xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">Select a language to proceed</h1>
       </div>
 
-      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        {languages.map((language) => (
-          <LanguageCard
-            key={language.name}
-            language={language}
-            onLanguageSelect={onLanguageSelect}
-            onCardClick={setSelectedLanguage}
-          />
-        ))}
+      {continueLearningLanguages.length > 0 && (
+        <div className="mb-10">
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-4">Continue Learning</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {continueLearningLanguages.map((language) => (
+              <LanguageCard
+                key={language.name}
+                language={language}
+                onLanguageSelect={onLanguageSelect}
+                onCardClick={setSelectedLanguage}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-4">New Languages</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {newLanguages.map((language) => (
+            <LanguageCard
+              key={language.name}
+              language={language}
+              onLanguageSelect={onLanguageSelect}
+              onCardClick={setSelectedLanguage}
+            />
+          ))}
+        </div>
       </div>
 
       {selectedLanguage && (

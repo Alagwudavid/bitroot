@@ -77,8 +77,7 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
             onLanguageSelect(language.name)
           }}
         >
-          <Play className="w-4 h-4 mr-2" />
-          {language.progress > 0 ? "Continue" : "Start Learning"}
+          <Play className="w-4 h-4" />
         </Button>
       </CardContent>
     </Card>
