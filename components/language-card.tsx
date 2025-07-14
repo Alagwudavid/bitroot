@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Play, Star, Clock } from "lucide-react"
+import { Play, Star, Clock, Network } from "lucide-react"
 
 interface LanguageCardProps {
   language: {
@@ -37,9 +37,9 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
                 onMouseEnter={() => setIsPopoverOpen(true)}
                 onMouseLeave={() => setIsPopoverOpen(false)}
               >
-                <span className="text-2xl">{language.name}</span>
+                <span className="text-xl line-clamp-1">{language.name}</span>
                 <div>
-                  <h3 className="text-xm font-semibold text-gray-800 dark:text-[#fafafa]">{language.flag}</h3>
+                  <h3 className="text-xm font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">{language.flag}</h3>
                 </div>
               </div>
             </div>
@@ -48,7 +48,10 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
             <div className="space-y-2">
               <p className="text-sm text-gray-500 dark:text-[#fafafa]/60">{language.level}</p>
               <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm">{language.description}</p>
-
+              <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm">{language.lessons} lessons</span>
+              </div>
               {language.progress > 0 && (
                 <>
                   <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
@@ -68,13 +71,24 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
         </Popover>
         <div className="flex justify-between mt-2">
           <div className="flex flex-col">
-            <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
-              <Clock className="w-4 h-4" />
-              <span className="text-sm">{language.lessons} lessons</span>
+            <div className="flex items-center space-x-1 mb-1 text-gray-500 dark:text-[#fafafa]/60">
+              <Network className="w-4 h-4" />
+              <span className="text-sm">{language.lessons} Segments</span>
             </div>
             <div className="flex flex-row items-center gap-2">
-              <span className="h-2 w-2 rounded-full bg-green-500"></span>
-              <span className="text-sm">203 active</span>
+              {language.progress > 0 ? (
+                <>
+                  <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
+                    <Star className="w-4 h-4 fill-current" />
+                    <span className="text-sm font-medium">{language.progress}% Progress</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="h-2 w-2 rounded-full bg-green-500"></span>
+                  <span className="text-sm">203 Active</span>
+                </>
+              )}
             </div>
           </div>
           <Button

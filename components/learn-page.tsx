@@ -67,9 +67,9 @@ export function LearnPage({ onLanguageSelect }: LearnPageProps) {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">Select a language to proceed</h1>
-      </div>
+      </div> */}
 
       {continueLearningLanguages.length > 0 && (
         <div className="mb-10">

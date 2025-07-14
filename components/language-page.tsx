@@ -55,44 +55,7 @@ export function LanguagePage({ language, onBack }: LanguagePageProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <Card className="bg-white/90 dark:bg-[#0d1117]/90 backdrop-blur-sm rounded-2xl">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex items-center space-x-2 text-[#6366f1] dark:text-[#8ddeed]">
-                  <div className="w-6 h-6 bg-[#6366f1] dark:bg-[#7037e4] rounded-lg flex items-center justify-center">
-                    <span className="text-white text-sm font-bold">D</span>
-                  </div>
-                  <span className="font-semibold">DASHBOARD</span>
-                </div>
-
-                <div className="space-y-2 text-gray-600 dark:text-[#fafafa]/70">
-                  <div className="flex items-center space-x-2 py-2">
-                    <Trophy className="w-4 h-4" />
-                    <span>LEADERBOARD</span>
-                  </div>
-                  <div className="flex items-center space-x-2 py-2">
-                    <Star className="w-4 h-4" />
-                    <span>STATS</span>
-                  </div>
-                  <div className="flex items-center space-x-2 py-2">
-                    <div className="w-4 h-4 bg-blue-500 rounded"></div>
-                    <span>SHOP</span>
-                  </div>
-                  <div className="flex items-center space-x-2 py-2">
-                    <div className="w-4 h-4 bg-pink-500 rounded"></div>
-                    <span>PROTOTYPE</span>
-                  </div>
-                  <div className="flex items-center space-x-2 py-2">
-                    <div className="w-4 h-4 bg-purple-500 rounded-full"></div>
-                    <span>MORE</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content - Level Path */}
           <div className="lg:col-span-2">
             <div className="relative">
