@@ -32,7 +32,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         <div className="mt-4 mb-5 h-11 w-11 shrink-0 overflow-hidden">
           <img 
                   src={`/original_light.png`} 
-                  alt={`Nigeria flag`}
+                  alt={`Bitroot logo`}
                   className="w-full h-full object-cover rounded"
                 />
         </div>

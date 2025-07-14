@@ -46,10 +46,16 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
     <>
       <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 theme-aware">
         <div className={"flex items-center space-x-4"}>
-            <span className={cn("",
-          isMobile
-          ? "flex"
-          : "hidden",)}>Bitroot</span>
+            <img 
+                  src={`/original.png`} 
+                  alt={`Bitroot logo`}
+                  className={
+                        cn("w-full h-16 object-cover rounded",
+                          isMobile
+                          ? "flex"
+                          : "hidden",
+                        )}
+                />
         </div>
         {/* <div className="flex items-center space-x-4">
           <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
