@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { ArrowLeft, Crown, Star, Trophy, Flame, Zap } from "lucide-react"
+import { ArrowLeft, Crown, Star, Trophy, Flame, Zap, XCircle } from "lucide-react"
 
 interface LanguagePageProps {
   language: string
@@ -45,13 +45,9 @@ export function LanguagePage({ language, onBack }: LanguagePageProps) {
           </Button>
 
           <div className="flex items-center space-x-4">
-            <Button className="bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] font-semibold rounded-xl px-6">
-              <Crown className="w-4 h-4 mr-2" />
-              GO PRO
+            <Button className="bg-gray-500 text-white font-semibold rounded-full px-6">
+              <XCircle className="w-4 h-4 mr-2" />
             </Button>
-            <div className="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold">U</span>
-            </div>
           </div>
         </div>
 

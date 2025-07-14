@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { ChevronDown, User, Settings, LogOut, Sun, Moon, Monitor } from "lucide-react"
+import { ChevronDown, User, Settings, LogOut, Sun, Moon, Monitor, Crown } from "lucide-react"
 import { useTheme } from "next-themes"
 import {
   DropdownMenu,
@@ -57,7 +57,7 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
                         )}
                 />
         </div>
-        {/* <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
             <DropdownMenuTrigger asChild>
               <Button
@@ -80,9 +80,12 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-        </div> */}
+        </div>
         <div className="flex items-center space-x-4">
-          {/* User Dropdown */}
+          <Button className="bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] font-semibold rounded-xl px-4">
+            <Crown className="w-4 h-4 mr-2" />
+            PREMIUM
+          </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
