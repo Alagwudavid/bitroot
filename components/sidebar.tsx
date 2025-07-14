@@ -24,7 +24,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
       className={cn(
         "bg-[#072ac8] dark:bg-[#0d1117] text-white flex theme-aware",
         isMobile
-          ? "fixed bottom-0 left-0 right-0 h-16 flex-row justify-around items-center border-t border-[#7037e4]/30 z-50"
+          ? "fixed bottom-0 left-0 right-0 h-20 flex-row justify-around items-center border-t border-[#7037e4]/30 z-50"
           : "w-28 px-4 flex-col items-center dark:border-r dark:border-[#7037e4]/30",
       )}
     >
@@ -42,7 +42,7 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
         <ul
           className={cn(
             "space-y-2",
-            isMobile ? "flex flex-row justify-around w-full h-full items-center space-y-0" : "flex flex-col",
+            isMobile ? "flex flex-row justify-around w-full h-full items-center space-x-2 px-3" : "flex flex-col",
           )}
         >
           {menuItems.map((item) => {
@@ -52,11 +52,11 @@ export function Sidebar({ currentPage, onPageChange }: SidebarProps) {
                 <button
                   onClick={() => onPageChange(item.id)}
                   className={cn(
-                    "w-full flex items-center justify-center gap-1 px-4 py-3 rounded-xl transition-all duration-200 theme-aware",
+                    "w-full flex items-center justify-center gap-1 rounded-xl transition-all duration-200 theme-aware",
                     currentPage === item.id
                       ? "bg-[#1e96fc] dark:bg-[#7037e4] text-white shadow-lg"
                       : "text-gray-300 dark:text-[#fafafa]/70 hover:bg-[#1e96fc]/20 dark:hover:bg-[#7037e4]/20 hover:text-white",
-                    isMobile ? "flex-col text-xs" : "flex-col",
+                    isMobile ? "flex-col text-xs p-2" : "flex-col px-4 py-3",
                   )}
                 >
                   <Icon className="w-5 h-5" />
