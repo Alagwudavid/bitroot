@@ -120,7 +120,7 @@ export function PodcastPage() {
             <div className="w-8 h-8 bg-[#fcf300] dark:bg-[#8ddeed] rounded-lg flex items-center justify-center">
               <span className="text-[#072ac8] dark:text-[#030318] font-bold text-lg">A</span>
             </div>
-            <span className="text-xl font-semibold dark:text-[#fafafa]">AfroLingo Podcasts</span>
+            <span className="text-xl font-semibold dark:text-[#fafafa]">Bitroot Podcasts</span>
           </div>
         </div>
 

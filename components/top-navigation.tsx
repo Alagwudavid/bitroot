@@ -43,9 +43,8 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
     <>
       <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 theme-aware">
         <div className="flex items-center space-x-4">
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-white">AfroLingo</h2>
+          {/* <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Bitroot</h2> */}
         </div>
-
         <div className="flex items-center space-x-4">
           {/* Language Switcher */}
           <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
@@ -58,7 +57,7 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
                 <ChevronDown className="ml-2 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48 rounded-xl theme-aware">
+            <DropdownMenuContent className="w-48 rounded-xl theme-aware cursor-pointer">
               {languages.map((language) => (
                 <DropdownMenuItem
                   key={language}
@@ -71,6 +70,8 @@ export function TopNavigation({ currentLanguage, onLanguageChange, onPageChange 
             </DropdownMenuContent>
           </DropdownMenu>
 
+        </div>
+        <div className="flex items-center space-x-4">
           {/* User Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

@@ -13,7 +13,7 @@ import { CoursesPage } from "@/components/courses-page"
 import { ProfilePage } from "@/components/profile-page"
 import { SettingsPage } from "@/components/settings-page"
 
-export default function AfroLingoApp() {
+export default function BitrootApp() {
   const [currentPage, setCurrentPage] = useState("learn")
   const [currentLanguage, setCurrentLanguage] = useState("English")
   const [themePreview, setThemePreview] = useState<string | null>(null)
