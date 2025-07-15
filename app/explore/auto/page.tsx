@@ -112,7 +112,7 @@ const sectionData = {
 
 export default function ExploreSectionPage({ params }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const section = decodeURIComponent(params.pages);
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
