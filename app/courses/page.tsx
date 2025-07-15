@@ -5,11 +5,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Play, Clock, Users, Search, BookOpen, Star, Eye } from "lucide-react";
 
 export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTab, setSelectedTab] = useState("courses");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
@@ -108,41 +108,92 @@ export default function CoursesPage() {
     },
   ];
 
-  const playlists = [
+  // Teachers data (mocked for now)
+  const teachers = [
     {
-      id: 1,
-      title: "African Languages Fundamentals",
-      videos: 25,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-      description: "Essential basics across multiple African languages",
-      duration: "8 hours",
+      name: "Dr. Amina Hassan",
+      avatar: "/placeholder-user.jpg",
+      bio: "Swahili linguist & educator",
+      courses: 3,
+      teacherOfMonth: true,
     },
     {
-      id: 2,
-      title: "Cultural Context in Language Learning",
-      videos: 18,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-      description: "Understanding culture through language",
-      duration: "6 hours",
+      name: "Prof. Adebayo Ogundimu",
+      avatar: "/placeholder-user.jpg",
+      bio: "Yoruba business expert",
+      courses: 2,
+      teacherOfMonth: false,
     },
     {
-      id: 3,
-      title: "Business African Languages",
-      videos: 32,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-      description: "Professional communication skills",
-      duration: "12 hours",
+      name: "Meron Tadesse",
+      avatar: "/placeholder-user.jpg",
+      bio: "Amharic culture specialist",
+      courses: 2,
+      teacherOfMonth: false,
     },
     {
-      id: 4,
-      title: "Pronunciation Guides",
-      videos: 15,
-      thumbnail: "/placeholder.svg?height=150&width=200",
-      description: "Master authentic pronunciation",
-      duration: "4 hours",
+      name: "Mallam Ibrahim Sani",
+      avatar: "/placeholder-user.jpg",
+      bio: "Hausa grammar coach",
+      courses: 1,
+      teacherOfMonth: false,
+    },
+    {
+      name: "Chioma Okafor",
+      avatar: "/placeholder-user.jpg",
+      bio: "Igbo language mentor",
+      courses: 1,
+      teacherOfMonth: false,
+    },
+    {
+      name: "Nomsa Mthembu",
+      avatar: "/placeholder-user.jpg",
+      bio: "Zulu pronunciation guide",
+      courses: 1,
+      teacherOfMonth: false,
     },
   ];
 
+  // Playlists are now courses grouped by teacher
+  const playlists = teachers.map((teacher, idx) => {
+    const teacherCourses = featuredCourses.filter(
+      (c) => c.instructor === teacher.name
+    );
+    return {
+      id: idx + 1,
+      title: `${teacher.name.split(" ")[0]}'s Course Playlist`,
+      teacher: teacher.name,
+      avatar: teacher.avatar,
+      courses: teacherCourses,
+      description: `A curated playlist of courses by ${teacher.name}`,
+      duration:
+        teacherCourses.reduce((acc, c) => acc + parseInt(c.duration), 0) +
+        " hours",
+      totalCourses: teacherCourses.length,
+      // For demo, use lessons as 'views'
+      views: teacherCourses.reduce((acc, c) => acc + c.lessons, 0),
+      thumbnail:
+        teacherCourses[0]?.thumbnail || "/placeholder.svg?height=150&width=200",
+    };
+  });
+
+  // Featured card logic
+  let featuredCard;
+  if (selectedTab === "courses") {
+    featuredCard = featuredCourses.reduce(
+      (max, course) => (course.students > max.students ? course : max),
+      featuredCourses[0]
+    );
+  } else if (selectedTab === "playlists") {
+    featuredCard = playlists.reduce(
+      (max, playlist) => (playlist.views > max.views ? playlist : max),
+      playlists[0]
+    );
+  } else if (selectedTab === "instructors") {
+    featuredCard = teachers.find((t) => t.teacherOfMonth) || teachers[0];
+  }
+
+  // Filtered data for each tab
   const filteredCourses = featuredCourses.filter((course) => {
     const matchesSearch =
       course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -152,38 +203,158 @@ export default function CoursesPage() {
     return matchesSearch && matchesCategory;
   });
 
+  const filteredTeachers = teachers.filter((teacher) =>
+    teacher.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredPlaylists = playlists.filter(
+    (playlist) =>
+      playlist.teacher.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      playlist.courses.some((c) =>
+        c.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+  );
+
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
-          Language Learning Courses
-        </h1>
-        <p className="text-gray-600 dark:text-[#fafafa]/70">
-          Comprehensive video courses to master African languages
-        </p>
-      </div>
-      {/* Search and Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-          <Input
-            placeholder="Search courses, instructors..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 rounded-xl dark:bg-[#0d1117] dark:border-[#7037e4]/30"
-          />
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      {/* Main Section */}
+      <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full px-4 md:px-8 pt-10 gap-10 md:gap-0">
+        {/* Left: Headline, Search, Tabs, Tags */}
+        <div className="flex-1 flex flex-col items-start max-w-xl w-full">
+          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#101828] dark:text-[#fafafa]">
+            Discover the World’s Top{" "}
+            {selectedTab === "courses"
+              ? "Courses"
+              : selectedTab === "playlists"
+              ? "Playlists"
+              : "Instructors"}
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-[#fafafa]/70 mb-8">
+            {selectedTab === "courses" &&
+              "Explore work from the most talented and accomplished instructors ready to help you master a new language."}
+            {selectedTab === "playlists" &&
+              "Browse curated playlists of courses by our top instructors."}
+            {selectedTab === "instructors" &&
+              "Meet the educators making a difference in language learning."}
+          </p>
+          {/* Tabs */}
+          <div className="flex items-center gap-2 mb-6">
+            <Button
+              variant={selectedTab === "courses" ? "default" : "outline"}
+              className={`rounded-full px-6 py-2 font-semibold text-base ${
+                selectedTab === "courses"
+                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
+                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
+              }`}
+              onClick={() => setSelectedTab("courses")}
+            >
+              Courses
+            </Button>
+            <Button
+              variant={selectedTab === "instructors" ? "default" : "outline"}
+              className={`rounded-full px-6 py-2 font-semibold text-base ${
+                selectedTab === "instructors"
+                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
+                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
+              }`}
+              onClick={() => setSelectedTab("instructors")}
+            >
+              Instructors
+            </Button>
+            <Button
+              variant={selectedTab === "playlists" ? "default" : "outline"}
+              className={`rounded-full px-6 py-2 font-semibold text-base ${
+                selectedTab === "playlists"
+                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
+                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
+              }`}
+              onClick={() => setSelectedTab("playlists")}
+            >
+              Playlists
+            </Button>
+          </div>
+          {/* Search Bar */}
+          <div className="w-full mb-4">
+            <div className="relative w-full">
+              <Input
+                placeholder={`Search ${selectedTab}...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-12 py-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border-0 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
+              />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
+              <Button
+                size="icon"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-[#f43f7e] hover:bg-[#e11d48] text-white w-10 h-10 flex items-center justify-center shadow"
+                tabIndex={-1}
+              >
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"
+                  />
+                </svg>
+              </Button>
+            </div>
+          </div>
         </div>
-        <div className="flex gap-2 overflow-x-auto">
+        {/* Right: Dynamic Featured Card */}
+        <div className="flex-1 hidden md:flex justify-center items-center w-full mb-10 md:mb-0">
+          <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] p-6 md:p-12 flex items-center justify-center w-full max-w-md h-80 md:h-96 relative">
+            {selectedTab === "courses" && featuredCard && 'thumbnail' in featuredCard && (
+              <>
+                <img
+                  src={featuredCard.thumbnail}
+                  alt="Bestseller Course"
+                  className="object-contain w-full h-full rounded-2xl shadow-lg"
+                />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
+                  <Star className="w-4 h-4 text-yellow-400" /> Bestseller
+                </div>
+              </>
+            )}
+            {selectedTab === "playlists" && featuredCard && 'thumbnail' in featuredCard && (
+              <>
+                <img
+                  src={featuredCard.thumbnail}
+                  alt="Most Viewed Playlist"
+                  className="object-contain w-full h-full rounded-2xl shadow-lg"
+                />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
+                  <Eye className="w-4 h-4 text-[#7037e4] dark:text-[#8ddeed]" /> Most Viewed
+                </div>
+              </>
+            )}
+            {selectedTab === "instructors" && featuredCard && 'avatar' in featuredCard && (
+              <>
+                <img
+                  src={featuredCard.avatar}
+                  alt="Teacher of the Month"
+                  className="object-contain w-32 h-32 rounded-full shadow-lg border-4 border-[#7037e4] dark:border-[#8ddeed] mx-auto"
+                />
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
+                  <Star className="w-4 h-4 text-yellow-400" /> Teacher of the Month
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+      {/* Bottom Navigation (Tabs) */}
+      <div className="fixed md:static bottom-0 left-0 w-full bg-background z-40 border-t md:border-0 flex justify-center py-3 md:py-8 mt-8 md:mt-16">
+        <div className="flex flex-row gap-2 md:gap-4 overflow-x-auto px-2 md:px-0">
           {categories.map((category) => (
             <Button
               key={category.id}
               variant={selectedCategory === category.id ? "default" : "outline"}
               onClick={() => setSelectedCategory(category.id)}
-              className={`rounded-xl whitespace-nowrap ${
+              className={`rounded-full px-6 py-2 font-semibold text-base whitespace-nowrap ${
                 selectedCategory === category.id
-                  ? "bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]"
-                  : "dark:border-[#7037e4]/30 dark:hover:bg-[#7037e4]/20"
+                  ? "bg-[#7037e4] text-white dark:bg-[#8ddeed] dark:text-[#010B13]"
+                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa] border border-[#e0e7ef] dark:border-[#23263a]"
               }`}
             >
               {category.label}
@@ -191,167 +362,166 @@ export default function CoursesPage() {
           ))}
         </div>
       </div>
-      <Tabs defaultValue="courses" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 max-w-md rounded-xl dark:bg-[#0d1117]">
-          <TabsTrigger value="courses" className="rounded-xl">
-            Courses
-          </TabsTrigger>
-          <TabsTrigger value="playlists" className="rounded-xl">
-            Playlists
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="courses" className="space-y-6">
-          {/* Featured Course */}
-          <Card className="rounded-2xl overflow-hidden dark:bg-[#0d1117] dark:border-[#7037e4]/30">
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              <div className="relative">
-                <img
-                  src={featuredCourses[0].thumbnail || "/placeholder.svg"}
-                  alt={featuredCourses[0].title}
-                  className="w-full h-64 lg:h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                  <Button
-                    size="lg"
-                    className="rounded-full bg-white/90 hover:bg-white text-black"
-                  >
-                    <Play className="w-6 h-6 mr-2" />
-                    Watch Preview
-                  </Button>
-                </div>
-              </div>
-              <CardContent className="p-8">
-                <Badge className="bg-[#fcf300] text-[#072ac8] hover:bg-[#ffc600] mb-4">
-                  Featured Course
-                </Badge>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
-                  {featuredCourses[0].title}
-                </h2>
-                <p className="text-gray-600 dark:text-[#fafafa]/70 mb-4">
-                  {featuredCourses[0].description}
-                </p>
-                <div className="flex items-center space-x-4 mb-4 text-sm text-gray-500 dark:text-[#fafafa]/60">
-                  <div className="flex items-center space-x-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{featuredCourses[0].duration}</span>
+      {/* Tab Content Grids */}
+      {selectedTab === "courses" && (
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-8 md:mt-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredCourses.map((course) => {
+              // Determine if this is the bestseller
+              const isBestseller =
+                course.id ===
+                featuredCourses.reduce(
+                  (max, c) => (c.students > max.students ? c : max),
+                  featuredCourses[0]
+                ).id;
+              // For demo, fake old price as +40%
+              const oldPrice = course.price.startsWith("₦")
+                ? `₦${(
+                    parseInt(course.price.replace(/\D/g, "")) * 1.4
+                  ).toLocaleString()}`
+                : course.price === "Free"
+                ? ""
+                : `₦${(12900 * 1.4).toLocaleString()}`;
+              return (
+                <Card
+                  key={course.id}
+                  className="bg-white dark:bg-[#101828] rounded-2xl shadow-md border border-gray-200 dark:border-[#23263a] flex flex-col overflow-hidden hover:shadow-lg transition-all duration-200"
+                >
+                  <div className="w-full h-44 bg-gray-100 dark:bg-[#23263a] flex items-center justify-center overflow-hidden border-b border-gray-200 dark:border-[#23263a]">
+                    <img
+                      src={course.thumbnail || "/placeholder.svg"}
+                      alt={course.title}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <BookOpen className="w-4 h-4" />
-                    <span>{featuredCourses[0].lessons} lessons</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Users className="w-4 h-4" />
-                    <span>
-                      {featuredCourses[0].students.toLocaleString()} students
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    <div className="flex items-center space-x-1">
-                      <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                      <span className="font-medium">
-                        {featuredCourses[0].rating}
+                  <CardContent className="p-5 flex-1 flex flex-col">
+                    <h3 className="text-lg font-extrabold text-[#101828] dark:text-[#fafafa] mb-1 leading-tight">
+                      {course.title}
+                    </h3>
+                    <div className="text-sm text-gray-700 dark:text-[#fafafa]/80 mb-2">
+                      {course.instructor}
+                    </div>
+                    <div className="flex items-center gap-1 text-[#f59e42] font-semibold text-base mb-1">
+                      <span>{course.rating.toFixed(1)}</span>
+                      <span className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <svg
+                            key={i}
+                            className={`w-4 h-4 ${
+                              i < Math.round(course.rating)
+                                ? "text-[#f59e42]"
+                                : "text-gray-300"
+                            }`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z" />
+                          </svg>
+                        ))}
+                      </span>
+                      <span className="text-gray-500 text-xs font-normal ml-1">
+                        ({(course.students * 10).toLocaleString()})
                       </span>
                     </div>
-                    <span className="text-2xl font-bold text-[#072ac8] dark:text-[#8ddeed]">
-                      {featuredCourses[0].price}
-                    </span>
-                  </div>
-                  <Button className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]">
-                    Enroll Now
+                    <div className="flex items-center gap-2 mb-2 mt-1">
+                      <span className="text-lg font-bold text-[#101828] dark:text-[#8ddeed]">
+                        {course.price.startsWith("₦")
+                          ? course.price
+                          : "₦12,900"}
+                      </span>
+                      {oldPrice && (
+                        <span className="text-gray-400 text-base line-through">
+                          {oldPrice}
+                        </span>
+                      )}
+                    </div>
+                    {isBestseller && (
+                      <span className="inline-block bg-[#d1fae5] text-[#065f46] px-3 py-1 rounded-lg text-xs font-semibold mb-2">
+                        Bestseller
+                      </span>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      {selectedTab === "instructors" && (
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-12">
+          <h2 className="text-2xl font-bold mb-6 text-[#101828] dark:text-[#fafafa]">
+            Meet Our Top Instructors
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {filteredTeachers.map((teacher) => (
+              <Card
+                key={teacher.name}
+                className="flex flex-col items-center bg-white dark:bg-[#101828] rounded-3xl shadow-md border-0 p-8 transition hover:shadow-lg min-h-[320px]"
+              >
+                <div className="w-24 h-24 rounded-full bg-[#f5f6fa] dark:bg-[#23263a] flex items-center justify-center mb-4 overflow-hidden">
+                  <img
+                    src={teacher.avatar}
+                    alt={teacher.name}
+                    className="w-24 h-24 object-cover rounded-full border-4 border-[#7037e4] dark:border-[#8ddeed]"
+                  />
+                </div>
+                <div className="flex flex-col items-center flex-1 w-full">
+                  <h3 className="text-lg font-extrabold text-[#101828] dark:text-[#fafafa] mb-1 text-center">
+                    {teacher.name}
+                  </h3>
+                  <p className="text-gray-500 dark:text-[#fafafa]/70 text-base mb-4 text-center">
+                    {teacher.bio}
+                  </p>
+                  <span className="bg-[#f5f6fa] dark:bg-[#23263a] text-[#7037e4] dark:text-[#8ddeed] px-4 py-1 rounded-full text-xs font-semibold mb-4">
+                    {teacher.courses} course{teacher.courses > 1 ? "s" : ""}
+                  </span>
+                  <Button className="rounded-full bg-[#f43f7e] hover:bg-[#e11d48] text-white px-6 py-2 text-sm font-semibold mt-auto">
+                    View Profile
                   </Button>
                 </div>
-              </CardContent>
-            </div>
-          </Card>
-          {/* Course Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredCourses.map((course) => (
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
+      {selectedTab === "playlists" && (
+        <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-12 mb-16">
+          <h2 className="text-2xl font-bold mb-6 text-[#101828] dark:text-[#fafafa]">
+            Curated Playlists
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {filteredPlaylists.map((playlist) => (
               <Card
-                key={course.id}
-                className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30 hover:shadow-lg transition-all duration-200"
+                key={playlist.id}
+                className="rounded-2xl bg-white dark:bg-[#101828] border-0 shadow flex flex-col relative"
               >
                 <img
-                  src={course.thumbnail || "/placeholder.svg"}
-                  alt={course.title}
-                  className="w-full h-40 object-cover rounded-t-2xl"
+                  src={playlist.thumbnail}
+                  alt={playlist.title}
+                  className="w-full h-32 object-cover rounded-t-2xl"
                 />
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
-                    {course.title}
+                <CardContent className="p-6 flex-1 flex flex-col">
+                  <h3 className="text-lg font-bold text-[#101828] dark:text-[#fafafa] mb-1">
+                    {playlist.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-2">
-                    {course.description}
+                  <p className="text-gray-500 dark:text-[#fafafa]/70 text-sm mb-2 flex-1">
+                    {playlist.description}
                   </p>
-                  <div className="flex items-center space-x-2 mb-2 text-sm text-gray-500 dark:text-[#fafafa]/60">
-                    <span>{course.instructor}</span>
-                    <span>•</span>
-                    <span>{course.duration}</span>
+                  <div className="flex items-center justify-between text-xs text-gray-400 dark:text-[#fafafa]/50 mt-2">
+                    <span>{playlist.totalCourses} courses</span>
+                    <span>{playlist.views} lessons</span>
                   </div>
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Badge className="bg-[#fcf300] text-[#072ac8] hover:bg-[#ffc600]">
-                      {course.category}
-                    </Badge>
-                    <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
-                      {course.lessons} lessons
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
-                      {course.students.toLocaleString()} students
-                    </span>
-                    <span className="text-xs text-yellow-500 flex items-center">
-                      <Star className="w-4 h-4 mr-1" />
-                      {course.rating}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-4">
-                    <span className="text-lg font-bold text-[#072ac8] dark:text-[#8ddeed]">
-                      {course.price}
-                    </span>
-                    <Button className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]">
-                      View Course
+                  <div className="flex items-center mt-4 justify-end">
+                    <Button className="rounded-full bg-[#7037e4] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#010B13] px-4 py-2 text-sm font-semibold absolute bottom-4 right-4">
+                      View Playlist
                     </Button>
                   </div>
                 </CardContent>
               </Card>
             ))}
           </div>
-        </TabsContent>
-        <TabsContent value="playlists" className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {playlists.map((playlist) => (
-              <Card
-                key={playlist.id}
-                className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30 hover:shadow-lg transition-all duration-200"
-              >
-                <img
-                  src={playlist.thumbnail || "/placeholder.svg"}
-                  alt={playlist.title}
-                  className="w-full h-32 object-cover rounded-t-2xl"
-                />
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
-                    {playlist.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-2">
-                    {playlist.description}
-                  </p>
-                  <div className="flex items-center space-x-2 mb-2 text-sm text-gray-500 dark:text-[#fafafa]/60">
-                    <span>{playlist.videos} videos</span>
-                    <span>•</span>
-                    <span>{playlist.duration}</span>
-                  </div>
-                  <Button className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]">
-                    View Playlist
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-      </Tabs>
+        </div>
+      )}
     </div>
   );
 }

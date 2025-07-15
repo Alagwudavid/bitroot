@@ -16,14 +16,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex min-h-screen bg-background text-foreground theme-aware">
+          <div className="flex min-h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <Sidebar />
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto">
               <TopNavigation />
-              <main className="flex-1 p-6 overflow-auto">{children}</main>
+              <main className="flex-1 p-6 h-full">{children}</main>
             </div>
           </div>
         </ThemeProvider>

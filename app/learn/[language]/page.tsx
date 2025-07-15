@@ -15,6 +15,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648559,
       title: "Unit 1",
+      level: "A1",
       status: "completed",
       progress: 26,
       total: 26,
@@ -24,6 +25,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648560,
       title: "Unit 2",
+      level: "A2",
       status: "in-progress",
       progress: 20,
       total: 26,
@@ -33,6 +35,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648561,
       title: "Unit 3",
+      level: "B1",
       status: "locked",
       progress: 0,
       total: 28,
@@ -42,6 +45,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648562,
       title: "Unit 4",
+      level: "B2",
       status: "locked",
       progress: 0,
       total: 28,
@@ -51,6 +55,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648563,
       title: "Exam 1 (Unit 1-4)",
+      level: "B2",
       status: "locked",
       progress: 0,
       total: 52,
@@ -60,6 +65,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648564,
       title: "Exam 2 (One on One)",
+      level: "B2",
       status: "locked",
       progress: 0,
       total: 50,
@@ -69,6 +75,7 @@ const languageunitsData: Record<string, Array<any>> = {
     {
       id: 22648565,
       title: "Certification",
+      level: "B2",
       status: "locked",
       progress: 0,
       total: 50,

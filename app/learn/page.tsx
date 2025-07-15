@@ -17,6 +17,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 24,
+      learned: 12,
       description: "Learn the most widely spoken language in East Africa",
     },
     {
@@ -26,6 +27,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 15,
       lessons: 32,
+      learned: 16,
       description: "Discover the rich language of the Yoruba people",
     },
     {
@@ -35,6 +37,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 28,
+      learned: 14,
       description: "Learn the official language of Ethiopia",
     },
     {
@@ -44,6 +47,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 26,
+      learned: 13,
       description: "Master the lingua franca of West Africa",
     },
     {
@@ -53,6 +57,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 30,
+      learned: 15,
       description: "Learn the language of the Igbo people",
     },
     {
@@ -62,6 +67,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 25,
+      learned: 12,
       description: "Discover South Africa's most spoken language",
     },
   ];

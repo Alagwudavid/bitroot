@@ -56,7 +56,7 @@ export function TopNavigation() {
 
   return (
     <>
-      <header className="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6 theme-aware">
+      <header className="h-16 bg-[#EEEDEC] dark:bg-[#0d1117] flex items-center justify-between px-6 theme-aware shrink-0 sticky top-0 z-50 dark:border-b border-gray-300 dark:border-gray-700">
         <div className={"flex items-center space-x-4"}>
           <img
             src={`/bitrootText.png`}
@@ -68,26 +68,30 @@ export function TopNavigation() {
           />
         </div>
         <div className="flex items-center space-x-4">
-          <Button className={cn("font-semibold rounded-xl px-4", isMobile ? "" : "bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] ")}>
+          <Button
+            className={cn(
+              "font-semibold rounded-xl px-4",
+              isMobile ? "" : "bg-[#fcf300] hover:bg-[#ffc600] text-[#072ac8] "
+            )}
+          >
             <Crown className="w-4 h-4 mr-2" />
             <span className="hidden md:block">PREMIUM</span>
           </Button>
           <div className="flex items-center space-x-4">
-            <DropdownMenu open={isLanguageOpen} onOpenChange={setIsLanguageOpen}>
+            <DropdownMenu
+              open={isLanguageOpen}
+              onOpenChange={setIsLanguageOpen}
+            >
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="rounded-lg px-1 md:px-2 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
+                  className="rounded-md !p-0 w-10 h-8 overflow-hidden border-1 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
                 >
-                    <div className="w-8 h-6 rounded-md md:mr-1 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
-                      <img 
-                        src={`https://flagcdn.com/w80/${currentLanguage}.png`} 
-                        srcSet={`https://flagcdn.com/w160/${currentLanguage}.png 2x`} 
-                        alt={`${currentLanguage} flag`}
-                        className="w-full h-full object-cover rounded"
-                      />
-                    </div>
-                    <span className="hidden md:block">{currentLanguage.toUpperCase()}</span>
+                    <img
+                      src={`/flag/${currentLanguage}.png`}
+                      alt={`${currentLanguage} flag`}
+                      className="w-full h-full object-cover rounded"
+                    />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48 rounded-xl theme-aware cursor-pointer">
@@ -98,9 +102,8 @@ export function TopNavigation() {
                     className="rounded-lg theme-aware"
                   >
                     <div className="w-10 h-8 rounded-lg mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
-                      <img 
-                        src={`https://flagcdn.com/w80/${language.flag}.png`} 
-                        srcSet={`https://flagcdn.com/w160/${language.flag}.png 2x`} 
+                      <img
+                        src={`/flag/${language.flag}.png`}
                         alt={`${language.label} flag`}
                         className="w-full h-full object-cover rounded"
                       />

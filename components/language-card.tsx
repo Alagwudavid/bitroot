@@ -1,27 +1,36 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Play, Star, Clock, Network } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Play, Star, Clock, Network } from "lucide-react";
 
 interface LanguageCardProps {
   language: {
-    name: string
-    flag: string
-    country: string
-    level: string
-    progress: number
-    lessons: number
-    description: string
-  }
-  onLanguageSelect: (language: string) => void
-  onCardClick: (languageName: string) => void
+    name: string;
+    flag: string;
+    country: string;
+    level: string;
+    progress: number;
+    lessons: number;
+    learned: number;
+    description: string;
+  };
+  onLanguageSelect: (language: string) => void;
+  onCardClick: (languageName: string) => void;
 }
 
-export function LanguageCard({ language, onLanguageSelect, onCardClick }: LanguageCardProps) {
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+export function LanguageCard({
+  language,
+  onLanguageSelect,
+  onCardClick,
+}: LanguageCardProps) {
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
 
   return (
     <Card
@@ -33,9 +42,8 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
           <PopoverTrigger asChild>
             <div className="flex flex-row items-center gap-2">
               <div className="w-12 h-12 rounded-full overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
-                <img 
-                  src={`https://flagcdn.com/w80/${language.flag}.png`} 
-                  srcSet={`https://flagcdn.com/w160/${language.flag}.png 2x`} 
+                <img
+                  src={`/flag/${language.flag}.png`}
                   alt={`${language.country} flag`}
                   className="w-full h-full object-cover rounded"
                 />
@@ -47,15 +55,21 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
               >
                 <span className="text-xl line-clamp-1">{language.name}</span>
                 <div>
-                  <h3 className="text-xm font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">{language.country}</h3>
+                  <h3 className="text-xm font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">
+                    {language.country}
+                  </h3>
                 </div>
               </div>
             </div>
           </PopoverTrigger>
           <PopoverContent className="w-auto p-4 rounded-xl theme-aware">
             <div className="space-y-2">
-              <p className="text-sm text-gray-500 dark:text-[#fafafa]/60">{language.level}</p>
-              <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm">{language.description}</p>
+              <p className="text-sm text-gray-500 dark:text-[#fafafa]/60">
+                {language.level}
+              </p>
+              <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm">
+                {language.description}
+              </p>
               <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
                 <Clock className="w-4 h-4" />
                 <span className="text-sm">{language.lessons} lessons</span>
@@ -64,7 +78,9 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
                 <>
                   <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
                     <Star className="w-4 h-4 fill-current" />
-                    <span className="text-sm font-medium">{language.progress}% progress</span>
+                    <span className="text-sm font-medium">
+                      {language.progress}% progress
+                    </span>
                   </div>
                   <div className="w-full bg-gray-200 dark:bg-[#030318] rounded-full h-2">
                     <div
@@ -88,29 +104,29 @@ export function LanguageCard({ language, onLanguageSelect, onCardClick }: Langua
                 <>
                   <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
                     <Star className="w-4 h-4 fill-current" />
-                    <span className="text-sm font-medium">{language.progress}% Progress</span>
+                    <span className="text-sm font-medium">
+                      {language.progress}% Progress
+                    </span>
                   </div>
                 </>
               ) : (
                 <>
-                  <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                  <span className="text-sm">203 Active</span>
+                  <span className="text-sm">{language.learned} Learners</span>
                 </>
               )}
             </div>
           </div>
           <Button
-          className="w-11 h-11 rounded-full bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318]"
-          onClick={(e) => {
-            e.stopPropagation() // Prevent card's onClick from firing
-            onLanguageSelect(language.name)
-          }}
-        >
-          <Play className="w-4 h-4" />
-        </Button>
+            className="w-11 h-11 rounded-full bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318]"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent card's onClick from firing
+              onLanguageSelect(language.name);
+            }}
+          >
+            <Play className="w-4 h-4" />
+          </Button>
         </div>
-        
       </CardContent>
     </Card>
-  )
+  );
 }

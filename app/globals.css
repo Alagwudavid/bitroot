@@ -4,25 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --background: 0 0% 98%; /* #fafafa */
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%; /* #ffffff */
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%; /* #ffffff */
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
     --radius: 0.75rem;
 
     /* Animation variables */
@@ -31,25 +31,25 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 210 100% 4%; /* #010B13 */
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
+    --card: 210 100% 4%; /* #010B13 */
     --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
+    --popover: 210 100% 4%; /* #010B13 */
     --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 262 83% 58%; /* #7037e4 */
+    --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 195 100% 78%; /* #8ddeed */
+    --accent-foreground: 210 100% 4%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 262 83% 58%; /* #7037e4 */
   }
 }
 
@@ -59,13 +59,15 @@
   }
 
   html {
-    transition: all var(--theme-transition-duration) var(--theme-transition-timing);
+    transition: all var(--theme-transition-duration)
+      var(--theme-transition-timing);
   }
 
   body {
     @apply bg-background text-foreground;
-    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing), color
-      var(--theme-transition-duration) var(--theme-transition-timing);
+    transition: background-color var(--theme-transition-duration)
+        var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
   }
 }
 
@@ -80,10 +82,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at center, rgba(112, 55, 228, 0.1) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at center,
+    rgba(112, 55, 228, 0.1) 0%,
+    transparent 70%
+  );
   z-index: 9999;
   opacity: 0;
-  animation: themeTransition var(--theme-transition-duration) var(--theme-transition-timing);
+  animation: themeTransition var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 @keyframes themeTransition {
@@ -103,9 +110,11 @@
 
 /* Smooth transitions for all theme-aware elements */
 .theme-aware {
-  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing), border-color
-    var(--theme-transition-duration) var(--theme-transition-timing), color var(--theme-transition-duration)
-    var(--theme-transition-timing), box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: background-color var(--theme-transition-duration)
+      var(--theme-transition-timing),
+    border-color var(--theme-transition-duration) var(--theme-transition-timing),
+    color var(--theme-transition-duration) var(--theme-transition-timing),
+    box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 /* Custom dark mode styles with transitions */
@@ -117,28 +126,33 @@
 .dark .sidebar-dark {
   background: #0d1117;
   border-color: #7037e4;
-  transition: all var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: all var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 .dark .card-dark {
   background: #0d1117;
   border-color: rgba(112, 55, 228, 0.2);
-  transition: all var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: all var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 .dark .accent-dark {
   color: #8ddeed;
-  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: color var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 .dark .primary-dark {
   background: #7037e4;
-  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: background-color var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 .dark .surface-dark {
   background: #0d1117;
-  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing);
+  transition: background-color var(--theme-transition-duration)
+    var(--theme-transition-timing);
 }
 
 /* Loading spinner for theme transitions */

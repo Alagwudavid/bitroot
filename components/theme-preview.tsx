@@ -1,60 +1,79 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
+import { useState, useEffect } from "react";
+import { Card } from "@/components/ui/card";
 
 interface ThemePreviewProps {
-  theme: "light" | "dark" | "system"
-  isActive?: boolean
+  theme: "light" | "dark" | "system";
+  isActive?: boolean;
 }
 
 export function ThemePreview({ theme, isActive }: ThemePreviewProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const getPreviewColors = () => {
     switch (theme) {
       case "light":
         return {
-          bg: "bg-white",
-          surface: "bg-gray-100",
-          primary: "bg-[#072ac8]",
-          accent: "bg-[#1e96fc]",
+          bg: "bg-[#fafafa]",
+          surface: "bg-[#ffffff]",
+          primary: "bg-[#7037e4]",
+          accent: "bg-[#8ddeed]",
           text: "bg-gray-800",
-        }
+        };
       case "dark":
         return {
-          bg: "bg-[#030318]",
-          surface: "bg-[#0d1117]",
+          bg: "bg-[#010B13]",
+          surface: "bg-[#010B13]",
           primary: "bg-[#7037e4]",
           accent: "bg-[#8ddeed]",
           text: "bg-[#fafafa]",
-        }
+        };
       case "system":
-        const systemIsDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+        if (!mounted) {
+          // Return light theme during SSR to prevent hydration mismatch
+          return {
+            bg: "bg-[#fafafa]",
+            surface: "bg-[#ffffff]",
+            primary: "bg-[#7037e4]",
+            accent: "bg-[#8ddeed]",
+            text: "bg-gray-800",
+          };
+        }
+        const systemIsDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
         return systemIsDark
           ? {
-              bg: "bg-[#030318]",
-              surface: "bg-[#0d1117]",
+              bg: "bg-[#010B13]",
+              surface: "bg-[#010B13]",
               primary: "bg-[#7037e4]",
               accent: "bg-[#8ddeed]",
               text: "bg-[#fafafa]",
             }
           : {
-              bg: "bg-white",
-              surface: "bg-gray-100",
-              primary: "bg-[#072ac8]",
-              accent: "bg-[#1e96fc]",
+              bg: "bg-[#fafafa]",
+              surface: "bg-[#ffffff]",
+              primary: "bg-[#7037e4]",
+              accent: "bg-[#8ddeed]",
               text: "bg-gray-800",
-            }
+            };
       default:
         return {
-          bg: "bg-white",
-          surface: "bg-gray-100",
-          primary: "bg-[#072ac8]",
-          accent: "bg-[#1e96fc]",
+          bg: "bg-[#fafafa]",
+          surface: "bg-[#ffffff]",
+          primary: "bg-[#7037e4]",
+          accent: "bg-[#8ddeed]",
           text: "bg-gray-800",
-        }
+        };
     }
-  }
+  };
 
-  const colors = getPreviewColors()
+  const colors = getPreviewColors();
 
   return (
     <div className="absolute right-2 top-1/2 -translate-y-1/2 z-50">
@@ -70,8 +89,10 @@ export function ThemePreview({ theme, isActive }: ThemePreviewProps) {
             <div className={`h-0.5 ${colors.text} rounded-sm w-2/3`}></div>
           </div>
         </div>
-        {isActive && <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>}
+        {isActive && (
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+        )}
       </Card>
     </div>
-  )
+  );
 }
