@@ -109,7 +109,7 @@ export default function CommunityPage() {
           Language Communities
         </h1>
         <p className="text-gray-600 dark:text-[#fafafa]/70">
-          Connect with learners and native speakers from around Africa
+          Connect with learners and native speakers from around the world
         </p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
