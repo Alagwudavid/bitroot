@@ -10,7 +10,7 @@ import {
   Sun,
   Moon,
   Monitor,
-  Bot,
+  SquarePen,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -70,12 +70,12 @@ export function TopNavigation() {
         <div className="flex items-center space-x-4">
           <Button
             className={cn(
-              "font-semibold rounded-3xl px-4",
-              isMobile ? "" : "bg-sky-500 hover:bg-sky-500 text-white "
+              "font-semibold rounded-3xl px-3 py-1",
+              isMobile ? "" : "bg-gray-700 hover:bg-gray-500 text-white "
             )}
           >
-            <Bot className="w-6 h-6 mr-1" />
-            <span className="hidden md:block text-base">Chat</span>
+            <SquarePen className="w-6 h-6 mr-1 shrink-0" />
+            <span className="hidden md:block text-base">New chat</span>
           </Button>
           <div className="flex items-center space-x-4">
             <DropdownMenu
