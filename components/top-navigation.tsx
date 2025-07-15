@@ -63,7 +63,15 @@ export function TopNavigation() {
             alt={`Bitroot logo`}
             className={cn(
               "w-full h-10 object-cover rounded",
-              isMobile ? "flex" : "hidden"
+              isMobile ? "flex dark:hidden" : "hidden"
+            )}
+          />
+          <img
+            src={`/bitrootText_light.png`}
+            alt={`Bitroot logo`}
+            className={cn(
+              "w-full h-10 object-cover rounded",
+              isMobile ? "dark:flex" : "hidden"
             )}
           />
         </div>
