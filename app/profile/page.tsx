@@ -158,7 +158,7 @@ export default function ProfilePage() {
     <div className="p-6 max-w-7xl mx-auto">
       {/* Header */}
       <div className="mb-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center space-x-4">
             <div className="relative">
               <Avatar className="w-20 h-20">
