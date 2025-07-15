@@ -216,7 +216,7 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-6">
       {/* Main Section */}
       <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full px-4 md:px-8 pt-10 gap-10 md:gap-0">
         {/* Left: Headline, Search, Tabs, Tags */}
@@ -228,7 +228,7 @@ export default function CoursesPage() {
               : selectedTab === "playlists"
               ? "Playlists"
               : "Instructors"}
-          </h1>
+        </h1>
           <p className="text-lg md:text-xl text-gray-600 dark:text-[#fafafa]/70 mb-8">
             {selectedTab === "courses" &&
               "Explore work from the most talented and accomplished instructors ready to help you master a new language."}
@@ -272,14 +272,14 @@ export default function CoursesPage() {
             >
               Playlists
             </Button>
-          </div>
+      </div>
           {/* Search Bar */}
           <div className="w-full mb-4">
             <div className="relative w-full">
-              <Input
+          <Input
                 placeholder={`Search ${selectedTab}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-12 pr-12 py-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border-0 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
               />
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
@@ -385,7 +385,7 @@ export default function CoursesPage() {
               return (
                 <Card
                   key={course.id}
-                  className="bg-white dark:bg-[#101828] rounded-2xl shadow-md border border-gray-200 dark:border-[#23263a] flex flex-col overflow-hidden hover:shadow-lg transition-all duration-200"
+                  className="bg-white dark:bg-[#101828] rounded-md shadow-md border border-gray-200 dark:border-[#23263a] flex flex-col overflow-hidden hover:shadow-lg transition-all duration-200"
                 >
                   <div className="w-full h-44 bg-gray-100 dark:bg-[#23263a] flex items-center justify-center overflow-hidden border-b border-gray-200 dark:border-[#23263a]">
                     <img
@@ -400,7 +400,7 @@ export default function CoursesPage() {
                     </h3>
                     <div className="text-sm text-gray-700 dark:text-[#fafafa]/80 mb-2">
                       {course.instructor}
-                    </div>
+                  </div>
                     <div className="flex items-center gap-1 text-[#f59e42] font-semibold text-base mb-1">
                       <span>{course.rating.toFixed(1)}</span>
                       <span className="flex items-center">
@@ -421,8 +421,8 @@ export default function CoursesPage() {
                       </span>
                       <span className="text-gray-500 text-xs font-normal ml-1">
                         ({(course.students * 10).toLocaleString()})
-                      </span>
-                    </div>
+                    </span>
+                  </div>
                     <div className="flex items-center gap-2 mb-2 mt-1">
                       <span className="text-lg font-bold text-[#101828] dark:text-[#8ddeed]">
                         {course.price.startsWith("₦")
@@ -436,16 +436,16 @@ export default function CoursesPage() {
                       )}
                     </div>
                     {isBestseller && (
-                      <span className="inline-block bg-[#d1fae5] text-[#065f46] px-3 py-1 rounded-lg text-xs font-semibold mb-2">
+                      <span className="inline-block bg-[#d1fae5] text-[#065f46] px-3 py-1 rounded text-xs font-semibold mb-2 w-fit">
                         Bestseller
-                      </span>
+                    </span>
                     )}
                   </CardContent>
                 </Card>
               );
             })}
-          </div>
-        </div>
+                  </div>
+                </div>
       )}
       {selectedTab === "instructors" && (
         <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-12">
@@ -474,11 +474,11 @@ export default function CoursesPage() {
                   </p>
                   <span className="bg-[#f5f6fa] dark:bg-[#23263a] text-[#7037e4] dark:text-[#8ddeed] px-4 py-1 rounded-full text-xs font-semibold mb-4">
                     {teacher.courses} course{teacher.courses > 1 ? "s" : ""}
-                  </span>
+                    </span>
                   <Button className="rounded-full bg-[#f43f7e] hover:bg-[#e11d48] text-white px-6 py-2 text-sm font-semibold mt-auto">
                     View Profile
-                  </Button>
-                </div>
+                    </Button>
+                  </div>
               </Card>
             ))}
           </div>
@@ -513,8 +513,8 @@ export default function CoursesPage() {
                   </div>
                   <div className="flex items-center mt-4 justify-end">
                     <Button className="rounded-full bg-[#7037e4] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#010B13] px-4 py-2 text-sm font-semibold absolute bottom-4 right-4">
-                      View Playlist
-                    </Button>
+                    View Playlist
+                  </Button>
                   </div>
                 </CardContent>
               </Card>

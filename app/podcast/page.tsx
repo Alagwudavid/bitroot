@@ -129,35 +129,23 @@ export default function PodcastPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 dark:from-[#030318] dark:via-[#0d1117] dark:to-[#030318] text-white">
+    <div className="min-h-screen text-white pb-6">
       {/* Header */}
-      <div className="p-6 border-b border-gray-700 dark:border-[#7037e4]/30">
-        <div className="flex items-center space-x-6 mb-6">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-[#fcf300] dark:bg-[#8ddeed] rounded-lg flex items-center justify-center">
-              <span className="text-[#072ac8] dark:text-[#030318] font-bold text-lg">
-                A
-              </span>
-            </div>
-            <span className="text-xl font-semibold dark:text-[#fafafa]">
-              Bitroot Podcasts
-            </span>
-          </div>
-        </div>
+      <div className="pb-6">
         {/* Categories */}
-        <div className="flex space-x-3 overflow-x-auto pb-2">
+        <div className="flex space-x-3 overflow-x-auto">
           {categories.map((category) => (
             <Badge
               key={category}
               variant="secondary"
-              className="whitespace-nowrap rounded-full bg-gray-700 dark:bg-[#7037e4]/20 hover:bg-[#1e96fc] dark:hover:bg-[#7037e4] text-white border-0 cursor-pointer transition-colors"
+              className="whitespace-nowrap rounded-xl px-4 py-2 bg-gray-700 dark:bg-[#7037e4]/20 hover:bg-[#1e96fc] dark:hover:bg-[#7037e4] text-white text-base border-0 cursor-pointer transition-colors"
             >
               {category}
             </Badge>
           ))}
         </div>
       </div>
-      <div className="p-6 space-y-8">
+      <div className="p-2 space-y-8">
         {/* Listen Again Section */}
         <section>
           <div className="flex items-center justify-between mb-6">
