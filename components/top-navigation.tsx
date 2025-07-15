@@ -10,7 +10,10 @@ import {
   Sun,
   Moon,
   Monitor,
-  SquarePen,
+  BotMessageSquare,
+  Gamepad2,
+  Swords,
+  SquareRadical,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -24,6 +27,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 export function TopNavigation() {
   const { theme, setTheme } = useTheme();
@@ -57,35 +61,39 @@ export function TopNavigation() {
   return (
     <>
       <header className="h-16 bg-[#EEEDEC] dark:bg-[#0d1117] flex items-center justify-between px-6 theme-aware shrink-0 sticky top-0 z-50 dark:border-b border-gray-300 dark:border-gray-700">
-        <div className={"flex items-center space-x-4"}>
+        <div className={"flex items-center"}>
           <img
-            src={`/bitrootText.png`}
+            src={`/original_light.png`}
             alt={`Bitroot logo`}
             className={cn(
               "w-full h-10 object-cover rounded",
-              isMobile ? "flex dark:hidden" : "hidden"
+              isMobile ? "hidden dark:flex" : "hidden"
             )}
           />
           <img
-            src={`/originalText_light.png`}
+            src={`/original.png`}
             alt={`Bitroot logo`}
             className={cn(
               "w-full h-10 object-cover rounded",
-              isMobile ? "dark:flex hidden" : "hidden"
+              isMobile ? "dark:hidden flex" : "hidden"
             )}
           />
         </div>
+        <Link href={"/studio"} className="w-fit h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
+          <SquareRadical className="!size-7 mr-2" />
+          Studio
+        </Link>
         <div className="flex items-center space-x-4">
-          <Button
-            className={cn(
-              "font-semibold rounded-3xl px-3 py-1",
-              isMobile ? "" : "bg-gray-700 hover:bg-gray-500 text-white "
-            )}
-          >
-            <SquarePen className="w-6 h-6 mr-1 shrink-0" />
-            <span className="hidden md:block text-base">New chat</span>
+          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
+            <Swords className="!size-7" />
           </Button>
-          <div className="flex items-center space-x-4">
+          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
+            <Gamepad2 className="!size-7" />
+          </Button>
+          <Button className="w-10 h-10 rounded-md bg-transparent mr-2 shrink-0 flex items-center justify-center text-white">
+            <BotMessageSquare className="!size-7" />
+          </Button>
+          <div className="flex items-center space-x-6">
             <DropdownMenu
               open={isLanguageOpen}
               onOpenChange={setIsLanguageOpen}
@@ -93,12 +101,12 @@ export function TopNavigation() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="rounded-md !p-0 w-10 h-8 overflow-hidden border-1 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
+                  className="rounded-full !p-0 w-10 h-10 overflow-hidden border-1 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
                 >
                     <img
                       src={`/flag/${currentLanguage}.png`}
                       alt={`${currentLanguage} flag`}
-                      className="w-full h-full object-cover rounded"
+                      className="w-full h-full object-cover"
                     />
                 </Button>
               </DropdownMenuTrigger>
@@ -109,11 +117,11 @@ export function TopNavigation() {
                     onClick={() => setCurrentLanguage(language.flag)}
                     className="rounded-lg theme-aware"
                   >
-                    <div className="w-10 h-8 rounded-lg mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-full mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
                       <img
                         src={`/flag/${language.flag}.png`}
                         alt={`${language.label} flag`}
-                        className="w-full h-full object-cover rounded"
+                        className="w-full h-full object-cover"
                       />
                     </div>
                     {language.label}

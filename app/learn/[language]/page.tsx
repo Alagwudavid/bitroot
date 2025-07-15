@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ChevronLeft } from "lucide-react";
+import { BotMessageSquare, ChevronLeft, UsersRound } from "lucide-react";
 
 const mascotUrl = "/placeholder-user.jpg"; // Replace with your mascot image if available
 
@@ -100,13 +100,32 @@ export default function LanguageUnitsPage() {
 
   return (
     <div className="max-w-screen-lg mx-auto py-8">
-      <Button
-        variant="ghost"
-        onClick={() => router.push("/learn")}
-        className="mb-6 flex items-center"
-      >
-        <ChevronLeft className="mr-2" /> Back to Languages
-      </Button>
+      <div className="mb-6 flex items-center justify-between gap-6">
+        <Button
+          variant="ghost"
+          onClick={() => router.push("/learn")}
+          className="flex items-center w-fit hover:bg-gray-300 text-base"
+        >
+          <ChevronLeft className="mr-1 !size-6" /> Back
+        </Button>
+        <span className="flex items-center justify-center font-bold">
+          {lang.toUpperCase()}
+        </span>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-md bg-sky-500 shrink-0 flex items-center justify-center text-white">
+            <BotMessageSquare className="" />
+          </div>
+          <span>Ai assisted</span>
+        </div>
+      </div>
+      <div className="mb-6 flex flex-col gap-2">
+        <span className="flex items-center font-semibold">
+          Description
+        </span>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci, cumque eligendi ipsa illum nesciunt animi, in placeat assumenda dolores inventore dolore nisi exercitationem quibusdam hic consectetur repellat nihil. Ducimus, id.
+        </div>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {units.map((Unit, idx) => (
         <Card

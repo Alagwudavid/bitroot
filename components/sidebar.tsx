@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, Users, Headphones, PlayCircle, User } from "lucide-react";
+import { BookOpen, Users, Earth, PlayCircle, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 
@@ -13,7 +13,7 @@ export function Sidebar() {
     { id: "learn", label: "Learn", icon: BookOpen, href: "/learn" },
     { id: "community", label: "Community", icon: Users, href: "/community" },
     { id: "courses", label: "Courses", icon: PlayCircle, href: "/courses" },
-    { id: "podcast", label: "Podcast", icon: Headphones, href: "/podcast" },
+    { id: "explore", label: "Explore", icon: Earth, href: "/explore" },
     { id: "profile", label: "Profile", icon: User, href: "/profile" },
   ];
 
