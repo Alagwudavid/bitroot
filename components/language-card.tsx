@@ -34,7 +34,7 @@ export function LanguageCard({
 
   return (
     <Card
-      className="rounded-3xl border-2 hover:border-[#1e96fc] dark:hover:border-[#7037e4] dark:bg-[#0d1117] dark:border-[#7037e4]/30 transition-all duration-200 cursor-pointer group hover:shadow-lg"
+      className="rounded-3xl border-2 hover:border-[#1e96fc] dark:hover:border-[#7037e4] dark:bg-[#0d1117] dark:border-gray-700 transition-all duration-200 cursor-pointer group hover:shadow-lg"
       onClick={() => onCardClick(language.name)}
     >
       <CardContent className="p-5">

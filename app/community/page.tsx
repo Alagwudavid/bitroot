@@ -119,7 +119,7 @@ export default function CommunityPage() {
             {communities.map((community) => (
               <Card
                 key={community.name}
-                className="rounded-2xl hover:shadow-lg dark:bg-[#0d1117] dark:border-[#7037e4]/30 dark:hover:border-[#7037e4] transition-all duration-200"
+                className="rounded-2xl hover:shadow-lg dark:bg-[#0d1117] dark:border-gray-700 dark:hover:border-[#7037e4] transition-all duration-200"
               >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
@@ -173,7 +173,7 @@ export default function CommunityPage() {
         </div>
         {/* Recent Activity Sidebar */}
         <div className="lg:col-span-1">
-          <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+          <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-gray-700">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">
                 <Globe className="w-5 h-5 text-[#1e96fc] dark:text-[#8ddeed]" />
