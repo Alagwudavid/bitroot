@@ -21,7 +21,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex min-h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <Sidebar />
-            <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto pb-6">
+            <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto">
               <TopNavigation />
               <main className="flex-1 p-6 h-full">{children}</main>
             </div>

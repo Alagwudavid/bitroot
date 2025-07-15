@@ -129,7 +129,7 @@ export default function PodcastPage() {
   ];
 
   return (
-    <div className="min-h-screen text-white pb-6">
+    <div className="min-h-screen text-white pb-16">
       {/* Header */}
       <div className="pb-6">
         {/* Categories */}
