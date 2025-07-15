@@ -13,11 +13,13 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 import { useState } from "react";
+import { useIsMobile } from "@/components/ui/use-mobile";
+import { cn } from "@/lib/utils";
 
 export default function PodcastPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(null);
-
+  const isMobile = useIsMobile();
   const categories = [
     "Podcasts",
     "Stories",
@@ -237,7 +239,10 @@ export default function PodcastPage() {
       </div>
       {/* Bottom Player */}
       {currentTrack && (
-        <div className="fixed bottom-0 left-0 right-0 bg-gray-900 dark:bg-[#0d1117] border-t border-gray-700 dark:border-[#7037e4]/30 p-4">
+        <div className={cn(
+            "fixed left-0 right-0 bg-gray-900 dark:bg-[#0d1117] border-t border-gray-700 dark:border-[#7037e4]/30 p-4",
+            isMobile ? "bottom-20" : "bottom-0",
+            )}>
           <div className="flex items-center justify-between max-w-7xl mx-auto">
             <div className="flex items-center space-x-4">
               <img
