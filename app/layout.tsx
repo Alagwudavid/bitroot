@@ -23,7 +23,8 @@ export default function RootLayout({
             <Sidebar />
             <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto">
               <TopNavigation />
-              <main className="flex-1 p-6 h-full">{children}</main>
+              <main className="flex-1 p-6">{children}</main>
+              <div className="h-10 w-full shrink-0 bg-transparent border-0 p-[10%]"></div>
             </div>
           </div>
         </ThemeProvider>
