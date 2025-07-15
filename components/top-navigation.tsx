@@ -79,18 +79,18 @@ export function TopNavigation() {
             )}
           />
         </div>
-        <Link href={"/studio"} className="w-fit h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
-          <SquareRadical className="!size-7 mr-2" />
-          Studio
-        </Link>
         <div className="flex items-center space-x-4">
-          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
+          <Link href={"/studio"} className="w-fit h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center dark:text-white text-black">
+            <SquareRadical className="!size-7 mr-2" />
+            Studio
+          </Link>
+          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center dark:text-white text-black hover:text-white">
             <Swords className="!size-7" />
           </Button>
-          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center text-white">
+          <Button className="w-10 h-10 rounded-md bg-transparent shrink-0 flex items-center justify-center dark:text-white text-black hover:text-white">
             <Gamepad2 className="!size-7" />
           </Button>
-          <Button className="w-10 h-10 rounded-md bg-transparent mr-2 shrink-0 flex items-center justify-center text-white">
+          <Button className="w-10 h-10 rounded-md bg-transparent mr-2 shrink-0 flex items-center justify-center dark:text-white text-black hover:text-white">
             <BotMessageSquare className="!size-7" />
           </Button>
           <div className="flex items-center space-x-6">

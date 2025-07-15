@@ -10,7 +10,7 @@ export default function CommunityPage() {
   const communities = [
     {
       name: "Swahili Learners",
-      flag: "🇹🇿",
+      flag: "tz",
       members: 12500,
       posts: 1240,
       description: "Connect with fellow Swahili learners and native speakers",
@@ -19,7 +19,7 @@ export default function CommunityPage() {
     },
     {
       name: "Yoruba Culture & Language",
-      flag: "🇳🇬",
+      flag: "ng",
       members: 8900,
       posts: 890,
       description:
@@ -29,7 +29,7 @@ export default function CommunityPage() {
     },
     {
       name: "Amharic Study Group",
-      flag: "🇪🇹",
+      flag: "et",
       members: 5600,
       posts: 456,
       description: "Study Amharic together with structured learning sessions",
@@ -38,7 +38,7 @@ export default function CommunityPage() {
     },
     {
       name: "Hausa Language Exchange",
-      flag: "🇳🇬",
+      flag: "ng",
       members: 7200,
       posts: 678,
       description: "Practice Hausa with native speakers and learners",
@@ -47,7 +47,7 @@ export default function CommunityPage() {
     },
     {
       name: "Igbo Heritage",
-      flag: "🇳🇬",
+      flag: "ng",
       members: 4300,
       posts: 234,
       description:
@@ -57,7 +57,7 @@ export default function CommunityPage() {
     },
     {
       name: "Zulu Conversations",
-      flag: "🇿🇦",
+      flag: "za",
       members: 6800,
       posts: 567,
       description: "Practice Zulu through daily conversations and discussions",
@@ -124,7 +124,14 @@ export default function CommunityPage() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <span className="text-2xl">{community.flag}</span>
+                      <div className="w-12 h-12 rounded-full overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                        <img
+                          src={`/flag/${community.flag}.png`}
+                          alt={`${community.flag} flag`}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </div>
+                      {/* <span className="text-2xl">{community.flag}</span> */}
                       <div>
                         <CardTitle className="text-lg dark:text-[#fafafa]">
                           {community.name}

@@ -11,6 +11,7 @@ import {
   Volume2,
   Heart,
   MoreHorizontal,
+  Search,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useIsMobile } from "@/components/ui/use-mobile";
@@ -38,7 +39,6 @@ export default function ExplorePage() {
     Education: 3,
     Games: 3,
   });
-
   const categories = [
     "All",
     "Stories",
@@ -53,7 +53,6 @@ export default function ExplorePage() {
     "Education",
     "Games",
   ];
-
   // Example data for each section (use placeholder images)
   const sectionData = {
     Stories: Array(6)
@@ -198,22 +197,25 @@ export default function ExplorePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#18181b] text-white pb-16">
+    <div className="text-white pb-16">
       {/* Search and Tabs */}
-      <div className="sticky top-0 z-10 bg-[#18181b] pb-4 pt-4">
-        <Input
-          placeholder="Search stories, podcasts, music..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 bg-[#23263a] border-0 text-white placeholder:text-gray-400"
-        />
+      <div className="relative pb-4 pt-4">
+        <div className="relative w-full">
+          <Input
+            placeholder="Search stories, podcasts, music..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-12 pr-12 py-4 mb-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
+          />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
+        </div>
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="overflow-x-auto flex gap-2 bg-[#23263a] rounded-xl p-2">
+          <TabsList className="flex flex-wrap h-fit items-center bg-transparent text-muted-foreground">
             {categories.map((cat) => (
               <TabsTrigger
                 key={cat}
                 value={cat}
-                className="rounded-xl px-4 py-2 text-base whitespace-nowrap data-[state=active]:bg-[#1e96fc] data-[state=active]:text-white"
+                className="rounded-xl px-4 py-2 ml-2 text-base whitespace-nowrap data-[state=active]:bg-[#1e96fc] data-[state=active]:text-white"
               >
                 {cat}
               </TabsTrigger>
@@ -229,7 +231,7 @@ export default function ExplorePage() {
               (activeTab === "All" || activeTab === section) && (
                 <section key={section}>
                   <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-2xl font-bold">{section}</h2>
+                    <h2 className="text-2xl font-bold text-black dark:text-white">{section}</h2>
                     <Link href={`/explore/${encodeURIComponent(section)}`}>
                       <Button
                         variant="ghost"
@@ -246,38 +248,32 @@ export default function ExplorePage() {
                       ))}
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                       {getFilteredSection(section).map(
                         (item: any, idx: number) => (
                           <Card
                             key={idx}
-                            className="bg-[#23263a] border-0 rounded-2xl hover:bg-[#1e96fc]/10 transition-colors cursor-pointer group"
+                            className="bg-transparent shadow-none border border-gray-300 dark:border-gray-700 transition-colors cursor-pointer group"
                           >
-                            <CardContent className="p-4">
-                              <div className="relative mb-3">
+                            <CardContent className="p-0">
+                              <div className="relative">
                                 <img
                                   src={item.image}
                                   alt={item.title}
-                                  className="w-full aspect-square object-cover rounded-xl"
+                                  className="w-full aspect-[4/5] object-cover rounded-t-xl"
                                 />
                               </div>
-                              <h3 className="font-semibold text-sm mb-1 truncate text-white">
-                                {item.title}
-                              </h3>
-                              <p className="text-gray-400 text-xs mb-1 truncate">
-                                {item.author ||
-                                  item.artist ||
-                                  item.host ||
-                                  item.source ||
-                                  item.developer}
-                              </p>
-                              <div className="flex items-center justify-between">
-                                <Badge className="bg-[#fcf300] text-[#072ac8] text-xs rounded-full">
-                                  {item.type}
-                                </Badge>
-                                <span className="text-xs text-gray-500">
-                                  {item.description}
-                                </span>
+                              <div className="relative p-4">
+                                <h3 className="font-semibold text-sm mb-1 truncate text-black dark:text-white">
+                                  {item.title}
+                                </h3>
+                                <p className="text-gray-400 text-xs mb-1 truncate">
+                                  {item.author ||
+                                    item.artist ||
+                                    item.host ||
+                                    item.source ||
+                                    item.developer}
+                                </p>
                               </div>
                             </CardContent>
                           </Card>
