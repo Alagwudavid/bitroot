@@ -1,132 +1,70 @@
-# Bitroot Web App
+# Bitroot
 
-_Automatically synced with your [v0.dev](https://v0.dev) deployments_
-
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/david-alagwus-projects/v0-Bitroot-web-app)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/AIeQzaIExBR)
+**Bitroot** is an all-in-one language and culture learning platform that blends Duolingo’s gamified lessons with Udemy’s creator economy. Users can learn new languages and explore cultural content through interactive lessons, podcasts, and community-led courses — while creators get paid for sharing their knowledge.
 
 ---
 
-## Overview
+## 🧩 Core Features
 
-**Bitroot** is a modern web application for language learning and cultural engagement, with a focus on African languages. It provides interactive courses, community features, podcasts, and user profiles to help users learn languages and connect with others.
+### For Learners
 
----
+- **Gamified Language Lessons** (Duolingo-style)
+- **Interactive Cultural Modules** (food, music, customs)
+- **Podcasts and Video Courses** (Creator-led)
+- **Community Forums and Study Groups**
+- **Progress Tracking & Daily Streaks**
+- **AI Learning Assistant** (for premium users)
 
-## Features
+### For Creators
 
-- 🌍 Learn multiple African languages (Swahili, Yoruba, Amharic, Hausa, Igbo, Zulu, etc.)
-- 📚 Interactive courses with progress tracking
-- 🏆 User profiles, XP, streaks, and achievements
-- 👥 Community groups and discussions
-- 🎧 Podcasts and cultural content
-- 🎨 Light/Dark theme support
-- 🔔 Notifications and reminders
-- ⚙️ Customizable settings
-- Responsive design (mobile & desktop)
-
----
-
-## Screenshots
-
-<!-- Add screenshots of your app here -->
-
-![Home Page](public/placeholder.jpg)
+- **Course Builder** (Audio, Video, Text, Quiz)
+- **Creator Dashboard** (Analytics, Earnings)
+- **Instant Payouts** per enrollment
+- **Community Management Tools** (Engage students)
+- **Podcast Hosting option**
 
 ---
 
-## Tech Stack
+## 💸 Business Model
 
-- **Framework:** [Next.js](https://nextjs.org/) 15+
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components:** [Radix UI](https://www.radix-ui.com/), custom components
-- **State Management:** React hooks
-- **Deployment:** [Vercel](https://vercel.com/)
-- **Other:** v0.dev, TypeScript
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- pnpm (recommended) or npm/yarn
-
-### Installation
-
-```bash
-# Clone the repository
-$ git clone <your-repo-url>
-$ cd bitroot
-
-# Install dependencies
-$ pnpm install
-# or
-$ npm install
-```
-
-### Running Locally
-
-```bash
-# Start the development server
-$ pnpm dev
-# or
-$ npm run dev
-```
-
-Visit [http://localhost:3000](http://localhost:3000) to view the app.
+1. **Freemium Plan (for learners)**
+   - Access to basic lessons and community features
+   - Pay-per-course/podcast access
+2. **Premium Monthly Plan ($/mo)**
+   - Unlock all courses and podcasts
+   - AI Language Tutor & Cultural Companion
+   - Offline access & downloads
+   - Early access to new content
+3. **Pay-Per-Course Model (like Udemy)**
+   - One-time payment for lifetime access to a specific course or podcast
+   - Revenue split with creators
+4. **Creator Monetization**
+   - Revenue share model (e.g., 70/30)
+   - Tiered reward system (bonus for top creators)
+   - Referral earnings
 
 ---
 
-## Project Structure
+## 📈 Value Propositions
 
-```
-bitroot/
-  app/           # Next.js app directory (entry, layout, pages)
-  components/    # UI and feature components
-    ui/          # UI primitives (buttons, cards, etc.)
-  hooks/         # Custom React hooks
-  lib/           # Utility functions
-  public/        # Static assets (images, logos)
-  styles/        # Global styles (Tailwind)
-  tailwind.config.ts  # Tailwind CSS config
-  package.json   # Project dependencies and scripts
-```
+- 🎯 **For Learners:** Learn at your own pace, in your preferred format (text, audio, video, gamified), and dive deep into cultural contexts.
+- 💰 **For Creators:** Monetize your expertise instantly. No middleman.
+- 🧠 **AI Support:** Personalized feedback, translations, cultural facts, and smart quiz generation.
 
 ---
 
-## Deployment
+## 🔮 Future Ideas
 
-Your project is live at:
-
-**[https://vercel.com/david-alagwus-projects/v0-Bitroot-web-app](https://vercel.com/david-alagwus-projects/v0-Bitroot-web-app)**
-
-Any changes made in [v0.dev](https://v0.dev) are automatically synced and deployed via Vercel.
-
----
-
-## Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a Pull Request
-
-Please follow the code style and conventions used in the project.
+- Passkey / biometric login
+- Creator certification badge
+- Language exchange marketplace
+- Mobile app with offline mode
+- NFT-based certification or credentialing
 
 ---
 
-## License
+## Get Started
 
-[MIT](LICENSE)
+Sign up to start learning or creating today! Explore languages, discover cultures, and join a vibrant community on Bitroot.
 
----
-
-## Credits
-
-- Built with [v0.dev](https://v0.dev)
-- Deployed on [Vercel](https://vercel.com/)
+For questions or support, please contact the Bitroot team through the platform's support page.
