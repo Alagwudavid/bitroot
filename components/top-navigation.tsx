@@ -63,19 +63,11 @@ export function TopNavigation() {
       <header className="h-20 bg-transparent flex items-center justify-between px-6 md:px-12 theme-aware shrink-0 border-0">
         <div className={"flex items-center"}>
           <img
-            src={`/original_light.png`}
+            src={`/images/placeholder.png`}
             alt={`Bitroot logo`}
             className={cn(
-              "w-full h-10 object-cover rounded",
-              isMobile ? "hidden dark:flex" : "hidden"
-            )}
-          />
-          <img
-            src={`/original.png`}
-            alt={`Bitroot logo`}
-            className={cn(
-              "w-full h-10 object-cover rounded",
-              isMobile ? "dark:hidden flex" : "hidden"
+              "w-10 h-10 object-cover rounded",
+              isMobile ? "flex" : "hidden"
             )}
           />
         </div>

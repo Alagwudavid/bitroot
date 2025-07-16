@@ -58,13 +58,13 @@ export function Sidebar() {
       )}
     >
       {!isMobile && (
-        <div className="mt-4 mb-5 h-11 w-11 shrink-0 overflow-hidden">
-          {/* <img
-            src={`/original_light.png`}
+        <div className="mt-4 mb-5 h-11 w-11 mx-auto shrink-0 overflow-hidden">
+          <img
+            src={`/images/placeholder.png`}
             alt={`Bitroot logo`}
             className="w-full h-full object-cover rounded hidden dark:block"
           />
-          <img
+          {/* <img
             src={`/original.png`}
             alt={`Bitroot logo`}
             className="w-full h-full object-cover rounded block dark:hidden"
