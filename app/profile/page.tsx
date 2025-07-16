@@ -165,13 +165,13 @@ export default function ProfilePage() {
         <div className="flex flex-col gap-4 items-center">
           <div className="flex items-center flex-col md:flex-row w-full gap-4">
             {isMobile ? (
-              <div className="relative w-full border border-gray-300 dark:border-gray-700 rounded-lg">
-                <Avatar className="flex w-full h-52 rounded-lg">
+              <div className="relative w-full bg-[#fbde84] border border-gray-300 dark:border-gray-700 rounded-lg">
+                <Avatar className="flex w-52 h-52 mx-auto rounded-none object-cover">
                   <AvatarImage
-                    src="/placeholder-user.jpg"
+                    src="/placeholder-user1.png"
                     alt={userStats.name}
                   />
-                  <AvatarFallback className="bg-[#1e96fc] text-white text-2xl w-52 h-52 rounded-lg">
+                  <AvatarFallback className="bg-[#fbde84] text-white text-2xl w-52 h-52 rounded-lg">
                     {userStats.name
                       .split(" ")
                       .map((n) => n[0])
@@ -189,7 +189,7 @@ export default function ProfilePage() {
               <div className="relative border border-gray-300 dark:border-gray-700 rounded-lg">
                 <Avatar className="flex w-52 h-52 rounded-lg">
                   <AvatarImage
-                    src="/placeholder-user.jpg"
+                    src="/placeholder-user1.png"
                     alt={userStats.name}
                   />
                   <AvatarFallback className="bg-[#1e96fc] text-white text-2xl w-52 h-52 rounded-lg">
@@ -280,14 +280,14 @@ export default function ProfilePage() {
             </div>
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                wildfire
+                23 day streak
               </p>
-              <p className="text-8xl font-bold text-gray-600 dark:text-white pl-2 z-10">
-                23
+              <p className="text-8xl font-bold text-gray-600 dark:text-white z-10">
+                5
               </p>
               <div className="flex flex-col">
                 <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                  day streak
+                wildfire
                 </p>
               </div>
               <svg
@@ -311,14 +311,14 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-base uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                completed
+                completed languages
               </p>
               <p className="text-8xl uppercase font-bold text-gray-600 dark:text-white z-10">
                 3
               </p>
               <div className="flex flex-col">
                 <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                  courses
+                  1 new
                 </p>
               </div>
               <svg
@@ -343,10 +343,13 @@ export default function ProfilePage() {
             </div>
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                certifcates
+                certificates
               </p>
-              <p className="text-9xl font-bold text-gray-600 dark:text-white pl-2 z-10">
+              <p className="text-9xl font-bold text-gray-600 dark:text-white z-10">
                 3
+              </p>
+              <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
+                fluent
               </p>
               <svg
                 className="size-60 absolute -right-14 top-0 rotate-12 text-[#4169E1]"
@@ -368,14 +371,14 @@ export default function ProfilePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-base uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                scholar
+              achievements
               </p>
               <p className="text-8xl uppercase font-bold text-gray-600 dark:text-white z-10">
                 103
               </p>
               <div className="flex flex-col">
                 <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                  achievement
+                scholar
                 </p>
               </div>
               <svg
@@ -398,20 +401,24 @@ export default function ProfilePage() {
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
                 bronze league
               </p>
-              <p className="text-9xl font-bold text-gray-600 dark:text-white flex pl-2 z-10">
+              <p className="text-9xl font-bold text-gray-600 dark:text-white flex z-10">
                 3
               </p>
+              <div className="flex flex-col">
+                <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
+                  #1 this week
+                </p>
+              </div>
               <svg
-                className="size-60 absolute -right-14 top-0 rotate-12 text-sky-500"
+                className="size-60 absolute -right-14 top-0 rotate-12 text-[#32CD32]"
                 viewBox="0 0 24 24"
                 fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21.7704 9.79844L20.9704 7.99844L19.2104 4.03844C18.7404 2.99844 18.0004 2.14844 16.3004 2.14844H7.70044C6.00044 2.14844 5.26044 2.99844 4.79044 4.03844L3.03044 7.99844L2.23044 9.79844C1.77044 10.8484 2.02044 12.3884 2.79044 13.2384L9.64044 20.7784C10.9404 22.2084 13.0604 22.2084 14.3604 20.7784L21.2104 13.2384C21.9804 12.3884 22.2304 10.8484 21.7704 9.79844Z"
-                  fill="currentColor"
-                />
-              </svg>
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.67 14H4C2.9 14 2 14.9 2 16V21C2 21.55 2.45 22 3 22H6.67C7.22 22 7.67 21.55 7.67 21V15C7.67 14.45 7.22 14 6.67 14Z" fill="currentColor"/>
+                <path d="M13.3302 10H10.6602C9.56016 10 8.66016 10.9 8.66016 12V21C8.66016 21.55 9.11016 22 9.66016 22H14.3302C14.8802 22 15.3302 21.55 15.3302 21V12C15.3302 10.9 14.4402 10 13.3302 10Z" fill="currentColor"/>
+                <path d="M20.0001 17H17.3301C16.7801 17 16.3301 17.45 16.3301 18V21C16.3301 21.55 16.7801 22 17.3301 22H21.0001C21.5501 22 22.0001 21.55 22.0001 21V19C22.0001 17.9 21.1001 17 20.0001 17Z" fill="currentColor"/>
+                <path d="M15.0095 4.85047C15.3195 4.54047 15.4395 4.17047 15.3395 3.85047C15.2395 3.53047 14.9295 3.30047 14.4895 3.23047L13.5295 3.07047C13.4895 3.07047 13.3995 3.00047 13.3795 2.96047L12.8495 1.90047C12.4495 1.09047 11.5395 1.09047 11.1395 1.90047L10.6095 2.96047C10.5995 3.00047 10.5095 3.07047 10.4695 3.07047L9.50945 3.23047C9.06945 3.30047 8.76945 3.53047 8.65945 3.85047C8.55945 4.17047 8.67945 4.54047 8.98945 4.85047L9.72945 5.60047C9.76945 5.63047 9.79945 5.75047 9.78945 5.79047L9.57945 6.71047C9.41945 7.40047 9.67945 7.71047 9.84945 7.83047C10.0195 7.95047 10.3895 8.11047 10.9995 7.75047L11.8995 7.22047C11.9395 7.19047 12.0695 7.19047 12.1095 7.22047L12.9995 7.75047C13.2795 7.92047 13.5095 7.97047 13.6895 7.97047C13.8995 7.97047 14.0495 7.89047 14.1395 7.83047C14.3095 7.71047 14.5695 7.40047 14.4095 6.71047L14.1995 5.79047C14.1895 5.74047 14.2195 5.63047 14.2595 5.60047L15.0095 4.85047Z" fill="currentColor"/>
+                </svg>
             </div>
           </div>
           <div className="w-full my-2">

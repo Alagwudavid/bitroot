@@ -150,9 +150,9 @@ export function TopNavigation() {
                 className="relative h-10 w-10 rounded-full"
               >
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src="/placeholder-user.jpg" alt="User" />
-                  <AvatarFallback className="bg-[#1e96fc] text-white">
-                    U
+                  <AvatarImage src="/placeholder-user1.png" alt="User" />
+                  <AvatarFallback className="bg-[#fbde84] text-white">
+                    AJ
                   </AvatarFallback>
                 </Avatar>
               </Button>
