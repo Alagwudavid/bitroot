@@ -26,11 +26,10 @@ export default function UnitPage() {
     <div className="flex flex-col lg:flex-row max-w-6xl mx-auto py-8 gap-8">
       {/* Back Button */}
         <Button
-          variant="ghost"
           onClick={() => router.push(`/learn/${language}`)}
           className="mb-6 flex items-center"
         >
-          <ChevronLeft className="mr-2" /> Back to Units
+          <ChevronLeft className="mr-2" /> Retreat
         </Button>
       {/* Left: Levels grid */}
       <div className="flex-1 flex flex-col items-center">

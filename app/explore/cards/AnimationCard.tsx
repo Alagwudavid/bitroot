@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function AnimationCard({ data }: { data: any }) {
   return (
-    <Card className="bg-none text-black dark:text-white border-0 rounded-none shadow-none transition-colors cursor-pointer group">
+    <Card className="bg-transparent text-black dark:text-white border-0 rounded-none shadow-none transition-colors cursor-pointer group">
       <CardContent className="p-0">
         <div className="relative border rounded-lg overflow-hidden">
           <img

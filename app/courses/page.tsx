@@ -235,7 +235,7 @@ export default function CoursesPage() {
         {/* Left: Headline, Search, Tabs, Tags */}
         <div className="flex-1 flex flex-col items-start max-w-xl w-full">
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#101828] dark:text-[#fafafa]">
-            Discover the World’s Top{" "}
+            Discover Top curated{" "}
             {selectedTab === "courses"
               ? "Courses"
               : selectedTab === "playlists"

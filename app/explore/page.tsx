@@ -225,7 +225,7 @@ export default function ExplorePage() {
             placeholder="Search stories, podcasts, music..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-12 pr-12 py-4 mb-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
+            className="pl-12 pr-12 py-4 mb-4 rounded-xl bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
         </div>
