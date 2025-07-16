@@ -10,55 +10,55 @@ import { BotMessageSquare, ChevronLeft, Eye, UsersRound } from "lucide-react";
 
 const mascotUrl = "/images/mascot.png"; // Replace with your mascot image if available
 
-const languageunitsData: Record<string, Array<any>> = {
+const languageSectionsData: Record<string, Array<any>> = {
   yoruba: [
     {
       id: 22648559,
-      title: "Unit 1",
+      title: "Section 1",
       level: "A1",
       status: "completed",
       progress: 26,
-      total: 26,
+      totalUnit: 26,
       phrase: "Mo fẹ́ kọ́ ẹ̀dá Yorùbá.",
       locked: false,
     },
     {
       id: 22648560,
-      title: "Unit 2",
+      title: "Section 2",
       level: "A2",
       status: "in-progress",
       progress: 20,
-      total: 26,
+      totalUnit: 26,
       phrase: "Mo fẹ́ kọ́ ẹ̀dá Yorùbá.",
       locked: false,
     },
     {
       id: 22648561,
-      title: "Unit 3",
+      title: "Section 3",
       level: "B1",
       status: "locked",
       progress: 0,
-      total: 28,
+      totalUnit: 28,
       phrase: "Mo mọ̀ díẹ̀ nínú àwọn ọ̀rọ̀.",
       locked: true,
     },
     {
       id: 22648562,
-      title: "Unit 4",
+      title: "Section 4",
       level: "B2",
       status: "locked",
       progress: 0,
-      total: 28,
+      totalUnit: 28,
       phrase: "Mo mọ̀ díẹ̀ nínú àwọn ọ̀rọ̀.",
       locked: true,
     },
     {
       id: 22648563,
-      title: "Exam 1 (Unit 1-4)",
+      title: "Exam 1 (Section 1-4)",
       level: "B2",
       status: "locked",
       progress: 0,
-      total: 52,
+      totalUnit: 52,
       phrase: "",
       locked: true,
     },
@@ -68,7 +68,7 @@ const languageunitsData: Record<string, Array<any>> = {
       level: "B2",
       status: "locked",
       progress: 0,
-      total: 50,
+      totalUnit: 50,
       phrase: "",
       locked: true,
     },
@@ -78,7 +78,7 @@ const languageunitsData: Record<string, Array<any>> = {
       level: "B2",
       status: "locked",
       progress: 0,
-      total: 50,
+      totalUnit: 50,
       phrase: "",
       locked: true,
     },
@@ -86,15 +86,15 @@ const languageunitsData: Record<string, Array<any>> = {
   // Add more languages as needed
 };
 
-export default function LanguageUnitsPage() {
+export default function LanguageSectionsPage() {
   const { language } = useParams();
   const router = useRouter();
   const lang = (language as string)?.toLowerCase();
-  const units = languageunitsData[lang] || [];
+  const Sections = languageSectionsData[lang] || [];
 
-  const handleUnitClick = (Unit: any) => {
-    if (!Unit.locked) {
-      router.push(`/learn/${lang}/unit/${Unit.id}`);
+  const handleSectionClick = (Section: any) => {
+    if (!Section.locked) {
+      router.push(`/learn/${lang}/section/${section.id}`);
     }
   };
 
@@ -112,7 +112,11 @@ export default function LanguageUnitsPage() {
               <path d="M12.0003 17.04C11.6203 17.04 11.2403 16.96 10.8903 16.81L4.15031 13.81C3.12031 13.35 2.32031 12.12 2.32031 10.99C2.32031 10.58 2.65031 10.25 3.06031 10.25C3.47031 10.25 3.80031 10.58 3.80031 10.99C3.80031 11.53 4.25031 12.23 4.75031 12.45L11.4903 15.45C11.8103 15.59 12.1803 15.59 12.5003 15.45L19.2403 12.45C19.7403 12.23 20.1903 11.54 20.1903 10.99C20.1903 10.58 20.5203 10.25 20.9303 10.25C21.3403 10.25 21.6703 10.58 21.6703 10.99C21.6703 12.11 20.8703 13.35 19.8403 13.81L13.1003 16.81C12.7603 16.96 12.3803 17.04 12.0003 17.04Z" fill="currentColor"/>
               <path d="M12.0003 22.0009C11.6203 22.0009 11.2403 21.9209 10.8903 21.7709L4.15031 18.7709C3.04031 18.2809 2.32031 17.1709 2.32031 15.9509C2.32031 15.5409 2.65031 15.2109 3.06031 15.2109C3.47031 15.2109 3.80031 15.5409 3.80031 15.9509C3.80031 16.5809 4.17031 17.1509 4.75031 17.4109L11.4903 20.4109C11.8103 20.5509 12.1803 20.5509 12.5003 20.4109L19.2403 17.4109C19.8103 17.1609 20.1903 16.5809 20.1903 15.9509C20.1903 15.5409 20.5203 15.2109 20.9303 15.2109C21.3403 15.2109 21.6703 15.5409 21.6703 15.9509C21.6703 17.1709 20.9503 18.2709 19.8403 18.7709L13.1003 21.7709C12.7603 21.9209 12.3803 22.0009 12.0003 22.0009Z" fill="currentColor"/>
               </svg>
-              <span>23 units</span>
+              <span>23 Sections</span>
+            </div>
+            <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
+            <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
+              <span>103 Units</span>
             </div>
             <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
             <div className="flex items-center gap-2 text-gray-500 dark:text-[#fafafa]/60">
@@ -145,7 +149,7 @@ export default function LanguageUnitsPage() {
               <img
                 src={`/stickers/earlyBurner.png`}
                 alt={`Bitroot logo`}
-                className="w-full h-full object-cover rounded"
+                className="w-full h-full object-cover rounded grayscale"
               />
             </div>
             <div className="w-14 h-14">
@@ -182,17 +186,17 @@ export default function LanguageUnitsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      {units.map((Unit, idx) => (
+      {Sections.map((Section, idx) => (
         <Card
-          key={Unit.id}
+          key={Section.id}
           className={`mb-6 p-6 bg-gradient-to-br rounded-lg ${
-            Unit.status === "completed"
+            Section.status === "completed"
               ? "from-gray-800 to-gray-900"
               : "from-gray-900 to-gray-800"
           } border-none relative cursor-pointer ${
-            Unit.locked ? "opacity-60 cursor-not-allowed" : "hover:shadow-lg"
+            Section.locked ? "opacity-60 cursor-not-allowed" : "hover:shadow-lg"
           }`}
-          onClick={() => handleUnitClick(Unit)}
+          onClick={() => handleSectionClick(Section)}
         >
           <div className="flex items-center justify-between mb-2">
             <div>
@@ -200,28 +204,28 @@ export default function LanguageUnitsPage() {
                 A{idx < 3 ? 1 : idx < 5 ? 2 : 3} • SEE DETAILS
               </span>
               <h2 className="text-2xl font-bold text-white mt-1">
-                {Unit.title}
+                {Section.title}
               </h2>
             </div>
-            {Unit.status === "completed" && (
+            {Section.status === "completed" && (
               <Badge className="bg-green-600 text-white rounded">COMPLETED!</Badge>
             )}
-            {Unit.status === "in-progress" && (
+            {Section.status === "in-progress" && (
               <Badge className="bg-blue-600 text-white">IN PROGRESS</Badge>
             )}
           </div>
-          {Unit.status !== "locked" && (
+          {Section.status !== "locked" && (
             <>
               <div className="flex items-center mb-4">
                 <Progress
-                  value={Math.round((Unit.progress / Unit.total) * 100)}
+                  value={Math.round((Section.progress / Section.totalUnit) * 100)}
                   className="h-1.5 flex-1 mr-5 bg-white"
                 />
                 <span className="text-xs text-white font-bold">
-                  {Unit.progress} / {Unit.total}
+                  {Section.progress} / {Section.totalUnit} Units
                 </span>
               </div>
-            {Unit.status === "completed" && (
+            {Section.status === "completed" && (
               <>
                 <div className="flex mb-4 items-center space-x-4">
                   <img
@@ -230,15 +234,15 @@ export default function LanguageUnitsPage() {
                     className="w-16 h-16 rounded-full bg-white"
                   />
                   <span className="bg-gray-800 text-white px-3 py-2 rounded-xl text-sm shadow">
-                    Hooray!!, you completed this unit.<br />
-                    You've got a gift
+                    Hooray!!, you completed this Section.<br />
+                    You've an unclaimed gift
                   </span>
                 </div>
                 <Button
                   className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white text-base font-bold rounded-xl"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleUnitClick(Unit);
+                    handleSectionClick(Section);
                   }}
                 >
                   <svg className="!size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,11 +252,11 @@ export default function LanguageUnitsPage() {
                   <path d="M17.8716 5.00141H12.3516L15.0716 2.28141C15.4416 1.91141 16.0516 1.91141 16.4216 2.28141L17.8416 3.70141C18.2016 4.06141 18.2116 4.63141 17.8716 5.00141Z" fill="currentColor"/>
                   <path d="M13.9714 11C14.5214 11 14.9714 11.45 14.9714 12V15.13C14.9714 15.93 14.0814 16.41 13.4214 15.96L12.5214 15.36C12.1914 15.14 11.7614 15.14 11.4214 15.36L10.4814 15.98C9.82141 16.42 8.94141 15.94 8.94141 15.15V12C8.94141 11.45 9.39141 11 9.94141 11H13.9714Z" fill="currentColor"/>
                   </svg>
-                  Claim
+                  Claim sticker
                 </Button>
               </>
               )}
-            {Unit.status === "in-progress" && (
+            {Section.status === "in-progress" && (
               <>
                 <div className="flex mb-4 items-center space-x-4">
                   <img
@@ -261,14 +265,14 @@ export default function LanguageUnitsPage() {
                     className="w-16 h-16 rounded-full bg-white"
                   />
                   <span className="bg-gray-800 text-white px-3 py-2 rounded-xl text-sm shadow underline decoration-dotted underline-offset-4">
-                    {Unit.phrase}
+                    {Section.phrase}
                   </span>
                 </div>
                 <Button
                   className="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl"
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleUnitClick(Unit);
+                    handleSectionClick(Section);
                   }}
                 >
                   Continue
@@ -277,11 +281,11 @@ export default function LanguageUnitsPage() {
               )}
             </>
           )}
-          {Unit.status === "locked" && (
+          {Section.status === "locked" && (
             <>
               <div className="flex items-center mb-4 opacity-50">
                 <span className="text-xs text-gray-400 font-bold">
-                  {Unit.total} UNITS
+                  {Section.totalUnit} Units
                 </span>
               </div>
               <Button
@@ -294,9 +298,9 @@ export default function LanguageUnitsPage() {
           )}
         </Card>
       ))}
-      {units.length === 0 && (
+      {Sections.length === 0 && (
         <div className="text-center text-gray-400">
-          No units available for this language yet.
+          No Sections available for this language yet.
         </div>
       )}
       </div>

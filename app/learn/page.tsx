@@ -31,7 +31,7 @@ export default function LearnPage() {
       country: "Nigeria",
       level: "Beginner",
       progress: 15,
-      lessons: 32,
+      lessons: 7,
       learned: 16,
       description: "Discover the rich language of the Yoruba people",
     },
