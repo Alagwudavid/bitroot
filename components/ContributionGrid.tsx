@@ -186,8 +186,7 @@ export default function ContributionGrid() {
                   return (
                     <td key={colIdx} className="align-middle">
                       <div className={`w-4 h-4 rounded flex items-center justify-center transition-colors duration-150
-                          ${
-                            isFiller
+                          ${isFiller
                               ? "bg-[#23263a] opacity-40 cursor-not-allowed"
                               : activityData[dateStr!]
                               ? "bg-[#22c55e] cursor-pointer"

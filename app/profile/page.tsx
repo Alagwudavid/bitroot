@@ -212,19 +212,28 @@ export default function ProfilePage() {
                 bio
               </p>
               <div className="flex flex-col items-start space-y-1 mt-2">
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa]">
+                <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] flex items-center">
                   {userStats.name}
+                  <svg className="size-7 text-[#FFD700] ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 22H7C6.59 22 6.25 21.66 6.25 21.25C6.25 20.84 6.59 20.5 7 20.5H17C17.41 20.5 17.75 20.84 17.75 21.25C17.75 21.66 17.41 22 17 22Z" fill="currentColor"/>
+                  <path d="M20.3502 5.51906L16.3502 8.37906C15.8202 8.75906 15.0602 8.52906 14.8302 7.91906L12.9402 2.87906C12.6202 2.00906 11.3902 2.00906 11.0702 2.87906L9.17022 7.90906C8.94022 8.52906 8.19022 8.75906 7.66022 8.36906L3.66022 5.50906C2.86022 4.94906 1.80022 5.73906 2.13022 6.66906L6.29022 18.3191C6.43022 18.7191 6.81022 18.9791 7.23022 18.9791H16.7602C17.1802 18.9791 17.5602 18.7091 17.7002 18.3191L21.8602 6.66906C22.2002 5.73906 21.1402 4.94906 20.3502 5.51906ZM14.5002 14.7491H9.50022C9.09022 14.7491 8.75022 14.4091 8.75022 13.9991C8.75022 13.5891 9.09022 13.2491 9.50022 13.2491H14.5002C14.9102 13.2491 15.2502 13.5891 15.2502 13.9991C15.2502 14.4091 14.9102 14.7491 14.5002 14.7491Z" fill="currentColor"/>
+                  </svg>
                 </h1>
                 <p className="text-gray-600 dark:text-[#fafafa]/70">
                   {userStats.username}
                 </p>
+                <div className="text-gray-600 dark:text-[#fafafa]/70 uppercase flex items-center gap-2">
+                  2 followers
+                  <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
+                  2 following
+                </div>
               </div>
-              <div className="flex items-center space-x-4 mt-2">
+              {/* <div className="flex items-center space-x-4 mt-2">
                 <div className="flex items-center space-x-1 text-sm text-gray-500 dark:text-[#fafafa]/60">
                   <Calendar className="w-4 h-4" />
                   <span>Joined {userStats.joinDate}</span>
                 </div>
-              </div>
+              </div> */}
               <div className="flex items-center space-x-2 mt-2">
                 <div className="w-8 h-5 rounded overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
                   <img
@@ -280,7 +289,7 @@ export default function ProfilePage() {
             </div>
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                23 day streak
+                best streak
               </p>
               <p className="text-8xl font-bold text-gray-600 dark:text-white z-10">
                 5
@@ -345,7 +354,7 @@ export default function ProfilePage() {
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
                 certificates
               </p>
-              <p className="text-9xl font-bold text-gray-600 dark:text-white z-10">
+              <p className="text-8xl font-bold text-gray-600 dark:text-white z-10">
                 3
               </p>
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
@@ -382,7 +391,7 @@ export default function ProfilePage() {
                 </p>
               </div>
               <svg
-                className="size-60 absolute -right-14 top-0 rotate-12 text-[#FFD700]"
+                className="size-60 absolute -right-14 top-0 rotate-12 text-[#FF4500]"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -399,14 +408,14 @@ export default function ProfilePage() {
             </div>
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
               <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                bronze league
+                rank
               </p>
-              <p className="text-9xl font-bold text-gray-600 dark:text-white flex z-10">
-                3
+              <p className="text-8xl font-bold text-gray-600 dark:text-white flex z-10">
+                14
               </p>
               <div className="flex flex-col">
                 <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                  #1 this week
+                  top 3 finishes
                 </p>
               </div>
               <svg
@@ -421,22 +430,20 @@ export default function ProfilePage() {
                 </svg>
             </div>
           </div>
-          <div className="w-full my-2">
-            <ContributionGrid />
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8 w-full">
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+          
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <Zap className="w-8 h-8 text-blue-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
                   {userStats.totalXP.toLocaleString()}
                 </div>
                 <div className="text-sm text-gray-600 dark:text-[#fafafa]/70">
-                  Total XP
+                  Today's XP
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <Flame className="w-8 h-8 text-orange-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
@@ -447,29 +454,29 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <Trophy className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
                   #{userStats.position}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-[#fafafa]/70">
-                  Rank
+                <div className="text-sm text-gray-600 dark:text-[#fafafa]/70 capitalize">
+                  this week
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <Globe className="w-8 h-8 text-green-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
-                  {userStats.languagesLearning}
+                  27
                 </div>
                 <div className="text-sm text-gray-600 dark:text-[#fafafa]/70">
-                  Languages
+                  Courses watched
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <BookOpen className="w-8 h-8 text-purple-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
@@ -480,7 +487,7 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-[#7037e4]/30">
+            <Card className="rounded-2xl dark:bg-[#0d1117] border border-gray-300 dark:border-gray-700">
               <CardContent className="p-4 text-center">
                 <Clock className="w-8 h-8 text-indigo-500 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-gray-800 dark:text-[#fafafa]">
@@ -492,26 +499,29 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
           </div>
-          {/* <div className="flex space-x-2">
-            <Button
-              variant="outline"
-              className="rounded-xl dark:border-[#7037e4]/30 bg-transparent"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              Share Profile
-            </Button>
-            <Button
-              onClick={() => setIsEditing(!isEditing)}
-              className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]"
-            >
-              <Edit className="w-4 h-4 mr-2" />
-              Edit Profile
-            </Button>
-          </div> */}
+          <div className="w-full my-2">
+            <ContributionGrid />
+          </div>
         </div>
       </div>
       {/* Side Overview */}
-      <div className="bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-full w-full lg:w-96 p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700"></div>
+      <div className="bg-transparent text-white flex flex-col justify-between h-full w-full lg:w-96 p-5 lg:p-0 font-mono rounded-lg theme-aware">
+
+        <div className="grid grid-cols-1 w-full gap-4">
+            <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
+              <p className="text-base uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
+              Suggested follows
+              </p>
+              
+            </div>
+            <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
+              <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
+                focus mode
+              </p>
+
+            </div>
+          </div>
+      </div>
     </div>
   );
 }

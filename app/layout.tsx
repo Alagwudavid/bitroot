@@ -24,7 +24,7 @@ export default function RootLayout({
             <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto">
               <TopNavigation />
               <main className="flex-1 p-6">{children}</main>
-              <div className="h-10 w-full shrink-0 bg-transparent border-0 p-[10%]"></div>
+              <div className="h-10 w-full shrink-0 bg-transparent border-0 md:p-5 p-[10%]"></div>
             </div>
           </div>
         </ThemeProvider>
