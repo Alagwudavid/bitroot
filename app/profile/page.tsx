@@ -178,12 +178,12 @@ export default function ProfilePage() {
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <Button
+                {/* <Button
                   size="icon"
                   className="absolute top-1 right-1 w-8 h-8 rounded-full bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]"
                 >
                   <Camera className="w-4 h-4" />
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <div className="relative border border-gray-300 dark:border-gray-700 rounded-lg">
@@ -199,12 +199,12 @@ export default function ProfilePage() {
                       .join("")}
                   </AvatarFallback>
                 </Avatar>
-                <Button
+                {/* <Button
                   size="icon"
                   className="absolute top-1 right-1 w-8 h-8 rounded-full bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318]"
                 >
                   <Camera className="w-4 h-4" />
-                </Button>
+                </Button> */}
               </div>
             )}
             <div className="bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-4 pr-10 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
@@ -214,9 +214,8 @@ export default function ProfilePage() {
               <div className="flex flex-col items-start space-y-1 mt-2">
                 <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] flex items-center">
                   {userStats.name}
-                  <svg className="size-7 text-[#FFD700] ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17 22H7C6.59 22 6.25 21.66 6.25 21.25C6.25 20.84 6.59 20.5 7 20.5H17C17.41 20.5 17.75 20.84 17.75 21.25C17.75 21.66 17.41 22 17 22Z" fill="currentColor"/>
-                  <path d="M20.3502 5.51906L16.3502 8.37906C15.8202 8.75906 15.0602 8.52906 14.8302 7.91906L12.9402 2.87906C12.6202 2.00906 11.3902 2.00906 11.0702 2.87906L9.17022 7.90906C8.94022 8.52906 8.19022 8.75906 7.66022 8.36906L3.66022 5.50906C2.86022 4.94906 1.80022 5.73906 2.13022 6.66906L6.29022 18.3191C6.43022 18.7191 6.81022 18.9791 7.23022 18.9791H16.7602C17.1802 18.9791 17.5602 18.7091 17.7002 18.3191L21.8602 6.66906C22.2002 5.73906 21.1402 4.94906 20.3502 5.51906ZM14.5002 14.7491H9.50022C9.09022 14.7491 8.75022 14.4091 8.75022 13.9991C8.75022 13.5891 9.09022 13.2491 9.50022 13.2491H14.5002C14.9102 13.2491 15.2502 13.5891 15.2502 13.9991C15.2502 14.4091 14.9102 14.7491 14.5002 14.7491Z" fill="currentColor"/>
+                  <svg className="size-7 text-[#8A2BE2] ml-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M21.5609 10.7386L20.2009 9.15859C19.9409 8.85859 19.7309 8.29859 19.7309 7.89859V6.19859C19.7309 5.13859 18.8609 4.26859 17.8009 4.26859H16.1009C15.7109 4.26859 15.1409 4.05859 14.8409 3.79859L13.2609 2.43859C12.5709 1.84859 11.4409 1.84859 10.7409 2.43859L9.17086 3.80859C8.87086 4.05859 8.30086 4.26859 7.91086 4.26859H6.18086C5.12086 4.26859 4.25086 5.13859 4.25086 6.19859V7.90859C4.25086 8.29859 4.04086 8.85859 3.79086 9.15859L2.44086 10.7486C1.86086 11.4386 1.86086 12.5586 2.44086 13.2486L3.79086 14.8386C4.04086 15.1386 4.25086 15.6986 4.25086 16.0886V17.7986C4.25086 18.8586 5.12086 19.7286 6.18086 19.7286H7.91086C8.30086 19.7286 8.87086 19.9386 9.17086 20.1986L10.7509 21.5586C11.4409 22.1486 12.5709 22.1486 13.2709 21.5586L14.8509 20.1986C15.1509 19.9386 15.7109 19.7286 16.1109 19.7286H17.8109C18.8709 19.7286 19.7409 18.8586 19.7409 17.7986V16.0986C19.7409 15.7086 19.9509 15.1386 20.2109 14.8386L21.5709 13.2586C22.1509 12.5686 22.1509 11.4286 21.5609 10.7386ZM16.1609 10.1086L11.3309 14.9386C11.1909 15.0786 11.0009 15.1586 10.8009 15.1586C10.6009 15.1586 10.4109 15.0786 10.2709 14.9386L7.85086 12.5186C7.56086 12.2286 7.56086 11.7486 7.85086 11.4586C8.14086 11.1686 8.62086 11.1686 8.91086 11.4586L10.8009 13.3486L15.1009 9.04859C15.3909 8.75859 15.8709 8.75859 16.1609 9.04859C16.4509 9.33859 16.4509 9.81859 16.1609 10.1086Z" fill="currentColor"/>
                   </svg>
                 </h1>
                 <p className="text-gray-600 dark:text-[#fafafa]/70">
@@ -505,7 +504,7 @@ export default function ProfilePage() {
         </div>
       </div>
       {/* Side Overview */}
-      <div className="bg-transparent text-white flex flex-col justify-between h-full w-full lg:w-96 p-5 lg:p-0 font-mono rounded-lg theme-aware">
+      <div className="bg-transparent text-white flex flex-col justify-between h-full w-full lg:w-96 p-0 font-mono rounded-lg theme-aware">
 
         <div className="grid grid-cols-1 w-full gap-4">
             <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
