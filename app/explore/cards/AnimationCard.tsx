@@ -7,7 +7,7 @@ export default function AnimationCard({ data }: { data: any }) {
   return (
     <Card className="bg-transparent text-black dark:text-white border-0 rounded-none shadow-none transition-colors cursor-pointer group">
       <CardContent className="p-0">
-        <div className="relative border rounded-lg overflow-hidden">
+        <div className="relative border rounded-lg overflow-hidden mb-2">
           <img
             src={data.image}
             alt={data.title}
@@ -17,6 +17,9 @@ export default function AnimationCard({ data }: { data: any }) {
             {data.type}
           </Badge>
         </div>
+        <p className="text-base capitalize font-bold text-black dark:text-white">
+        {data.title}
+        </p>
         <div className="flex items-center gap-2 py-2">
               <Button
                 variant="ghost"
@@ -31,9 +34,9 @@ export default function AnimationCard({ data }: { data: any }) {
               </Button>
               <div className="relative">
                 <h3 className="font-semibold text-base mb-1 truncate text-black dark:text-[#e75480]">
-                  {data.title}
+                  {data.creator}
                 </h3>
-                <p className="text-gray-400 text-xs mb-1 truncate">{data.creator}</p>
+                <p className="text-gray-400 text-xs mb-1 truncate">3.4 Rating</p>
               </div>
         </div>
       </CardContent>

@@ -13,6 +13,7 @@ import {
   UsersRound,
   CheckCircle,
   Circle,
+  ChevronRight,
 } from "lucide-react";
 
 const mascotUrl = "/images/mascot.png"; // Replace with your mascot image if available
@@ -94,11 +95,67 @@ const languageSectionsData: Record<string, Array<any>> = {
 };
 
 // Mock units data for demonstration
-const mockUnits = [
-  { id: "greetings", label: "Greetings", done: true },
-  { id: "ordering-food", label: "Ordering Food", done: false },
-  { id: "paying-bill", label: "Paying the Bill", done: false },
-];
+const units = [
+      {
+        id: 10,
+        title: "Basic Greetings",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "completed",
+        progress: 3,
+        totalLessons: 3,
+      },
+      {
+        id: 11,
+        title: "Polite Phrases",
+        placeholder: "/placeholder-user.jpg",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "progress",
+        progress: 1,
+        totalLessons: 9,
+      },
+      {
+        id: 12,
+        title: "Checkpoint",
+        placeholder: "/placeholder-user.jpg",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "locked",
+        progress: 0,
+        totalLessons: 6,
+      },
+      {
+        id: 13,
+        title: "At the Market",
+        placeholder: "/placeholder-user.jpg",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "locked",
+        progress: 0,
+        totalLessons: 6,
+      },
+      {
+        id: 14,
+        title: "Practice: Ordering",
+        placeholder: "/placeholder-user.jpg",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "locked",
+        progress: 0,
+        totalLessons: 6,
+      },
+      {
+        id: 14,
+        title: "Audio: Payment Dialogues",
+        placeholder: "/placeholder-user.jpg",
+        sectionId: 1,
+        languageId: "yoruba",
+        status: "locked",
+        progress: 0,
+        totalLessons: 6,
+      },
+    ];
 
 export default function LanguageSectionsPage() {
   const { language } = useParams();
@@ -245,7 +302,6 @@ export default function LanguageSectionsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Sections.map((Section, idx) => {
           // Find first unmarked unit
-          const firstUnmarked = mockUnits.find((u) => !u.done) || mockUnits[0];
           return (
             <Card
               key={Section.id}
@@ -300,7 +356,9 @@ export default function LanguageSectionsPage() {
                     ))}
                   </div> */}
                   <div className="flex w-full flex-row gap-2 items-center mb-4">
-                    <Button className="w-8 h-full rounded bg-transparent"></Button>
+                    <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
+                      <ChevronLeft className="!size-6" />
+                    </Button>
                     <div className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer">
                       <div className="w-20 h-20 mx-auto mb-4">
                         <img
@@ -312,7 +370,9 @@ export default function LanguageSectionsPage() {
                       <span className="text-white capitalize font-mono">greetings</span>
                       <span className="text-gray-300 capitalize font-mono text-sm">{Section.status === "completed" ? "completed" : "2 of 5 lessons"}</span>
                     </div>
-                    <Button className="w-8 h-full rounded bg-transparent"></Button>
+                    <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
+                      <ChevronRight className="!size-6" />
+                    </Button>
                   </div>
                   <div className="flex flex-col items-center">
                     <div className="flex items-center w-full mb-4">
@@ -345,7 +405,9 @@ export default function LanguageSectionsPage() {
                 <>
                   <div className="flex flex-col items-center">
                     <div className="flex w-full flex-row gap-2 items-center mb-4">
-                      <Button className="w-8 h-full rounded bg-transparent"></Button>
+                      <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
+                        <ChevronLeft className="!size-6" />
+                      </Button>
                       <div className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer">
                         <div className="w-20 h-20 mx-auto mb-4">
                           <img
@@ -357,7 +419,9 @@ export default function LanguageSectionsPage() {
                         <span className="text-white capitalize font-mono">greetings</span>
                         <span className="text-gray-300 capitalize font-mono text-sm">{Section.status === "completed" ? "completed" : "2 of 5 lessons"}</span>
                       </div>
-                      <Button className="w-8 h-full rounded bg-transparent"></Button>
+                      <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
+                        <ChevronRight className="!size-6" />
+                      </Button>
                     </div>
                     <div className="flex items-center w-full mb-4">
                       <Progress
