@@ -15,7 +15,7 @@ export default function CommunityPage() {
       posts: 1240,
       description: "Connect with fellow Swahili learners and native speakers",
       trending: true,
-      recentActivity: "2 hours ago",
+      admins: "2",
     },
     {
       name: "Yoruba Culture & Language",
@@ -25,7 +25,7 @@ export default function CommunityPage() {
       description:
         "Explore Yoruba traditions, language, and cultural practices",
       trending: false,
-      recentActivity: "4 hours ago",
+      admins: "4",
     },
     {
       name: "Amharic Study Group",
@@ -34,7 +34,7 @@ export default function CommunityPage() {
       posts: 456,
       description: "Study Amharic together with structured learning sessions",
       trending: true,
-      recentActivity: "1 hour ago",
+      admins: "1",
     },
     {
       name: "Hausa Language Exchange",
@@ -43,7 +43,7 @@ export default function CommunityPage() {
       posts: 678,
       description: "Practice Hausa with native speakers and learners",
       trending: false,
-      recentActivity: "6 hours ago",
+      admins: "6",
     },
     {
       name: "Igbo Heritage",
@@ -53,7 +53,7 @@ export default function CommunityPage() {
       description:
         "Learn Igbo language while discovering rich cultural heritage",
       trending: false,
-      recentActivity: "3 hours ago",
+      admins: "3",
     },
     {
       name: "Zulu Conversations",
@@ -62,7 +62,7 @@ export default function CommunityPage() {
       posts: 567,
       description: "Practice Zulu through daily conversations and discussions",
       trending: true,
-      recentActivity: "30 minutes ago",
+      admins: "30",
     },
   ];
 
@@ -164,7 +164,7 @@ export default function CommunityPage() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
-                      Active {community.recentActivity}
+                      {community.admins} active admins
                     </span>
                     <Button
                       size="sm"

@@ -15,6 +15,7 @@ import {
   Circle,
   ChevronRight,
 } from "lucide-react";
+import Link from "next/link";
 
 const mascotUrl = "/images/mascot.png"; // Replace with your mascot image if available
 
@@ -95,67 +96,200 @@ const languageSectionsData: Record<string, Array<any>> = {
 };
 
 // Mock units data for demonstration
-const units = [
-      {
-        id: 10,
-        title: "Basic Greetings",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "completed",
-        progress: 3,
-        totalLessons: 3,
-      },
-      {
-        id: 11,
-        title: "Polite Phrases",
-        placeholder: "/placeholder-user.jpg",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "progress",
-        progress: 1,
-        totalLessons: 9,
-      },
-      {
-        id: 12,
-        title: "Checkpoint",
-        placeholder: "/placeholder-user.jpg",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "locked",
-        progress: 0,
-        totalLessons: 6,
-      },
-      {
-        id: 13,
-        title: "At the Market",
-        placeholder: "/placeholder-user.jpg",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "locked",
-        progress: 0,
-        totalLessons: 6,
-      },
-      {
-        id: 14,
-        title: "Practice: Ordering",
-        placeholder: "/placeholder-user.jpg",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "locked",
-        progress: 0,
-        totalLessons: 6,
-      },
-      {
-        id: 14,
-        title: "Audio: Payment Dialogues",
-        placeholder: "/placeholder-user.jpg",
-        sectionId: 1,
-        languageId: "yoruba",
-        status: "locked",
-        progress: 0,
-        totalLessons: 6,
-      },
-    ];
+// const units = [
+//   {
+//     id: 10,
+//     title: "Basic Greetings",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "completed",
+//     progress: 3,
+//     totalLessons: 3,
+//   },
+//   {
+//     id: 11,
+//     title: "Polite Phrases",
+//     placeholder: "/placeholder-user.jpg",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "progress",
+//     progress: 1,
+//     totalLessons: 9,
+//   },
+//   {
+//     id: 12,
+//     title: "Checkpoint",
+//     placeholder: "/placeholder-user.jpg",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "locked",
+//     progress: 0,
+//     totalLessons: 6,
+//   },
+//   {
+//     id: 13,
+//     title: "At the Market",
+//     placeholder: "/placeholder-user.jpg",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "locked",
+//     progress: 0,
+//     totalLessons: 6,
+//   },
+//   {
+//     id: 14,
+//     title: "Practice: Ordering",
+//     placeholder: "/placeholder-user.jpg",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "locked",
+//     progress: 0,
+//     totalLessons: 6,
+//   },
+//   {
+//     id: 14,
+//     title: "Audio: Payment Dialogues",
+//     placeholder: "/placeholder-user.jpg",
+//     sectionId: 1,
+//     languageId: "yoruba",
+//     status: "locked",
+//     progress: 0,
+//     totalLessons: 6,
+//   },
+// ];
+
+// Grouped units by sectionId for demonstration
+const unitsBySection: Record<number, Array<{
+  id: number;
+  title: string;
+  sectionId: number;
+  languageId: string;
+  status: string;
+  progress: number;
+  totalLessons: number;
+}>> = {
+  1: [
+    {
+      id: 10,
+      title: "Basic Greetings",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "completed",
+      progress: 2,
+      totalLessons: 3,
+    },
+    {
+      id: 11,
+      title: "Polite Phrases",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "locked",
+      progress: 0,
+      totalLessons: 9,
+    },
+    {
+      id: 12,
+      title: "Checkpoint",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "locked",
+      progress: 0,
+      totalLessons: 6,
+    },
+    {
+      id: 13,
+      title: "At the Market",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "locked",
+      progress: 0,
+      totalLessons: 6,
+    },
+    {
+      id: 14,
+      title: "Practice: Ordering",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "locked",
+      progress: 0,
+      totalLessons: 6,
+    },
+    {
+      id: 15,
+      title: "Audio: Payment Dialogues",
+      sectionId: 1,
+      languageId: "yoruba",
+      status: "locked",
+      progress: 0,
+      totalLessons: 6,
+    },
+  ],
+  // Add more sections as needed
+};
+
+function UnitCarousel({ units, lang, section }: { units: any[]; lang: string; section: any }) {
+  const [idx, setIdx] = useState(0);
+
+  if (!units || units.length === 0) {
+    return (
+      <div className="flex w-full flex-row gap-2 items-center mb-4 justify-center text-gray-400">
+        No units available for this section.
+      </div>
+    );
+  }
+
+  const unit = units[idx];
+  return (
+    <div className="flex w-full flex-row gap-2 items-center mb-4">
+      <Button
+        className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white"
+        onClick={() => setIdx((idx - 1 + units.length) % units.length)}
+        aria-label="Previous unit"
+      >
+        <ChevronLeft className="!size-6" />
+      </Button>
+      <Link
+        href={`/learn/${lang}/${sanitizeUrl(section.title)}/${sanitizeUrl(unit.title)}`}
+        className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer"
+      >
+        <div className="w-20 h-20 mx-auto mb-4">
+          <img
+            src={`/stickers/earlyBurner.png`}
+            alt={`Bitroot logo`}
+            className={`w-full h-full object-cover rounded ${
+              unit.status !== "completed" && unit.status === "locked" && unit.status !== "progress"
+                ? "grayscale"
+                : ""
+            }`}
+          />
+        </div>
+        <span className="text-white text-center capitalize font-mono">{unit.title}</span>
+        <span className="text-gray-300 capitalize font-mono text-sm">
+          {unit.status === "completed"
+            ? "completed"
+            : `${unit.progress} of ${unit.totalLessons} lessons`}
+        </span>
+      </Link>
+      <Button
+        className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white"
+        onClick={() => setIdx((idx + 1) % units.length)}
+        aria-label="Next unit"
+      >
+        <ChevronRight className="!size-6" />
+      </Button>
+    </div>
+  );
+}
+
+// Helper function to sanitize URLs
+function sanitizeUrl(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .trim();
+}
 
 export default function LanguageSectionsPage() {
   const { language } = useParams();
@@ -277,7 +411,7 @@ export default function LanguageSectionsPage() {
           <div className="flex items-center justify-between gap-6">
             <Button
               onClick={() => router.push("/learn")}
-              className="flex items-center w-fit text-base dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white bg-[#C51E3A] dark:bg-[#1e96fc] text-white"
+              className="flex items-center w-fit text-base dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white bg-[#C51E3A] dark:bg-[#1e96fc]/50 text-white"
             >
               <ChevronLeft className="mr-1 !size-6" /> Back
             </Button>
@@ -314,66 +448,21 @@ export default function LanguageSectionsPage() {
                   ? "opacity-60 cursor-not-allowed"
                   : "hover:shadow-lg"
               }`}
-              onClick={() => handleSectionClick(Section)}
             >
               <div className="flex items-center justify-between mb-4 relative">
                 <div>
                   <span className="text-xs text-blue-400 font-bold">
-                    {Section.level} • SECTION {Section.id} {Section.status === "locked" && "• LOCKED"}
+                    {Section.level} • SECTION {Section.id}{" "}
+                    {Section.status === "locked" && "• LOCKED"}
                   </span>
                   <h2 className="text-2xl font-bold text-white mt-1">
                     {Section.title} Level
                   </h2>
                 </div>
-                {/* {Section.status === "completed" && (
-                  <Badge className="bg-green-600 text-white rounded absolute top-0 right-0">
-                    COMPLETED!
-                  </Badge>
-                )}
-                {Section.status === "in-progress" && (
-                  <Badge className="bg-blue-600 text-white absolute top-0 right-0">IN PROGRESS</Badge>
-                )} */}
               </div>
               {Section.status !== "locked" && (
                 <>
-                {/* Timeline/List of Units */}
-                {/* <div className="flex flex-col gap-3 mb-4">
-                    {mockUnits.map((unit, i) => (
-                      <div key={unit.id} className="flex items-center gap-3">
-                        {unit.done ? (
-                          <CheckCircle className="text-green-400" />
-                        ) : (
-                          <Circle className="text-gray-400" />
-                        )}
-                        <span
-                          className={`font-semibold ${
-                            unit.done ? "text-green-300" : "text-white"
-                          }`}
-                        >
-                          {unit.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div> */}
-                  <div className="flex w-full flex-row gap-2 items-center mb-4">
-                    <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
-                      <ChevronLeft className="!size-6" />
-                    </Button>
-                    <div className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer">
-                      <div className="w-20 h-20 mx-auto mb-4">
-                        <img
-                          src={`/stickers/earlyBurner.png`}
-                          alt={`Bitroot logo`}
-                          className={`w-full h-full object-cover rounded ${Section.status === "completed" ? "" : "grayscale"}`}
-                        />
-                      </div>
-                      <span className="text-white capitalize font-mono">greetings</span>
-                      <span className="text-gray-300 capitalize font-mono text-sm">{Section.status === "completed" ? "completed" : "2 of 5 lessons"}</span>
-                    </div>
-                    <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
-                      <ChevronRight className="!size-6" />
-                    </Button>
-                  </div>
+                  <UnitCarousel units={unitsBySection[Section.id] || []} lang={lang} section={Section} />
                   <div className="flex flex-col items-center">
                     <div className="flex items-center w-full mb-4">
                       <Progress
@@ -387,42 +476,12 @@ export default function LanguageSectionsPage() {
                       {Section.progress} / {Section.totalUnit} Units
                     </span>
                   </div>
-                  
-                  {/* {Section.status === "completed" ? "" : <Button
-                    className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      router.push(
-                        `/learn/${lang}/section/${Section.id}/unit/${firstUnmarked.id}`
-                      );
-                    }}
-                  >
-                    Continue
-                  </Button>} */}
                 </>
               )}
               {Section.status === "locked" && (
                 <>
+                  <UnitCarousel units={unitsBySection[Section.id] || []} lang={lang} section={Section} />
                   <div className="flex flex-col items-center">
-                    <div className="flex w-full flex-row gap-2 items-center mb-4">
-                      <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
-                        <ChevronLeft className="!size-6" />
-                      </Button>
-                      <div className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer">
-                        <div className="w-20 h-20 mx-auto mb-4">
-                          <img
-                            src={`/stickers/earlyBurner.png`}
-                            alt={`Bitroot logo`}
-                            className={`w-full h-full object-cover rounded ${Section.status === "completed" ? "" : "grayscale"}`}
-                          />
-                        </div>
-                        <span className="text-white capitalize font-mono">greetings</span>
-                        <span className="text-gray-300 capitalize font-mono text-sm">{Section.status === "completed" ? "completed" : "2 of 5 lessons"}</span>
-                      </div>
-                      <Button className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white">
-                        <ChevronRight className="!size-6" />
-                      </Button>
-                    </div>
                     <div className="flex items-center w-full mb-4">
                       <Progress
                         value={Math.round(
