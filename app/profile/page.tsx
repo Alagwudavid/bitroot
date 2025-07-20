@@ -226,6 +226,9 @@ export default function ProfilePage() {
                   <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
                   2 following
                 </div>
+                <div className="text-gray-600 dark:text-[#fafafa]/70 flex items-center gap-2">
+                  <Calendar className="size-4" /> Joined March, 2024
+                </div>
               </div>
               {/* <div className="flex items-center space-x-4 mt-2">
                 <div className="flex items-center space-x-1 text-sm text-gray-500 dark:text-[#fafafa]/60">

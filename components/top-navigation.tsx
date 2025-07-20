@@ -60,7 +60,7 @@ export function TopNavigation() {
 
   return (
     <>
-      <header className="h-20 bg-transparent flex items-center justify-between px-6 md:px-12 theme-aware shrink-0 border-0">
+      <header className="h-14 bg-transparent flex items-center justify-between px-6 md:px-12 theme-aware shrink-0 border-0">
         <div className={"flex items-center"}>
           <img
             src={`/images/placeholder.png`}
@@ -107,7 +107,7 @@ export function TopNavigation() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="rounded-full !p-0 w-8 h-8 overflow-hidden border-1 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
+                  className="rounded !p-0 w-9 h-8 overflow-hidden border-1 border-[#1e96fc] text-[#072ac8] dark:text-[#a2d6f9] hover:bg-[#a2d6f9]/10 bg-transparent theme-aware"
                 >
                     <img
                       src={`/flag/${currentLanguage}.png`}

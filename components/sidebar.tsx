@@ -44,7 +44,7 @@ export function Sidebar() {
       label: "Profile", 
       icon: <Avatar className="h-10 w-10 rounded-md">
       <AvatarImage src="/placeholder-user1.png" alt="User" />
-      <AvatarFallback className="bg-[#fbde84] text-white">
+      <AvatarFallback className="bg-[#fbde84] text-black h-10 w-10 rounded-md">
         AJ
       </AvatarFallback>
     </Avatar>, 
@@ -65,7 +65,7 @@ export function Sidebar() {
           <img
             src={`/images/placeholder.png`}
             alt={`Bitroot logo`}
-            className="w-full h-full object-cover rounded hidden dark:block"
+            className="w-full h-full object-cover rounded block"
           />
         </div>
       )}

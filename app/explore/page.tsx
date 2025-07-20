@@ -12,6 +12,8 @@ import {
   Heart,
   MoreHorizontal,
   Search,
+  ArrowRight,
+  ChevronRight,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useIsMobile } from "@/components/ui/use-mobile";
@@ -33,12 +35,10 @@ export default function ExplorePage() {
   const [activeTab, setActiveTab] = useState("All");
   const [sectionCounts, setSectionCounts] = useState({
     Stories: 5,
-    Animations: 4,
-    Podcasts: 5,
-    "Tourism Blogs": 5,
-    Culture: 5,
-    History: 5,
-    "Language Tips": 5,
+    Animations: 3,
+    "Podcasts & Songs": 5,
+    "Tourism, News and Lifestyle": 3,
+    "Flash cards": 4,
     Music: 5,
     News: 5,
     Education: 5,
@@ -48,11 +48,12 @@ export default function ExplorePage() {
     "All",
     "Stories",
     "Animations",
-    "Podcasts",
-    "Tourism Blogs",
-    "Culture",
-    "History",
-    "Language Tips",
+    "Podcasts & Songs",
+    "Tourism, News and Lifestyle",
+    // "Tourism",
+    // "News",
+    // "Lifestyle",
+    "Flash cards",
     "Music",
     "News",
     "Education",
@@ -65,7 +66,7 @@ export default function ExplorePage() {
       .map((_, i) => ({
         title: `Story Title ${i + 1}`,
         author: `Author ${i + 1}`,
-        image: "/placeholder.jpg",
+        image: `/free/story-${i + 1}.jpg`,
         type: "Ebook",
         description: "A captivating story to read.",
       })),
@@ -74,47 +75,29 @@ export default function ExplorePage() {
       .map((_, i) => ({
         title: `Animation Title ${i + 1}`,
         creator: `Creator ${i + 1}`,
-        image: "/placeholder.jpg",
+        image: `/free/video-${i + 1}.jpg`,
         type: "Animation",
         description: "A fun cartoon for kids.",
       })),
-    Podcasts: Array(6)
+    "Podcasts & Songs": Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Podcast Title ${i + 1}`,
         host: `Host ${i + 1}`,
-        image: "/placeholder.jpg",
+        image: `/free/podcast-${i + 1}.jpg`,
         type: "Podcast",
         description: "An interesting podcast episode.",
       })),
-    "Tourism Blogs": Array(6)
+    "Tourism, News and Lifestyle": Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Tourism Blog ${i + 1}`,
         author: `Blogger ${i + 1}`,
-        image: "/placeholder.jpg",
+        image: `/free/blog-${i + 1}.jpg`,
         type: "Blog",
-        description: "Explore new places and cultures.",
+        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quisquam adipisci placeat ad deserunt voluptas nobis temporibus minima ratione beatae molestias tempore laboriosam, expedita rerum a optio cupiditate officia possimus.",
       })),
-    Culture: Array(6)
-      .fill(null)
-      .map((_, i) => ({
-        title: `Culture Piece ${i + 1}`,
-        author: `Contributor ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "Culture",
-        description: "Learn about cultural traditions.",
-      })),
-    History: Array(6)
-      .fill(null)
-      .map((_, i) => ({
-        title: `History Article ${i + 1}`,
-        author: `Historian ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "History",
-        description: "Dive into historical events.",
-      })),
-    "Language Tips": Array(6)
+    "Flash cards": Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Language Tip ${i + 1}`,
@@ -205,11 +188,9 @@ export default function ExplorePage() {
   const sectionCardStyles: Record<string, string> = {
     Stories: "bg-[#f5e6e8] border-[#e75480] text-[#e75480]",
     Animations: "bg-[#e6f7ff] border-[#1e96fc] text-[#1e96fc]",
-    Podcasts: "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
-    "Tourism Blogs": "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
-    Culture: "bg-[#f3e6ff] border-[#a259ff] text-[#a259ff]",
-    History: "bg-[#e6e6e6] border-[#6c757d] text-[#6c757d]",
-    "Language Tips": "bg-[#e6f0ff] border-[#007bff] text-[#007bff]",
+    "Podcasts & Songs": "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
+    "Tourism, News and Lifestyle": "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
+    "Flash cards": "bg-[#e6f0ff] border-[#007bff] text-[#007bff]",
     Music: "bg-[#fff0f6] border-[#ff2d55] text-[#ff2d55]",
     News: "bg-[#e6faff] border-[#17a2b8] text-[#17a2b8]",
     Education: "bg-[#f9fbe7] border-[#cddc39] text-[#cddc39]",
@@ -222,7 +203,7 @@ export default function ExplorePage() {
       <div className="relative pb-4 pt-4">
         <div className="relative w-full">
           <Input
-            placeholder="Search stories, podcasts, music..."
+            placeholder="Search stories, podcasts, songs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="pl-12 pr-12 py-4 mb-4 rounded-xl bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
@@ -257,8 +238,9 @@ export default function ExplorePage() {
                         {section}
                       </h2>
                     </div>
-                    <Link href={`/explore/${encodeURIComponent(section).toLowerCase()}`}>
+                    <Link href={`/explore/${encodeURIComponent(section).toLowerCase()}`} className="flex items-center gap-1 hover:text-gray-400">
                         View More
+                        <ChevronRight />
                     </Link>
                   </div>
                   {loading ? (
@@ -277,11 +259,11 @@ export default function ExplorePage() {
                         getFilteredSection(section).map((item, idx) => (
                           <AnimationCard key={idx} data={item} />
                         ))}
-                      {section === "Tourism Blogs" &&
+                      {section === "Tourism, News and Lifestyle" &&
                         getFilteredSection(section).map((item, idx) => (
                           <BlogCard key={idx} data={item} />
                         ))}
-                      {section === "Podcasts" &&
+                      {section === "Podcasts & Songs" &&
                         getFilteredSection(section).map((item, idx) => (
                           <PodcastCard key={idx} data={item} />
                         ))}
@@ -293,8 +275,8 @@ export default function ExplorePage() {
                       {[
                         "Stories",
                         "Animations",
-                        "Tourism Blogs",
-                        "Podcasts",
+                        "Tourism, News and Lifestyle",
+                        "Podcasts & Songs",
                         "Music",
                       ].indexOf(section) === -1 &&
                         getFilteredSection(section).map(

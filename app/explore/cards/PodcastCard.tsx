@@ -2,23 +2,20 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function PodcastCard({ data }: { data: any }) {
   return (
-    <Card className="bg-[#fffbe6] border-[#f7b801] text-[#f7b801] shadow-none border transition-colors cursor-pointer group">
+    <Card className="border-none rounded-none shadow-none cursor-pointer group">
       <CardContent className="p-0">
-        <div className="relative">
+        <div className="relative rounded-lg border transition-colors text-[#f7b801] overflow-hidden">
           <img
             src={data.image}
             alt={data.title}
-            className="w-full aspect-[4/5] object-cover rounded-t-xl"
+            className="w-full aspect-square object-cover rounded-t-xl"
           />
         </div>
-        <div className="relative p-4">
-          <h3 className="font-semibold text-sm mb-1 truncate text-black dark:text-[#f7b801]">
+        <div className="relative mt-2">
+          <h3 className="font-semibold text-lg truncate text-black dark:text-[#f7b801]">
             {data.title}
           </h3>
-          <p className="text-gray-400 text-xs mb-1 truncate">{data.host}</p>
-          <p className="text-xs text-[#f7b801] mt-1 truncate">
-            {data.description}
-          </p>
+          <p className="text-gray-400 text-base truncate">{data.host}</p>
         </div>
       </CardContent>
     </Card>
