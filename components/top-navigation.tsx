@@ -98,7 +98,7 @@ export function TopNavigation() {
                   fill="currentColor"
                 />
               </svg>
-            <span className="text-xl hidden">103,034k</span>
+            {/* <span className="text-xl hidden">103,034k</span> */}
           </div>
           <div className="flex items-center space-x-6">
             <DropdownMenu
