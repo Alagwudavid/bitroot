@@ -146,7 +146,7 @@ export default function ExploreSectionPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-[#18181b] text-white pb-16">
+    <div className="max-h-screen bg-[#18181b] text-white pb-16">
       <div className="sticky top-0 z-10 bg-[#18181b] pb-4 pt-4 flex items-center gap-4">
         <Button
           variant="ghost"

@@ -12,7 +12,7 @@ export default function StoryPreview() {
   if (!story) return <div className="p-8">Story not found</div>;
 
   return (
-    <div className="min-h-screen text-black dark:text-white pb-16 p-4 max-w-2xl mx-auto">
+    <div className="max-h-screen text-black dark:text-white pb-16 p-4 max-w-2xl mx-auto">
       <Button
         variant="ghost"
         className="flex items-center gap-2 mb-6"

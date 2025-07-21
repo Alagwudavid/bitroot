@@ -12,7 +12,7 @@ export default function FlashCardPreview() {
   if (!card) return <div className="p-8">Flash card not found</div>;
 
   return (
-    <div className="min-h-screen text-black dark:text-white pb-16 p-4 max-w-2xl mx-auto">
+    <div className="max-h-screen text-black dark:text-white pb-16 p-4 max-w-2xl mx-auto">
       <Button
         variant="ghost"
         className="flex items-center gap-2 mb-6"

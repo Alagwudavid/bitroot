@@ -33,11 +33,21 @@ import GameCard from "./cards/GameCard";
 const sectionIcons: Record<string, React.ElementType> = {
   Stories: Library,
   Animations: Baby,
-  "Listen": Headphones,
-  "Lifestyle": Rss,
+  Listen: Headphones,
+  Lifestyle: Rss,
   "Flash cards": Copy,
   Games: Swords,
 };
+
+function toSectionSlug(section: string) {
+  return encodeURIComponent(
+    section
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-zA-Z0-9-_]/g, "") // remove special chars except - and _
+      .toLowerCase()
+  );
+}
 
 export default function ExplorePage() {
   const [search, setSearch] = useState("");
@@ -47,8 +57,8 @@ export default function ExplorePage() {
   const [sectionCounts, setSectionCounts] = useState({
     Stories: [2, 3, 5],
     Animations: [1, 3, 3],
-    "Listen": [2, 3, 5],
-    "Lifestyle": [1, 3, 3],
+    Listen: [2, 3, 5],
+    Lifestyle: [1, 3, 3],
     "Flash cards": [1, 3, 4],
     Games: [2, 3, 5],
   });
@@ -70,7 +80,6 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Story Title ${i + 1}`,
-        slug: "",
         author: `Author ${i + 1}`,
         image: `/free/story-${i + 1}.jpg`,
         type: "Ebook",
@@ -81,29 +90,26 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Animation Title ${i + 1}`,
-        slug: "",
         creator: `Creator ${i + 1}`,
         image: `/free/video-${i + 1}.jpg`,
         type: "Animation",
         icon: "Baby",
         description: "A fun cartoon for kids.",
       })),
-    "Listen": Array(6)
+    Listen: Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Podcast Title ${i + 1}`,
-        slug: "",
         host: `Host ${i + 1}`,
         image: `/free/podcast-${i + 1}.jpg`,
         type: "Podcast",
         icon: "Headphones",
         description: "An interesting podcast episode.",
       })),
-    "Lifestyle": Array(6)
+    Lifestyle: Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Tourism Blog ${i + 1}`,
-        slug: "",
         author: `Blogger ${i + 1}`,
         image: `/free/blog-${i + 1}.jpg`,
         type: "Blog",
@@ -115,7 +121,6 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Object name ${i + 1}`,
-        slug: "",
         artist: `User ${i + 1}`,
         image: `/free/flash-${i + 1}.jpg`,
         type: "Flash card",
@@ -126,7 +131,6 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Game Title ${i + 1}`,
-        slug: "",
         developer: `Game Studio ${i + 1}`,
         image: `/free/game-${i + 1}.jpg`,
         type: "Game",
@@ -181,9 +185,8 @@ export default function ExplorePage() {
   const sectionCardStyles: Record<string, string> = {
     Stories: "bg-[#f5e6e8] border-[#e75480] text-[#e75480]",
     Animations: "bg-[#e6f7ff] border-[#1e96fc] text-[#1e96fc]",
-    "Listen": "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
-    "Lifestyle":
-      "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
+    Listen: "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
+    Lifestyle: "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
     "Flash cards": "bg-[#fff0f6] border-[#ff2d55] text-[#ff2d55]",
     Games: "bg-[#f3ffe6] border-[#00b894] text-[#00b894]",
   };
@@ -240,9 +243,7 @@ export default function ExplorePage() {
                       </h2>
                     </div>
                     <Link
-                      href={`/explore/${encodeURIComponent(
-                        section
-                      ).toLowerCase()}`}
+                      href={`/explore/${toSectionSlug(section)}`}
                       className="flex items-center gap-1 text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-400"
                     >
                       More
