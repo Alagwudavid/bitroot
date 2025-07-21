@@ -17,13 +17,10 @@ export default function AnimationCard({ data }: { data: any }) {
             {data.type}
           </Badge>
         </div>
-        <p className="text-base capitalize font-bold text-black dark:text-white">
-        {data.title}
-        </p>
-        <div className="flex items-center gap-2 py-2">
+        <div className="flex gap-2 my-4">
               <Button
                 variant="ghost"
-                className="relative h-10 w-10 rounded-full"
+                className="relative h-10 w-10 shrink-0 rounded-full"
               >
                 <Avatar className="h-10 w-10">
                   <AvatarImage src="/placeholder-user.jpg" alt="User" />
@@ -32,11 +29,12 @@ export default function AnimationCard({ data }: { data: any }) {
                   </AvatarFallback>
                 </Avatar>
               </Button>
-              <div className="relative">
-                <h3 className="font-semibold text-base mb-1 truncate text-black dark:text-[#e75480]">
-                  {data.creator}
+              <div className="relative w-full block overflow-hidden">
+                <h3 className="font-semibold text-lg truncate text-black dark:text-[#e75480]">
+                  {data.title}
                 </h3>
-                <p className="text-gray-400 text-xs mb-1 truncate">3.4 Rating</p>
+                <p className="text-gray-400 text-base truncate">{data.creator}</p>
+                <p className="text-gray-400 text-base truncate">2 followers</p>
               </div>
         </div>
       </CardContent>

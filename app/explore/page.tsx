@@ -1,19 +1,19 @@
 "use client";
-
+import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Play,
-  Pause,
-  SkipBack,
-  SkipForward,
-  Volume2,
-  Heart,
-  MoreHorizontal,
   Search,
-  ArrowRight,
   ChevronRight,
+  AudioLines,
+  MicVocal,
+  Library,
+  Baby,
+  Rss,
+  Copy,
+  Swords,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useIsMobile } from "@/components/ui/use-mobile";
@@ -26,7 +26,18 @@ import StoryCard from "./cards/StoryCard";
 import AnimationCard from "./cards/AnimationCard";
 import BlogCard from "./cards/BlogCard";
 import PodcastCard from "./cards/PodcastCard";
-import MusicCard from "./cards/MusicCard";
+import FlashCard from "./cards/FlashCard";
+import GameCard from "./cards/GameCard";
+
+// Section icon mapping
+const sectionIcons: Record<string, React.ElementType> = {
+  Stories: Library,
+  Animations: Baby,
+  "Podcasts & Songs": MicVocal,
+  "Tourism, News and Lifestyle": Rss,
+  "Flash cards": Copy,
+  Games: Swords,
+};
 
 export default function ExplorePage() {
   const [search, setSearch] = useState("");
@@ -34,15 +45,12 @@ export default function ExplorePage() {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("All");
   const [sectionCounts, setSectionCounts] = useState({
-    Stories: 5,
-    Animations: 3,
-    "Podcasts & Songs": 5,
-    "Tourism, News and Lifestyle": 3,
-    "Flash cards": 4,
-    Music: 5,
-    News: 5,
-    Education: 5,
-    Games: 5,
+    Stories: [2, 3, 5],
+    Animations: [1, 3, 3],
+    "Podcasts & Songs": [2, 3, 5],
+    "Tourism, News and Lifestyle": [1, 3, 3],
+    "Flash cards": [1, 3, 4],
+    Games: [2, 3, 5],
   });
   const categories = [
     "All",
@@ -54,9 +62,6 @@ export default function ExplorePage() {
     // "News",
     // "Lifestyle",
     "Flash cards",
-    "Music",
-    "News",
-    "Education",
     "Games",
   ];
   // Example data for each section (use placeholder images)
@@ -68,6 +73,7 @@ export default function ExplorePage() {
         author: `Author ${i + 1}`,
         image: `/free/story-${i + 1}.jpg`,
         type: "Ebook",
+        icon: "Library",
         description: "A captivating story to read.",
       })),
     Animations: Array(6)
@@ -77,6 +83,7 @@ export default function ExplorePage() {
         creator: `Creator ${i + 1}`,
         image: `/free/video-${i + 1}.jpg`,
         type: "Animation",
+        icon: "Baby",
         description: "A fun cartoon for kids.",
       })),
     "Podcasts & Songs": Array(6)
@@ -86,6 +93,7 @@ export default function ExplorePage() {
         host: `Host ${i + 1}`,
         image: `/free/podcast-${i + 1}.jpg`,
         type: "Podcast",
+        icon: "MicVocal",
         description: "An interesting podcast episode.",
       })),
     "Tourism, News and Lifestyle": Array(6)
@@ -95,51 +103,28 @@ export default function ExplorePage() {
         author: `Blogger ${i + 1}`,
         image: `/free/blog-${i + 1}.jpg`,
         type: "Blog",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quisquam adipisci placeat ad deserunt voluptas nobis temporibus minima ratione beatae molestias tempore laboriosam, expedita rerum a optio cupiditate officia possimus.",
+        icon: "Rss",
+        description:
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quisquam adipisci placeat ad deserunt voluptas nobis temporibus minima ratione beatae molestias tempore laboriosam, expedita rerum a optio cupiditate officia possimus.",
       })),
     "Flash cards": Array(6)
       .fill(null)
       .map((_, i) => ({
-        title: `Language Tip ${i + 1}`,
-        author: `Expert ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "Tip",
-        description: "Improve your language skills.",
-      })),
-    Music: Array(6)
-      .fill(null)
-      .map((_, i) => ({
-        title: `Music Track ${i + 1}`,
-        artist: `Musician ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "Music",
-        description: "Enjoy great music.",
-      })),
-    News: Array(6)
-      .fill(null)
-      .map((_, i) => ({
-        title: `News Headline ${i + 1}`,
-        source: `News Source ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "News",
-        description: "Stay updated with the latest news.",
-      })),
-    Education: Array(6)
-      .fill(null)
-      .map((_, i) => ({
-        title: `Education Resource ${i + 1}`,
-        author: `Educator ${i + 1}`,
-        image: "/placeholder.jpg",
-        type: "Education",
-        description: "Learn something new today.",
+        title: `Object name ${i + 1}`,
+        artist: `User ${i + 1}`,
+        image: `/free/flash-${i + 1}.jpg`,
+        type: "Flash card",
+        icon: "Copy",
+        description: "Object translation.",
       })),
     Games: Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Game Title ${i + 1}`,
         developer: `Game Studio ${i + 1}`,
-        image: "/placeholder.jpg",
+        image: `/free/game-${i + 1}.jpg`,
         type: "Game",
+        icon: "Swords",
         description: "A fun and educational game.",
       })),
   };
@@ -181,7 +166,9 @@ export default function ExplorePage() {
               .includes(debouncedSearch.toLowerCase()))
       );
     }
-    return items.slice(0, sectionCounts[section as keyof typeof sectionCounts]);
+    const count = sectionCounts[section as keyof typeof sectionCounts];
+    const itemCount = Array.isArray(count) ? count[2] : count || 6;
+    return items.slice(0, itemCount);
   };
 
   // Style map for section card styles
@@ -189,11 +176,9 @@ export default function ExplorePage() {
     Stories: "bg-[#f5e6e8] border-[#e75480] text-[#e75480]",
     Animations: "bg-[#e6f7ff] border-[#1e96fc] text-[#1e96fc]",
     "Podcasts & Songs": "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
-    "Tourism, News and Lifestyle": "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
-    "Flash cards": "bg-[#e6f0ff] border-[#007bff] text-[#007bff]",
-    Music: "bg-[#fff0f6] border-[#ff2d55] text-[#ff2d55]",
-    News: "bg-[#e6faff] border-[#17a2b8] text-[#17a2b8]",
-    Education: "bg-[#f9fbe7] border-[#cddc39] text-[#cddc39]",
+    "Tourism, News and Lifestyle":
+      "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
+    "Flash cards": "bg-[#fff0f6] border-[#ff2d55] text-[#ff2d55]",
     Games: "bg-[#f3ffe6] border-[#00b894] text-[#00b894]",
   };
 
@@ -210,21 +195,25 @@ export default function ExplorePage() {
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
         </div>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="flex flex-wrap h-fit items-center bg-transparent text-muted-foreground">
+        <div className="relative">
+          <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
             {categories.map((cat) => (
-              <TabsTrigger
+              <button
                 key={cat}
-                value={cat}
-                className="rounded-xl px-4 py-2 ml-2 text-base whitespace-nowrap data-[state=active]:bg-[#1e96fc] data-[state=active]:text-white"
+                onClick={() => setActiveTab(cat)}
+                className={`rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 border ${
+                  activeTab === cat
+                    ? "bg-blue-100 border-blue-300 text-blue-700 shadow-sm"
+                    : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50"
+                }`}
               >
                 {cat}
-              </TabsTrigger>
+              </button>
             ))}
-          </TabsList>
-        </Tabs>
+          </div>
+        </div>
       </div>
-      <div className="p-4 space-y-10">
+      <div className="space-y-10">
         {categories
           .filter((cat: string) => cat !== "All")
           .map(
@@ -232,15 +221,26 @@ export default function ExplorePage() {
               (activeTab === "All" || activeTab === section) && (
                 <section key={section}>
                   <div className="flex items-center justify-between mb-4">
-                    <div>
-                      
+                    <div className="flex items-center gap-2">
+                      {sectionIcons[section] && (
+                        <span className="text-xl text-[#1e96fc] dark:text-[#8ddeed]">
+                          {React.createElement(sectionIcons[section], {
+                            className: "size-7",
+                          })}
+                        </span>
+                      )}
                       <h2 className="text-2xl font-bold text-black dark:text-white">
                         {section}
                       </h2>
                     </div>
-                    <Link href={`/explore/${encodeURIComponent(section).toLowerCase()}`} className="flex items-center gap-1 hover:text-gray-400">
-                        View More
-                        <ChevronRight />
+                    <Link
+                      href={`/explore/${encodeURIComponent(
+                        section
+                      ).toLowerCase()}`}
+                      className="flex items-center gap-1 text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-400"
+                    >
+                      More
+                      <ChevronRight />
                     </Link>
                   </div>
                   {loading ? (
@@ -250,12 +250,26 @@ export default function ExplorePage() {
                       ))}
                     </div>
                   ) : (
-                    <div className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-${sectionCounts[section]} gap-4`}>
+                    <div
+                      className={`grid grid-cols-${
+                        sectionCounts[
+                          section as keyof typeof sectionCounts
+                        ]?.[0] || 1
+                      } md:grid-cols-${
+                        sectionCounts[
+                          section as keyof typeof sectionCounts
+                        ]?.[1] || 3
+                      } lg:grid-cols-${
+                        sectionCounts[
+                          section as keyof typeof sectionCounts
+                        ]?.[2] || 6
+                      } gap-4`}
+                    >
                       {section === "Stories" &&
                         getFilteredSection(section).map((item, idx) => (
                           <StoryCard key={idx} data={item} />
                         ))}
-                        {section === "Animations" &&
+                      {section === "Animations" &&
                         getFilteredSection(section).map((item, idx) => (
                           <AnimationCard key={idx} data={item} />
                         ))}
@@ -267,9 +281,13 @@ export default function ExplorePage() {
                         getFilteredSection(section).map((item, idx) => (
                           <PodcastCard key={idx} data={item} />
                         ))}
-                      {section === "Music" &&
+                      {section === "Flash cards" &&
                         getFilteredSection(section).map((item, idx) => (
-                          <MusicCard key={idx} data={item} />
+                          <FlashCard key={idx} data={item} />
+                        ))}
+                      {section === "Games" &&
+                        getFilteredSection(section).map((item, idx) => (
+                          <GameCard key={idx} data={item} />
                         ))}
                       {/* Default card for other sections */}
                       {[
@@ -277,7 +295,8 @@ export default function ExplorePage() {
                         "Animations",
                         "Tourism, News and Lifestyle",
                         "Podcasts & Songs",
-                        "Music",
+                        "Flash cards",
+                        "Games",
                       ].indexOf(section) === -1 &&
                         getFilteredSection(section).map(
                           (item: any, idx: number) => (
@@ -295,9 +314,9 @@ export default function ExplorePage() {
                                     alt={item.title}
                                     className="w-full aspect-[4/5] object-cover rounded-t-xl"
                                   />
-                                <Badge className="absolute bottom-2 right-2 bg-[#fcf300] text-[#072ac8] text-xs rounded-full">
-                                  {item.type}
-                                </Badge>
+                                  <Badge className="absolute bottom-2 right-2 bg-[#fcf300] text-[#072ac8] text-xs rounded-full">
+                                    {item.type}
+                                  </Badge>
                                 </div>
                                 <div className="relative p-4">
                                   <h3 className="font-semibold text-sm mb-1 truncate text-black dark:text-white">

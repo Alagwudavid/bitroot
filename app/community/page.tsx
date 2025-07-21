@@ -15,7 +15,7 @@ export default function CommunityPage() {
       posts: 1240,
       description: "Connect with fellow Swahili learners and native speakers",
       trending: true,
-      admins: "2",
+      moderators: "2",
     },
     {
       name: "Yoruba Culture & Language",
@@ -25,7 +25,7 @@ export default function CommunityPage() {
       description:
         "Explore Yoruba traditions, language, and cultural practices",
       trending: false,
-      admins: "4",
+      moderators: "4",
     },
     {
       name: "Amharic Study Group",
@@ -34,7 +34,7 @@ export default function CommunityPage() {
       posts: 456,
       description: "Study Amharic together with structured learning sessions",
       trending: true,
-      admins: "1",
+      moderators: "1",
     },
     {
       name: "Hausa Language Exchange",
@@ -43,7 +43,7 @@ export default function CommunityPage() {
       posts: 678,
       description: "Practice Hausa with native speakers and learners",
       trending: false,
-      admins: "6",
+      moderators: "6",
     },
     {
       name: "Igbo Heritage",
@@ -53,7 +53,7 @@ export default function CommunityPage() {
       description:
         "Learn Igbo language while discovering rich cultural heritage",
       trending: false,
-      admins: "3",
+      moderators: "3",
     },
     {
       name: "Zulu Conversations",
@@ -62,7 +62,7 @@ export default function CommunityPage() {
       posts: 567,
       description: "Practice Zulu through daily conversations and discussions",
       trending: true,
-      admins: "30",
+      moderators: "30",
     },
   ];
 
@@ -136,12 +136,15 @@ export default function CommunityPage() {
                         <CardTitle className="text-lg dark:text-[#fafafa]">
                           {community.name}
                         </CardTitle>
+                        <div className="flex items-center space-x-1">
+                        <span className="text-sm uppercase">{community.moderators} mods</span>
                         {community.trending && (
                           <Badge className="bg-[#fcf300] text-[#072ac8] dark:bg-[#8ddeed] dark:text-[#030318] hover:bg-[#ffc600] dark:hover:bg-[#8ddeed]/80 rounded-full">
                             <TrendingUp className="w-3 h-3 mr-1" />
                             Trending
                           </Badge>
                         )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -150,7 +153,7 @@ export default function CommunityPage() {
                   <p className="text-gray-600 dark:text-[#fafafa]/70 text-sm mb-4">
                     {community.description}
                   </p>
-                  <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-[#fafafa]/60">
                       <div className="flex items-center space-x-1">
                         <Users className="w-4 h-4" />
@@ -161,11 +164,6 @@ export default function CommunityPage() {
                         <span>{community.posts}</span>
                       </div>
                     </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400 dark:text-[#fafafa]/50">
-                      {community.admins} active admins
-                    </span>
                     <Button
                       size="sm"
                       className="rounded-xl bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white"
@@ -179,7 +177,28 @@ export default function CommunityPage() {
           </div>
         </div>
         {/* Recent Activity Sidebar */}
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 flex flex-col gap-6">
+          {/* Community Regulations */}
+          <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-gray-700">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Users className="w-5 h-5 text-[#1e96fc] dark:text-[#8ddeed]" />
+                <span className="dark:text-[#fafafa]">
+                  Community Regulations
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="list-disc pl-5 text-sm text-gray-600 dark:text-[#fafafa]/70 space-y-2">
+                <li>Be respectful and supportive to all members</li>
+                <li>No spam, advertising, or self-promotion</li>
+                <li>Use appropriate language and content</li>
+                <li>Stay on topic and contribute constructively</li>
+                <li>Report any inappropriate behavior to moderators</li>
+              </ul>
+            </CardContent>
+          </Card>
+          {/* Recent Activity */}
           <Card className="rounded-2xl dark:bg-[#0d1117] dark:border-gray-700">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2">

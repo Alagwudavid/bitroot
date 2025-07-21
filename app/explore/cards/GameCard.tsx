@@ -15,7 +15,7 @@ export default function PodcastCard({ data }: { data: any }) {
           <h3 className="font-bold line-clamp-1 text-base truncate text-black dark:text-[#e75480]">
             {data.title}
           </h3>
-          <p className="text-black dark:text-white text-base truncate hover:underline underline-offset-2">{data.host}</p>
+          <p className="text-black dark:text-white text-base truncate hover:underline underline-offset-2">{data.developer}</p>
         </div>
       </CardContent>
     </Card>
