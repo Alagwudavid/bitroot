@@ -1,6 +1,6 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { flashCardsData } from "./data";
+import { flashCardsData } from "../data";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 

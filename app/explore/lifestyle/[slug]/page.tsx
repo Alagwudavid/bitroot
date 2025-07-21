@@ -1,6 +1,6 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
-import { lifestyleData } from "./data";
+import { lifestyleData } from "../data";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
