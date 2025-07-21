@@ -72,7 +72,7 @@ export function TopNavigation() {
           />
         </div>
         <div className="flex items-center space-x-4">
-          <Link href={"/ai-chat"} className="h-10 rounded-md bg-transparent shrink-0 text-lg flex items-center justify-center text-gray-600 dark:text-[#fafafa]/70">
+          <Link href={"/ai-agent"} className="h-10 rounded-md bg-transparent shrink-0 text-lg flex items-center justify-center text-gray-600 dark:text-[#fafafa]/70">
             <svg className="size-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <title>Ai agent</title>
                 <g id="页面-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">

@@ -229,7 +229,7 @@ export default function SectionPage({
                           <Lock className="w-4 h-4 text-gray-400" />
                         )}
                       </span>
-        </Link>
+                    </Link>
                   </div>
               </div>
             );
