@@ -455,7 +455,7 @@ export default function LanguageSectionsPage() {
                     {Section.level} • SECTION {Section.id}{" "}
                     {Section.status === "locked" && "• LOCKED"}
                   </span>
-                  <Link href={`/learn/${lang}/${sanitizeUrl(Section.title)}/`} className="text-2xl font-bold text-white mt-1">
+                  <Link href={`/learn/${lang}/${sanitizeUrl(Section.title)}/`} className="text-2xl font-bold text-white mt-1 hover:underline underline-offset-2">
                     {Section.title} Level
                   </Link>
                 </div>
