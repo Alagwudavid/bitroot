@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 export default function ListenCard({ data }: { data: any }) {
   return (
-    <Card className="bg-transparent border-none rounded-none shadow-none cursor-pointer group">
+    <Card className="bg-transparent border-none rounded-none shadow-none cursor-pointer-custom group">
       <CardContent className="p-0">
         <div className="relative rounded border transition-colors text-[#f7b801] overflow-hidden">
           <img
@@ -15,7 +15,9 @@ export default function ListenCard({ data }: { data: any }) {
           <h3 className="font-bold line-clamp-1 text-base truncate text-black dark:text-[#e75480]">
             {data.title}
           </h3>
-          <p className="text-black dark:text-white text-base truncate hover:underline underline-offset-2">{data.host}</p>
+          <p className="text-black dark:text-white text-base truncate hover:underline underline-offset-2">
+            {data.host}
+          </p>
         </div>
       </CardContent>
     </Card>

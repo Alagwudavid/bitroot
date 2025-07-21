@@ -200,7 +200,7 @@ export default function ExplorePage() {
             placeholder="Search stories, podcasts, songs..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-12 pr-12 py-4 mb-4 rounded-xl bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
+            className="pl-12 pr-12 py-4 mb-4 rounded-xl bg-[#f5f6fa] dark:bg-[#101828] text-[#101828] dark:text-[#f5f6fa] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
         </div>
@@ -309,7 +309,7 @@ export default function ExplorePage() {
                           (item: any, idx: number) => (
                             <Card
                               key={idx}
-                              className={`shadow-none border transition-colors cursor-pointer group ${
+                              className={`shadow-none border transition-colors cursor-pointer-custom group ${
                                 sectionCardStyles[section] ||
                                 "bg-transparent border-gray-300 dark:border-gray-700"
                               }`}

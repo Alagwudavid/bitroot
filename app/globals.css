@@ -2,6 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  cursor: url('/cursor/cursor.svg') 12 12, auto;
+}
+
+a, button{
+  cursor: url('/cursor/pointer.svg') 12 12, auto;
+}
+
+/* input, textarea {
+  cursor: url('/cursor/text.svg') 12 12, auto;
+} */
+
+/* optgroup, select, {
+  cursor: url('/cursor/click.svg') 12 12, auto;
+} */
+
+/* * .cursor-pointer-custom {
+  cursor: url('/cursor/pointer.svg') 12 12, auto;
+} */
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+  background: rgb(197 30 58 / 0.7);
+}
+
+::selection {
+  color: #fff;
+  background: rgb(197 30 58 / 0.7);
+}
+
 @layer base {
   :root {
     --background: 0 0% 98%; /* #fafafa */

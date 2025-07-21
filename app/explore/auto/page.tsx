@@ -175,7 +175,7 @@ export default function ExploreSectionPage({ params }) {
             {items.map((item, idx) => (
               <Card
                 key={idx}
-                className="bg-[#23263a] border-0 rounded-2xl hover:bg-[#1e96fc]/10 transition-colors cursor-pointer group"
+                className="bg-[#23263a] border-0 rounded-2xl hover:bg-[#1e96fc]/10 transition-colors cursor-pointer-custom group"
               >
                 <CardContent className="p-4">
                   <div className="relative mb-3">

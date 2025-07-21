@@ -159,15 +159,18 @@ const languageSectionsData: Record<string, Array<any>> = {
 // ];
 
 // Grouped units by sectionId for demonstration
-const unitsBySection: Record<number, Array<{
-  id: number;
-  title: string;
-  sectionId: number;
-  languageId: string;
-  status: string;
-  progress: number;
-  totalLessons: number;
-}>> = {
+const unitsBySection: Record<
+  number,
+  Array<{
+    id: number;
+    title: string;
+    sectionId: number;
+    languageId: string;
+    status: string;
+    progress: number;
+    totalLessons: number;
+  }>
+> = {
   1: [
     {
       id: 10,
@@ -227,7 +230,15 @@ const unitsBySection: Record<number, Array<{
   // Add more sections as needed
 };
 
-function UnitCarousel({ units, lang, section }: { units: any[]; lang: string; section: any }) {
+function UnitCarousel({
+  units,
+  lang,
+  section,
+}: {
+  units: any[];
+  lang: string;
+  section: any;
+}) {
   const [idx, setIdx] = useState(0);
 
   if (!units || units.length === 0) {
@@ -249,21 +260,27 @@ function UnitCarousel({ units, lang, section }: { units: any[]; lang: string; se
         <ChevronLeft className="!size-6" />
       </Button>
       <Link
-        href={`/learn/${lang}/${sanitizeUrl(section.title)}/${sanitizeUrl(unit.title)}`}
-        className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer"
+        href={`/learn/${lang}/${sanitizeUrl(section.title)}/${sanitizeUrl(
+          unit.title
+        )}`}
+        className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer-custom"
       >
         <div className="w-20 h-20 mx-auto mb-4">
           <img
             src={`/stickers/earlyBurner.png`}
             alt={`Bitroot logo`}
             className={`w-full h-full object-cover rounded ${
-              unit.status !== "completed" && unit.status === "locked" && unit.status !== "progress"
+              unit.status !== "completed" &&
+              unit.status === "locked" &&
+              unit.status !== "progress"
                 ? "grayscale"
                 : ""
             }`}
           />
         </div>
-        <span className="text-white text-center capitalize font-mono">{unit.title}</span>
+        <span className="text-white text-center capitalize font-mono">
+          {unit.title}
+        </span>
         <span className="text-gray-300 capitalize font-mono text-sm">
           {unit.status === "completed"
             ? "completed"
@@ -425,7 +442,7 @@ export default function LanguageSectionsPage() {
               alt="Most Viewed Playlist"
               className="object-cover w-full h-full"
             />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2 cursor-pointer">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2 cursor-pointer-custom">
               <Eye className="w-4 h-4 text-[#7037e4] dark:text-[#8ddeed]" />{" "}
               Alexa root
             </div>
@@ -455,14 +472,23 @@ export default function LanguageSectionsPage() {
                     {Section.level} • SECTION {Section.id}{" "}
                     {Section.status === "locked" && "• LOCKED"}
                   </span>
-                  <Link href={`/learn/${lang}/${sanitizeUrl(Section.title)}/`} className="text-2xl font-bold text-white mt-1 hover:underline underline-offset-2">
-                    {Section.title} Level
+                  <Link
+                    href={`/learn/${lang}/${sanitizeUrl(
+                      Section.title
+                    )}#${sanitizeUrl(Section.title)}`}
+                    className="text-2xl font-bold text-white mt-1 hover:underline underline-offset-2"
+                  >
+                    {Section.title}
                   </Link>
                 </div>
               </div>
               {Section.status !== "locked" && (
                 <>
-                  <UnitCarousel units={unitsBySection[Section.id] || []} lang={lang} section={Section} />
+                  <UnitCarousel
+                    units={unitsBySection[Section.id] || []}
+                    lang={lang}
+                    section={Section}
+                  />
                   <div className="flex flex-col items-center">
                     <div className="flex items-center w-full mb-4">
                       <Progress
@@ -480,7 +506,11 @@ export default function LanguageSectionsPage() {
               )}
               {Section.status === "locked" && (
                 <>
-                  <UnitCarousel units={unitsBySection[Section.id] || []} lang={lang} section={Section} />
+                  <UnitCarousel
+                    units={unitsBySection[Section.id] || []}
+                    lang={lang}
+                    section={Section}
+                  />
                   <div className="flex flex-col items-center">
                     <div className="flex items-center w-full mb-4">
                       <Progress

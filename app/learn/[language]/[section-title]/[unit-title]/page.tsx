@@ -90,7 +90,7 @@ export default function UnitPage({
               </span>
             </Link>
             {idx < mockSteps.length - 1 && (
-              <div className="w-1 h-10 bg-white mx-auto mt-4" />
+              <div className="w-1 h-10 bg-gray-700 dark:bg-white mx-auto mt-4" />
             )}
           </div>
         ))}

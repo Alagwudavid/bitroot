@@ -132,9 +132,7 @@ export default function ContributionGrid() {
   return (
     <div className="bg-[#EEEDEC] dark:bg-[#0d1117] dark:text-white text-black rounded-lg p-6 w-full max-w-3xl mx-auto border border-gray-300 dark:border-gray-700">
       <div className="flex items-center justify-between mb-2">
-        <span className="text-lg font-semibold">
-          My activity
-        </span>
+        <span className="text-lg font-semibold">My activity</span>
         <div className="flex items-center gap-2">
           <select
             className="bg-[#23263a] text-white px-3 py-1 rounded-lg text-sm"
@@ -185,12 +183,14 @@ export default function ContributionGrid() {
                       : null;
                   return (
                     <td key={colIdx} className="align-middle">
-                      <div className={`w-4 h-4 rounded flex items-center justify-center transition-colors duration-150
-                          ${isFiller
+                      <div
+                        className={`w-4 h-4 rounded flex items-center justify-center transition-colors duration-150
+                          ${
+                            isFiller
                               ? "bg-[#23263a] opacity-40 cursor-not-allowed"
                               : activityData[dateStr!]
-                              ? "bg-[#22c55e] cursor-pointer"
-                              : "bg-[#374152] cursor-pointer"
+                              ? "bg-[#22c55e] cursor-pointer-custom"
+                              : "bg-[#374152] cursor-pointer-custom"
                           }`}
                         onMouseEnter={(e) => {
                           if (
