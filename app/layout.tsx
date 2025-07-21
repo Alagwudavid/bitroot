@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="flex max-h-screen bg-background text-foreground theme-aware overflow-hidden relative">
+          <div className="flex min-h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <Sidebar />
             <div className="flex-1 flex flex-col h-screen overflow-hidden overflow-y-auto">
               <TopNavigation />

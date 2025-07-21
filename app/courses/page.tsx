@@ -229,7 +229,7 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="max-h-screen bg-background text-foreground flex flex-col pb-6">
+    <div className="min-h-screen bg-background text-foreground flex flex-col pb-6">
       {/* Main Section */}
       <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full px-4 md:px-8 pt-10 gap-10 md:gap-0">
         {/* Left: Headline, Search, Tabs, Tags */}

@@ -62,7 +62,7 @@ export default function UnitPage({
   }
 
   return (
-    <div className="max-h-screen">
+    <div className="min-h-screen">
       <div className="mb-6">
         <Link href={`/learn/${params.language}/${params["section-title"]}`}>
           <Button className="flex items-center gap-2">

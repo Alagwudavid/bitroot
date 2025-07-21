@@ -16,7 +16,7 @@ export default function FlashCardsPage() {
   );
 
   return (
-    <div className="max-h-screen text-black dark:text-white pb-16 p-4">
+    <div className="min-h-screen text-black dark:text-white pb-16 p-4">
       <div className="mb-4">
         <Link href="/explore">
           <Button variant="ghost" className="flex items-center gap-2">
