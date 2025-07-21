@@ -1,0 +1,42 @@
+export const storiesData = [
+  {
+    slug: "the-lions-promise",
+    title: "The Lion's Promise",
+    author: "A. Okoro",
+    image: "/free/story-1.jpg",
+    type: "Ebook",
+    description: "A tale of courage and wisdom in the savannah.",
+  },
+  {
+    slug: "moonlit-tales",
+    title: "Moonlit Tales",
+    author: "B. Ndlovu",
+    image: "/free/story-2.jpg",
+    type: "Ebook",
+    description: "Bedtime stories from the heart of Africa.",
+  },
+  {
+    slug: "the-clever-hare",
+    title: "The Clever Hare",
+    author: "C. Moyo",
+    image: "/free/story-3.jpg",
+    type: "Ebook",
+    description: "A classic fable of wit and survival.",
+  },
+  {
+    slug: "river-spirits",
+    title: "River Spirits",
+    author: "D. Abebe",
+    image: "/free/story-4.jpg",
+    type: "Ebook",
+    description: "Legends from the banks of the Nile.",
+  },
+  {
+    slug: "the-lost-drum",
+    title: "The Lost Drum",
+    author: "E. Mensah",
+    image: "/free/story-5.jpg",
+    type: "Ebook",
+    description: "A journey to recover a village's heartbeat.",
+  },
+];

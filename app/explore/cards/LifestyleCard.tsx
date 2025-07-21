@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 
-export default function BlogCard({ data }: { data: any }) {
+export default function LifestyleCard({ data }: { data: any }) {
   return (
     <Card className="bg-transparent rounded-none shadow-none border-none transition-colors cursor-pointer group">
       <CardContent className="p-0">

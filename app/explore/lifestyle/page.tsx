@@ -1,14 +1,14 @@
 "use client";
 import { useState } from "react";
-import { storiesData } from "./data";
-import StoryCard from "../cards/StoryCard";
+import { lifestyleData } from "./data";
+import LifestyleCard from "../cards/LifestyleCard";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
-export default function StoriesPage() {
+export default function LifestylePage() {
   const [search, setSearch] = useState("");
-  const filtered = storiesData.filter(
+  const filtered = lifestyleData.filter(
     (item) =>
       item.title.toLowerCase().includes(search.toLowerCase()) ||
       (item.author && item.author.toLowerCase().includes(search.toLowerCase()))
@@ -24,17 +24,17 @@ export default function StoriesPage() {
           </Button>
         </Link>
       </div>
-      <h1 className="text-2xl font-bold mb-6">Stories</h1>
+      <h1 className="text-2xl font-bold mb-6">Lifestyle</h1>
       <input
         className="mb-4 p-2 rounded border w-full text-black"
-        placeholder="Search stories..."
+        placeholder="Search blogs..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {filtered.map((item, idx) => (
-          <Link key={item.slug} href={`/explore/stories/${item.slug}`}>
-            <StoryCard data={item} />
+          <Link key={item.slug} href={`/explore/lifestyle/${item.slug}`}>
+            <LifestyleCard data={item} />
           </Link>
         ))}
       </div>

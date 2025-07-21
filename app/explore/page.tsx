@@ -8,7 +8,7 @@ import {
   Search,
   ChevronRight,
   AudioLines,
-  MicVocal,
+  Headphones,
   Library,
   Baby,
   Rss,
@@ -24,8 +24,8 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
 import StoryCard from "./cards/StoryCard";
 import AnimationCard from "./cards/AnimationCard";
-import BlogCard from "./cards/BlogCard";
-import PodcastCard from "./cards/PodcastCard";
+import LifestyleCard from "./cards/LifestyleCard";
+import ListenCard from "./cards/ListenCard";
 import FlashCard from "./cards/FlashCard";
 import GameCard from "./cards/GameCard";
 
@@ -33,8 +33,8 @@ import GameCard from "./cards/GameCard";
 const sectionIcons: Record<string, React.ElementType> = {
   Stories: Library,
   Animations: Baby,
-  "Podcasts & Songs": MicVocal,
-  "Tourism, News and Lifestyle": Rss,
+  "Listen": Headphones,
+  "Lifestyle": Rss,
   "Flash cards": Copy,
   Games: Swords,
 };
@@ -47,8 +47,8 @@ export default function ExplorePage() {
   const [sectionCounts, setSectionCounts] = useState({
     Stories: [2, 3, 5],
     Animations: [1, 3, 3],
-    "Podcasts & Songs": [2, 3, 5],
-    "Tourism, News and Lifestyle": [1, 3, 3],
+    "Listen": [2, 3, 5],
+    "Lifestyle": [1, 3, 3],
     "Flash cards": [1, 3, 4],
     Games: [2, 3, 5],
   });
@@ -56,8 +56,8 @@ export default function ExplorePage() {
     "All",
     "Stories",
     "Animations",
-    "Podcasts & Songs",
-    "Tourism, News and Lifestyle",
+    "Listen",
+    "Lifestyle",
     // "Tourism",
     // "News",
     // "Lifestyle",
@@ -70,6 +70,7 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Story Title ${i + 1}`,
+        slug: "",
         author: `Author ${i + 1}`,
         image: `/free/story-${i + 1}.jpg`,
         type: "Ebook",
@@ -80,26 +81,29 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Animation Title ${i + 1}`,
+        slug: "",
         creator: `Creator ${i + 1}`,
         image: `/free/video-${i + 1}.jpg`,
         type: "Animation",
         icon: "Baby",
         description: "A fun cartoon for kids.",
       })),
-    "Podcasts & Songs": Array(6)
+    "Listen": Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Podcast Title ${i + 1}`,
+        slug: "",
         host: `Host ${i + 1}`,
         image: `/free/podcast-${i + 1}.jpg`,
         type: "Podcast",
-        icon: "MicVocal",
+        icon: "Headphones",
         description: "An interesting podcast episode.",
       })),
-    "Tourism, News and Lifestyle": Array(6)
+    "Lifestyle": Array(6)
       .fill(null)
       .map((_, i) => ({
         title: `Tourism Blog ${i + 1}`,
+        slug: "",
         author: `Blogger ${i + 1}`,
         image: `/free/blog-${i + 1}.jpg`,
         type: "Blog",
@@ -111,6 +115,7 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Object name ${i + 1}`,
+        slug: "",
         artist: `User ${i + 1}`,
         image: `/free/flash-${i + 1}.jpg`,
         type: "Flash card",
@@ -121,6 +126,7 @@ export default function ExplorePage() {
       .fill(null)
       .map((_, i) => ({
         title: `Game Title ${i + 1}`,
+        slug: "",
         developer: `Game Studio ${i + 1}`,
         image: `/free/game-${i + 1}.jpg`,
         type: "Game",
@@ -175,8 +181,8 @@ export default function ExplorePage() {
   const sectionCardStyles: Record<string, string> = {
     Stories: "bg-[#f5e6e8] border-[#e75480] text-[#e75480]",
     Animations: "bg-[#e6f7ff] border-[#1e96fc] text-[#1e96fc]",
-    "Podcasts & Songs": "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
-    "Tourism, News and Lifestyle":
+    "Listen": "bg-[#fffbe6] border-[#f7b801] text-[#f7b801]",
+    "Lifestyle":
       "bg-[#e6ffe6] border-[#34c759] text-[#34c759]",
     "Flash cards": "bg-[#fff0f6] border-[#ff2d55] text-[#ff2d55]",
     Games: "bg-[#f3ffe6] border-[#00b894] text-[#00b894]",
@@ -273,13 +279,13 @@ export default function ExplorePage() {
                         getFilteredSection(section).map((item, idx) => (
                           <AnimationCard key={idx} data={item} />
                         ))}
-                      {section === "Tourism, News and Lifestyle" &&
+                      {section === "Lifestyle" &&
                         getFilteredSection(section).map((item, idx) => (
-                          <BlogCard key={idx} data={item} />
+                          <LifestyleCard key={idx} data={item} />
                         ))}
-                      {section === "Podcasts & Songs" &&
+                      {section === "Listen" &&
                         getFilteredSection(section).map((item, idx) => (
-                          <PodcastCard key={idx} data={item} />
+                          <ListenCard key={idx} data={item} />
                         ))}
                       {section === "Flash cards" &&
                         getFilteredSection(section).map((item, idx) => (
@@ -293,8 +299,8 @@ export default function ExplorePage() {
                       {[
                         "Stories",
                         "Animations",
-                        "Tourism, News and Lifestyle",
-                        "Podcasts & Songs",
+                        "Lifestyle",
+                        "Listen",
                         "Flash cards",
                         "Games",
                       ].indexOf(section) === -1 &&

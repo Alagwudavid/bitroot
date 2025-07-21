@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 
-export default function PodcastCard({ data }: { data: any }) {
+export default function ListenCard({ data }: { data: any }) {
   return (
     <Card className="bg-transparent border-none rounded-none shadow-none cursor-pointer group">
       <CardContent className="p-0">

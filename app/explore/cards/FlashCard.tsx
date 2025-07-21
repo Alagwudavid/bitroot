@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AudioLines } from "lucide-react";
 
-export default function MusicCard({ data }: { data: any }) {
+export default function FlashCard({ data }: { data: any }) {
   return (
     <Card className="bg-white text-black shadow-none rounded-2xl border transition-colors cursor-pointer group">
       <CardContent className="p-3">
