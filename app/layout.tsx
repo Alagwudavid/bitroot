@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     siteName: "Bitroot",
     images: [
       {
-        url: "/https://bitroot-app.vercel.app/logo.png",
+        url: "/logo.png",
         width: 1200,
         height: 630,
         alt: "Bitroot App Preview",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Bitroot App",
     description: "Where language takes root — and culture comes alive.",
-    images: ["https://bitroot-app.vercel.app/logo.png"],
+    images: ["/logo.png"],
     creator: "@LegendNGR",
   },
 };
