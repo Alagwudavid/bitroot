@@ -4,10 +4,39 @@ import { Sidebar } from "@/components/sidebar";
 import { TopNavigation } from "@/components/top-navigation";
 import { ThemeProvider } from "@/components/theme-provider";
 
+// export const metadata: Metadata = {
+//   title: "Bitroot App",
+//   description: "Where language takes root — and culture comes alive.",
+//   generator: "Techgators",
+// };
+
 export const metadata: Metadata = {
   title: "Bitroot App",
   description: "Where language takes root — and culture comes alive.",
   generator: "Techgators",
+  openGraph: {
+    title: "Bitroot App",
+    description: "Where language takes root — and culture comes alive.",
+    url: "https://bitroot-app.vercel.app/",
+    siteName: "Bitroot",
+    images: [
+      {
+        url: "/https://bitroot-app.vercel.app/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Bitroot App Preview",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Bitroot App",
+    description: "Where language takes root — and culture comes alive.",
+    images: ["https://bitroot-app.vercel.app/logo.png"],
+    creator: "@LegendNGR",
+  },
 };
 
 export default function RootLayout({

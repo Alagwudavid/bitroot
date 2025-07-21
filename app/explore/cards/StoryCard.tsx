@@ -15,14 +15,14 @@ export default function StoryCard({ data }: { data: any }) {
             {data.type}
           </Badge>
         </div>
-        
+
         <div className="flex items-center gap-2 py-2">
-              <div className="relative">
-                <h3 className="font-semibold text-base mb-1 truncate text-black dark:text-[#e75480] line-clamp-1">
-                  {data.title}
-                </h3>
-                <p className="text-gray-400 text-xs mb-1 truncate">{data.author}</p>
-              </div>
+          <div className="relative">
+            <h3 className="font-semibold text-base mb-1 truncate text-black dark:text-[#e75480] line-clamp-1">
+              {data.title}
+            </h3>
+            <p className="text-gray-400 text-xs mb-1 truncate">{data.author}</p>
+          </div>
         </div>
       </CardContent>
     </Card>
