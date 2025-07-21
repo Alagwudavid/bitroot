@@ -450,14 +450,14 @@ export default function LanguageSectionsPage() {
               }`}
             >
               <div className="flex items-center justify-between mb-4 relative">
-                <div>
+                <div className="flex flex-col gap-1">
                   <span className="text-xs text-blue-400 font-bold">
                     {Section.level} • SECTION {Section.id}{" "}
                     {Section.status === "locked" && "• LOCKED"}
                   </span>
-                  <h2 className="text-2xl font-bold text-white mt-1">
+                  <Link href={`/learn/${lang}/${sanitizeUrl(Section.title)}/`} className="text-2xl font-bold text-white mt-1">
                     {Section.title} Level
-                  </h2>
+                  </Link>
                 </div>
               </div>
               {Section.status !== "locked" && (
