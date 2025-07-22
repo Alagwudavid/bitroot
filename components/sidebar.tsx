@@ -67,7 +67,7 @@ export function Sidebar() {
     { label: "Vlogs", icon: <Flame />, value: "vlogs", href: "/explore" },
     // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
     { label: "Listen", icon: <Headphones />, value: "listen", href: "/explore/listen" },
-    { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/explore/leaderboard" },
+    { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/leaderboard" },
     { label: "Favourite", icon: <Heart />, value: "favourite", href: "/b/user/favourite" },
   ];
   const [MoreMenuOpen, setMoreMenuOpen] = useState(false);
@@ -150,7 +150,7 @@ const MenuRef = useRef<HTMLDivElement>(null);
                         key={opt.value}
                         onClick={() => {
                           setMoreMenuOpen(false);
-                          router.push(`./${opt.href}`);
+                          router.push(opt.href);
                         }}
                         className={cn(
                           "flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#23263a] text-black dark:text-white transition",
