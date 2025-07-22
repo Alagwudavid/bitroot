@@ -62,9 +62,9 @@ export function Sidebar() {
       href: "/profile" },
   ];
   const MoreMenuOptions = [
+    { label: "Reels", icon: <Flame />, value: "reels", href: "/feed" },
     { label: "Explore", icon: <Compass />, value: "explore", href: "/explore" },
     { label: "Community", icon: <UsersRound />, value: "community", href: "/community" },
-    { label: "Vlogs", icon: <Flame />, value: "vlogs", href: "/explore" },
     // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
     { label: "Listen", icon: <Headphones />, value: "listen", href: "/explore/listen" },
     { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/leaderboard" },
@@ -97,7 +97,7 @@ const MenuRef = useRef<HTMLDivElement>(null);
   return (
     <div
       className={cn(
-        "bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex theme-aware border-gray-300 dark:border-gray-700 z-40",
+        "bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex theme-aware border-gray-300 dark:border-gray-700 z-30",
         isMobile
           ? "fixed bottom-0 left-0 right-0 h-20 flex-row justify-around items-center border-t z-50"
           : "w-20 px-2 lg:w-52 lg:px-4 flex-col dark:border-r sticky top-0"

@@ -62,7 +62,7 @@ export function TopNavigation() {
   return (
     <>
     {!isMobile && (
-      <header className="absolute top-0 z-50 w-full h-14 mt-2 pl-4 md:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
+      <header className="absolute top-0 z-40 w-full h-14 mt-2 pl-4 lg:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
         <div className={"flex items-center"}>
           <img
             src={`/images/placeholder.png`}

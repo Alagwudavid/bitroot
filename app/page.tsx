@@ -1,5 +1,5 @@
-import LearnPage from "./learn/page";
+import MyFeed from "./feed/page";
 
 export default function Home() {
-  return <LearnPage />;
+  return <MyFeed />;
 }
