@@ -1,4 +1,5 @@
 "use client";
+/** @jsxImportSource @emotion/react */
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Users, MessageCircle, TrendingUp, Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
+import { css } from "@emotion/react";
 
 export default function MyFeed() {
   const isMobile = useIsMobile();
@@ -108,7 +110,7 @@ export default function MyFeed() {
 
   return (
     <div className={cn("max-w-7xl w-full mx-auto flex flex-col bg-background text-foreground theme-aware", isMobile ? "absolute top-0 left-0 p-4 overflow-hidden overflow-y-auto h-screen" : "-mt-16 h-[calc(100vh-36px)]")}>
-      <div className="h-10 w-full flex items-center justify-center relative">
+      <div className="h-12 w-full flex items-center justify-center relative">
         <div className="bg-transparent w-full max-w-xl mx-auto absolute top-0 z-50">
           <ul className="flex items-center space-x-6 text-sm text-gray-600 dark:text-[#fafafa] w-fit mx-auto">
             <li className="text-[#1e96fc] dark:hover:text-[#8ddeed] text-lg font-semibold flex flex-col items-center justify-center">
@@ -125,10 +127,10 @@ export default function MyFeed() {
           </ul>
         </div>
       </div>
-      <div className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative", isMobile ? "h-[calc(100vh-144px)]" : "h-[calc(100vh-56px)]")}>
-        <div className="col-span-1 md:col-auto lg:col-span-2 bg-gray-300 h-full">
-          <div className="aspect-square bg-red-400"></div>
-          <Card className="rounded-none dark:bg-[#0d1117] dark:border-gray-700">
+      <div className={cn("flex items-center justify-center relative", isMobile ? "h-[calc(100vh-144px)]" : "h-[calc(100vh-56px)]")}>
+        <div className="flex items-center justify-center gap-6 bg-gray-300 w-fit h-full relative mx-auto">
+          <div className="w-full h-full bg-red-400 relative min-w-[520px] max-w-lg mx-auto">
+          <Card className="absolute bottom-0 w-full rounded-none border-none !bg-transparent bg-gradient-to-t from-[#0d1117] to-transparent">
             <CardContent className="p-4 space-y-4">
               {postMetas.map((post, index) => (
                 <div
@@ -171,13 +173,13 @@ export default function MyFeed() {
               ))}
             </CardContent>
           </Card>
-        </div>
-        {/* {cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative", isMobile ? "h-[calc(100vh-132px)]" : "h-[calc(100vh-56px)]")} */}
-        <div className={cn("bg-red-300/30 h-full", isMobile ? "absolute top-0 right-0 overflow-hidden w-20" : "lg:col-span-1 md:col-[80px]")}>
-          <div className="w-20 grid grid-rows-[1fr_auto_1fr] gap-1 md:grid-rows-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)]">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
+          </div>
+          <div className={cn("bg-red-300/30 h-full w-14 ", isMobile ? "absolute top-0 right-0 overflow-hidden" : "relative")}>
+            <div className="w-full flex flex-col gap-2 items-center justify-center" css={css`background:red;position:absolute;bottom:0;`}>
+              <div css={css`background:grey;width:40px;height:40px;`}>1</div>
+              <div css={css`background:grey;width:40px;height:40px;`}>2</div>
+              <div css={css`background:grey;width:40px;height:40px;`}>3</div>
+            </div>
           </div>
         </div>
       </div>
