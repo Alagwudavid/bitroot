@@ -444,7 +444,7 @@ export default function LanguageSectionsPage() {
             />
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2 cursor-pointer-custom">
               <Eye className="w-4 h-4 text-[#7037e4] dark:text-[#8ddeed]" />{" "}
-              Alexa root
+              Beet root
             </div>
           </div>
         </div>

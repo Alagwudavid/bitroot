@@ -10,7 +10,7 @@ import {
   Sun,
   Moon,
   Monitor,
-  Sparkles,
+  BotMessageSquare,
   Gamepad2,
   Swords,
   SquareRadical,
@@ -29,8 +29,7 @@ import { useIsMobile } from "@/components/ui/use-mobile";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-
-export function TopNavigation() {
+export function MdTopNavigation() {
   const { theme, setTheme } = useTheme();
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("us");
@@ -61,8 +60,8 @@ export function TopNavigation() {
 
   return (
     <>
-    {!isMobile && (
-      <header className="absolute top-0 z-10 w-full h-14 mt-2 pl-4 md:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
+    {isMobile && (
+      <header className="shrink-0 w-full h-14 mt-2 pl-4 md:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
         <div className={"flex items-center"}>
           <img
             src={`/images/placeholder.png`}
@@ -195,7 +194,7 @@ export function TopNavigation() {
           </DropdownMenu>
         </div>
       </header>
-    )}
+      )}
     </>
   );
 }

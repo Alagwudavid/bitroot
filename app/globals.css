@@ -34,7 +34,7 @@ a, button{
 
 @layer base {
   :root {
-    --background: 0 0% 98%; /* #fafafa */
+    --background: 0 0% 100%; /* #fafafa */
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%; /* #ffffff */
     --card-foreground: 0 0% 3.9%;
