@@ -26,7 +26,7 @@ export default function StoriesPage() {
       </div>
       <h1 className="text-2xl font-bold mb-6">Stories</h1>
       <input
-        className="mb-4 p-2 rounded border w-full text-black"
+        className="mb-4 p-2 rounded border w-full text-black dark:text-white"
         placeholder="Search stories..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}

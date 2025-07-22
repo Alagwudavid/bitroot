@@ -41,7 +41,7 @@ export default function AIAgentPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8">
       <h1 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-white">
-        AI Language Lab
+        Select AI agent
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl w-full justify-center">
         {features.map((f) => (

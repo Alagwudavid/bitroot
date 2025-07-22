@@ -24,12 +24,12 @@ a, button{
 
 ::-moz-selection { /* Code for Firefox */
   color: #fff;
-  background: rgb(197 30 58 / 0.7);
+  background: #ff5757;
 }
 
 ::selection {
   color: #fff;
-  background: rgb(197 30 58 / 0.7);
+  background: #ff5757;
 }
 
 @layer base {

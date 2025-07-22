@@ -10,8 +10,8 @@ import {
   Sun,
   Moon,
   Monitor,
-  Sparkles,
-  Gamepad2,
+  BellDot,
+  AlignRight,
   Swords,
   SquareRadical,
 } from "lucide-react";
@@ -62,7 +62,7 @@ export function TopNavigation() {
   return (
     <>
     {!isMobile && (
-      <header className="absolute top-0 z-10 w-full h-14 mt-2 pl-4 md:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
+      <header className="absolute top-0 z-50 w-full h-14 mt-2 pl-4 md:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
         <div className={"flex items-center"}>
           <img
             src={`/images/placeholder.png`}
@@ -73,10 +73,10 @@ export function TopNavigation() {
         <div></div>
         <div className="flex items-center justify-end gap-4">
           <Link
-            href={"/ai-agent"}
-            className="relative h-12 w-12 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 shrink-0 text-lg flex items-center justify-center"
+            href={"/notifications"}
+            className="relative h-10 w-10 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 shrink-0 text-lg flex items-center justify-center border-2 theme-aware"
           >
-            <Sparkles className="size-6" />
+            <BellDot className="size-6" />
           </Link>
           <div className="flex items-center space-x-6">
             <DropdownMenu
@@ -86,12 +86,12 @@ export function TopNavigation() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="relative h-12 w-12 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 overflow-hidden theme-aware"
+                  className="relative h-10 w-10 rounded-full p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 overflow-hidden border-2 theme-aware"
                 >
                   <img
                     src={`/flag/${currentLanguage}.png`}
                     alt={`${currentLanguage} flag`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover rounded-full"
                   />
                 </Button>
               </DropdownMenuTrigger>
@@ -119,31 +119,9 @@ export function TopNavigation() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-12 w-12 rounded p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30"
+                className="relative h-10 w-10 rounded p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 border-2 theme-aware"
               >
-                <svg
-                  className="!size-9 shrink-0"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M20.5 16.75H18.25V14.5C18.25 14.09 17.91 13.75 17.5 13.75C17.09 13.75 16.75 14.09 16.75 14.5V16.75H14.5C14.09 16.75 13.75 17.09 13.75 17.5C13.75 17.91 14.09 18.25 14.5 18.25H16.75V20.5C16.75 20.91 17.09 21.25 17.5 21.25C17.91 21.25 18.25 20.91 18.25 20.5V18.25H20.5C20.91 18.25 21.25 17.91 21.25 17.5C21.25 17.09 20.91 16.75 20.5 16.75Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M22 8.52V3.98C22 2.57 21.36 2 19.77 2H15.73C14.14 2 13.5 2.57 13.5 3.98V8.51C13.5 9.93 14.14 10.49 15.73 10.49H19.77C21.36 10.5 22 9.93 22 8.52Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
-                    fill="currentColor"
-                  />
-                </svg>
+                <AlignRight className="!size-8 shrink-0" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent

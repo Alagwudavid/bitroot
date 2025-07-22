@@ -27,7 +27,7 @@ export default function FlashCardsPage() {
       </div>
       <h1 className="text-2xl font-bold mb-6">Flash Cards</h1>
       <input
-        className="mb-4 p-2 rounded border w-full text-black"
+        className="mb-4 p-2 rounded border w-full text-black dark:text-white"
         placeholder="Search flash cards..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}

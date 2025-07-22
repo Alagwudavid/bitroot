@@ -40,7 +40,7 @@ export default function LessonPage({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-[#181c23] bg-opacity-95 flex flex-col items-center h-screen md:p-8">
+    <div className="fixed inset-0 z-50 bg-[#181c23] bg-opacity-95 flex flex-col items-center min-h-screen md:p-8">
       {/* Progress bar and close */}
       <div className="w-full flex items-center px-8 pt-6">
         <button

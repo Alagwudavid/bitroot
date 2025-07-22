@@ -350,7 +350,7 @@ export default function CoursesPage() {
         </div>
       </div>
       {/* Bottom Navigation (Tabs) */}
-      <div className="fixed md:static bottom-0 left-0 w-full bg-background z-40 border-t md:border-0 flex justify-center py-3 mt-8 md:mt-16">
+      <div className="fixed md:static bottom-0 left-0 w-full bg-background z-10 border-t md:border-0 flex justify-center py-3 mt-8 md:mt-16">
         <div className="flex flex-row gap-2 md:gap-4 overflow-x-auto px-2 md:px-0">
           {categories.map((category) => (
             <Button

@@ -26,7 +26,7 @@ export default function ListenPage() {
       </div>
       <h1 className="text-2xl font-bold mb-6">Listen</h1>
       <input
-        className="mb-4 p-2 rounded border w-full text-black"
+        className="mb-4 p-2 rounded border w-full text-black dark:text-white"
         placeholder="Search podcasts..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}

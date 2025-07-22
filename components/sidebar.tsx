@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { BookOpen, Users, Earth, PlayCircle, User } from "lucide-react";
+import { AudioWaveform, Compass, Video, Trophy, Heart, Image, Podcast, Flame, Headphones, UsersRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useRouter } from "next/navigation";
 
 export function Sidebar() {
+  const router = useRouter();
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const menuItems = [
@@ -19,27 +22,35 @@ export function Sidebar() {
             </svg>,
       href: "/learn"
     },
-    { id: "community",
-      label: "Community",
-      icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M9 2C6.38 2 4.25 4.13 4.25 6.75C4.25 9.32 6.26 11.4 8.88 11.49C8.96 11.48 9.04 11.48 9.1 11.49C9.12 11.49 9.13 11.49 9.15 11.49C9.16 11.49 9.16 11.49 9.17 11.49C11.73 11.4 13.74 9.32 13.75 6.75C13.75 4.13 11.62 2 9 2Z" fill="currentColor"/>
-      <path d="M14.0809 14.1489C11.2909 12.2889 6.74094 12.2889 3.93094 14.1489C2.66094 14.9989 1.96094 16.1489 1.96094 17.3789C1.96094 18.6089 2.66094 19.7489 3.92094 20.5889C5.32094 21.5289 7.16094 21.9989 9.00094 21.9989C10.8409 21.9989 12.6809 21.5289 14.0809 20.5889C15.3409 19.7389 16.0409 18.5989 16.0409 17.3589C16.0309 16.1289 15.3409 14.9889 14.0809 14.1489Z" fill="currentColor"/>
-      <path d="M19.9894 7.33815C20.1494 9.27815 18.7694 10.9781 16.8594 11.2081C16.8494 11.2081 16.8494 11.2081 16.8394 11.2081H16.8094C16.7494 11.2081 16.6894 11.2081 16.6394 11.2281C15.6694 11.2781 14.7794 10.9681 14.1094 10.3981C15.1394 9.47815 15.7294 8.09815 15.6094 6.59815C15.5394 5.78815 15.2594 5.04815 14.8394 4.41815C15.2194 4.22815 15.6594 4.10815 16.1094 4.06815C18.0694 3.89815 19.8194 5.35815 19.9894 7.33815Z" fill="currentColor"/>
-      <path d="M21.9883 16.5904C21.9083 17.5604 21.2883 18.4004 20.2483 18.9704C19.2483 19.5204 17.9883 19.7804 16.7383 19.7504C17.4583 19.1004 17.8783 18.2904 17.9583 17.4304C18.0583 16.1904 17.4683 15.0004 16.2883 14.0504C15.6183 13.5204 14.8383 13.1004 13.9883 12.7904C16.1983 12.1504 18.9783 12.5804 20.6883 13.9604C21.6083 14.7004 22.0783 15.6304 21.9883 16.5904Z" fill="currentColor"/>
-      </svg>,
-      href: "/community" },
+    { id: "beet-ai",
+      label: "Beet Ai",
+      icon: <AudioWaveform className="shrink-0 size-8" />,
+      href: "/beet" },
     { id: "courses", 
       label: "Courses", 
       icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M21.15 6.17C20.74 5.95 19.88 5.72 18.71 6.54L17.24 7.58C17.13 4.47 15.78 3.25 12.5 3.25H6.5C3.08 3.25 1.75 4.58 1.75 8V16C1.75 18.3 3 20.75 6.5 20.75H12.5C15.78 20.75 17.13 19.53 17.24 16.42L18.71 17.46C19.33 17.9 19.87 18.04 20.3 18.04C20.67 18.04 20.96 17.93 21.15 17.83C21.56 17.62 22.25 17.05 22.25 15.62V8.38C22.25 6.95 21.56 6.38 21.15 6.17ZM11 11.38C9.97 11.38 9.12 10.54 9.12 9.5C9.12 8.46 9.97 7.62 11 7.62C12.03 7.62 12.88 8.46 12.88 9.5C12.88 10.54 12.03 11.38 11 11.38Z" fill="currentColor"/>
       </svg>, 
       href: "/courses" },
-    { id: "explore", 
-      label: "Explore", 
-      icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.9808 3.02084C20.1108 2.15084 18.8808 1.81084 17.6908 2.11084L7.89084 4.56084C6.24084 4.97084 4.97084 6.25084 4.56084 7.89084L2.11084 17.7008C1.81084 18.8908 2.15084 20.1208 3.02084 20.9908C3.68084 21.6408 4.55084 22.0008 5.45084 22.0008C5.73084 22.0008 6.02084 21.9708 6.30084 21.8908L16.1108 19.4408C17.7508 19.0308 19.0308 17.7608 19.4408 16.1108L21.8908 6.30084C22.1908 5.11084 21.8508 3.88084 20.9808 3.02084ZM12.0008 15.8808C9.86084 15.8808 8.12084 14.1408 8.12084 12.0008C8.12084 9.86084 9.86084 8.12084 12.0008 8.12084C14.1408 8.12084 15.8808 9.86084 15.8808 12.0008C15.8808 14.1408 14.1408 15.8808 12.0008 15.8808Z" fill="currentColor"/>
-      </svg>, 
-      href: "/explore" },
+    { id: "More", 
+      label: "Menu", 
+      icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
+      d="M20.5 16.75H18.25V14.5C18.25 14.09 17.91 13.75 17.5 13.75C17.09 13.75 16.75 14.09 16.75 14.5V16.75H14.5C14.09 16.75 13.75 17.09 13.75 17.5C13.75 17.91 14.09 18.25 14.5 18.25H16.75V20.5C16.75 20.91 17.09 21.25 17.5 21.25C17.91 21.25 18.25 20.91 18.25 20.5V18.25H20.5C20.91 18.25 21.25 17.91 21.25 17.5C21.25 17.09 20.91 16.75 20.5 16.75Z"
+      fill="currentColor"
+    />
+    <path
+      d="M22 8.52V3.98C22 2.57 21.36 2 19.77 2H15.73C14.14 2 13.5 2.57 13.5 3.98V8.51C13.5 9.93 14.14 10.49 15.73 10.49H19.77C21.36 10.5 22 9.93 22 8.52Z"
+      fill="currentColor"
+    />
+    <path
+      d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
+      fill="currentColor"
+    />
+    <path
+      d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
+      fill="currentColor"
+    />
+  </svg>, },
     { id: "profile", 
       label: "Profile", 
       icon: <Avatar className="h-10 w-10 rounded-md">
@@ -50,11 +61,43 @@ export function Sidebar() {
     </Avatar>, 
       href: "/profile" },
   ];
+  const MoreMenuOptions = [
+    { label: "Explore", icon: <Compass />, value: "explore", href: "/explore" },
+    { label: "Community", icon: <UsersRound />, value: "community", href: "/community" },
+    { label: "Vlogs", icon: <Flame />, value: "vlogs", href: "/explore" },
+    // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
+    { label: "Listen", icon: <Headphones />, value: "listen", href: "/explore/listen" },
+    { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/explore/leaderboard" },
+    { label: "Favourite", icon: <Heart />, value: "favourite", href: "/b/user/favourite" },
+  ];
+  const [MoreMenuOpen, setMoreMenuOpen] = useState(false);
+  // const [MoreSelected, setMoreSelected] = useState("Explore");
+  const MoreBtnRef = useRef<HTMLButtonElement>(null);
+
+const MenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        MenuRef.current &&
+        !MenuRef.current.contains(event.target as Node) &&
+        MoreBtnRef.current &&
+        !MoreBtnRef.current.contains(event.target as Node)
+      ) {
+        setMoreMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div
       className={cn(
-        "bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex theme-aware border-gray-300 dark:border-gray-700",
+        "bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex theme-aware border-gray-300 dark:border-gray-700 z-40",
         isMobile
           ? "fixed bottom-0 left-0 right-0 h-20 flex-row justify-around items-center border-t z-50"
           : "w-20 px-2 lg:w-52 lg:px-4 flex-col dark:border-r sticky top-0"
@@ -76,8 +119,54 @@ export function Sidebar() {
           {menuItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname.startsWith(item.href);
+            const isMore = item.id === "More";
             return (
-              <li key={item.id} className={"w-full"}>
+              <li key={item.id} className="w-full relative">
+            {isMore ? (
+              <>
+                <button
+                  ref={MoreBtnRef}
+                  onClick={() => setMoreMenuOpen((v) => !v)}
+                  className={cn(
+                    "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
+                    isActive
+                      ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
+                      : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
+                    isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
+                  )}
+                >
+                  {item.icon}
+                  <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
+                    {item.label}
+                  </span>
+                </button>
+                {MoreMenuOpen && (
+                  <div 
+                  ref={MenuRef}
+                  className={cn("absolute z-10 bg-white dark:bg-[#181c2a] rounded-2xl shadow-xl border p-2 w-56 ", isMobile ? "right-0 bottom-full" : "left-full top-0 mt-2 ml-2")}
+                  >
+                    {MoreMenuOptions.map((opt) => (
+                      <button
+                        key={opt.value}
+                        onClick={() => {
+                          setMoreMenuOpen(false);
+                          router.push(`./${opt.href}`);
+                        }}
+                        className={cn(
+                          "flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#23263a] text-black dark:text-white transition",
+                          isActive
+                          ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
+                          : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
+                        )}
+                      >
+                        {opt.icon}
+                        <span className="ml-3 flex-1 text-left">{opt.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
                 <Link href={item.href} legacyBehavior>
                   <a
                     className={cn(
@@ -93,10 +182,9 @@ export function Sidebar() {
                       {item.label}
                     </span>
                   </a>
-                </Link>
+                </Link>)}
               </li>
-            );
-          })}
+          )})}
         </ul>
       </nav>
     </div>
