@@ -98,7 +98,7 @@ function getDayGroup(dateStr: string) {
     if (diffDays === 0) return "Today";
     if (diffDays === 1) return "Yesterday";
     if (diffDays < 7) return "Last Week";
-    return date.toLocaleDateString();
+    return date.toISOString().split("T")[0];
 }
 
 function groupNotificationsByDay(list: typeof notifications) {
