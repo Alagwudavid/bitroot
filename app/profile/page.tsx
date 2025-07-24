@@ -8,7 +8,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
-  Calendar,
+  CalendarDays,
   Trophy,
   Flame,
   Zap,
@@ -227,12 +227,12 @@ export default function ProfilePage() {
                   2 following
                 </div>
                 <div className="text-gray-600 dark:text-[#fafafa]/70 flex items-center gap-2">
-                  <Calendar className="size-4" /> Joined March, 2024
+                  <CalendarDays className="size-4" /> Joined March, 2024
                 </div>
               </div>
               {/* <div className="flex items-center space-x-4 mt-2">
                 <div className="flex items-center space-x-1 text-sm text-gray-500 dark:text-[#fafafa]/60">
-                  <Calendar className="w-4 h-4" />
+                  <CalendarDays className="w-4 h-4" />
                   <span>Joined {userStats.joinDate}</span>
                 </div>
               </div> */}
