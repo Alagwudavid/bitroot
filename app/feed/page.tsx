@@ -10,7 +10,13 @@ import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import styled from "@emotion/styled";
 
+// export const metadata = {
+//   title: "About Us – My App",
+//   description: "Learn more about our team and mission.",
+// };
+
 export default function MyFeed() {
+  const [value, setValue] = useState(50);
   const isMobile = useIsMobile();
   const communities = [
     {
@@ -70,7 +76,6 @@ export default function MyFeed() {
       moderators: "30",
     },
   ];
-
   const postMetas = [
     {
       user: "Amara K.",
@@ -110,157 +115,219 @@ export default function MyFeed() {
     },
   ];
 
-  const ReelActionDiv = styled.div`
+  const Btd_ReelContainer = styled.section`
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - var(--btd-topheader));
+    overflow: hidden scroll;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
+    margin-top: var(--top-margin-free-scroll-override, 0px);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  `;
+  const Btd_ReelSequence = styled.section`
+    position: relative;
+    width: fit-content;
+    height: 100%;
+    background: #fafafa;
+    ${isMobile ?
+      `
+        min-width: 315px;
+        min-height: 560px;
+       `
+      :
+      `
+      min-width: 354px;
+        min-height: 629px;
+        `
+    }
+    // min-width: 315px;
+    // min-height: 560px;
+    // max-width: 354px;
+    // max-height: 629px;
+    aspect-ratio: var(--btd-ratio);
+    // margin-top: 6% !important;
+    margin: 0 auto;
+    contain: size layout;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  `;
+
+  const Btd_ReelPlayer = styled.section`
+    display: flex;
+    background: #f87171;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    ${isMobile ?
+      `
+        min-width: 315px;
+        min-height: 560px;
+       `
+      :
+      `
+      min-width: 354px;
+        min-height: 629px;
+        `
+    }
+    // max-width: 354px;
+    // max-height: 629px;
+    // min-width: 315px;
+    // min-height: 560px;
+  `;
+
+  const Btd_ReelPlayer_EngagementPanel = styled.div`
+    align-items: center;
+    display: flexbox;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    pointer-events: auto;
+    width: 62px;
+    height: 100%;
+    padding: 0 12px 0 12px;
+  `;
+
+  const Btd_ReelAction_Div = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 8px;
   `;
-  const ReelActionBtn = styled.button`
+  const Btd_ReelAction_Btn = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 50px;
     height: 50px;
   `;
-    const ReelActionSpan = styled.span`
+    const Btd_ReelAction_Span = styled.span`
     font-size: 14px;
     line-height: 1.5;
   `;
-
   return (
-    <div className={cn("max-w-7xl w-full mx-auto flex flex-col bg-background text-foreground theme-aware", isMobile ? "absolute top-0 left-0 p-4 overflow-hidden overflow-y-auto h-screen" : "-mt-16 h-[calc(100vh-36px)]")}>
-      {/* <div className="h-10 w-full shrink-0 flex items-center justify-center relative">
-        <div className="bg-transparent w-full mx-auto">
-          <ul className="flex items-center space-x-6 text-sm text-gray-600 dark:text-[#fafafa] w-fit mx-auto absolute top-0 z-50">
-            <li className="text-[#1e96fc] dark:hover:text-[#8ddeed] text-lg font-semibold flex flex-col items-center justify-center">
-              <Link href="/feed">Following</Link>
-              <span className="h-1 w-4 rounded-lg bg-gray-500 dark:bg-[#1e96fc]/70"></span>
-            </li>
-            <li className="hover:text-[#1e96fc] dark:hover:text-[#8ddeed] text-lg">
-              <Link href="/explore">For you</Link>
-            </li>
-            <li className="hover:text-[#1e96fc] dark:hover:text-[#8ddeed] text-lg">
-              <Link href="/notifications">Gallery</Link>
-            </li>
-
-          </ul>
-        </div>
-      </div> */}
-      <div className={cn("flex flex-col relative overflow-hidden w-full overflow-y-hidden shrink-0", isMobile ? "h-[calc(100vh-220px)]" : "h-[calc(100vh-26px)]")}>
-        {postMetas.map((post, index) => (
-          <section key={index} className="flex items-center justify-center gap-6 h-full shrink-0 relative mx-auto">
-            <div className="flex items-center justify-center w-full h-fit bg-red-400 relative min-w-[420px] rounded-xl overflow-hidden max-w-lg mx-auto">
-              <canvas width={420} height={640}></canvas>
-              <a className="absolute inset-0 z-10 group/ReelPlayer">
-                <div className="relative h-full">
-                  {/* Top bar (hidden by default) */}
-                  <div className="absolute h-10 top-0 z-20 group-hover/ReelPlayer:flex hidden items-center justify-between w-full px-4 !bg-transparent bg-gradient-to-b from-[#0d1117] to-transparent">
-                    <ReelActionBtn className="!w-8 !h-8 items-center justify-center text-white hover:text-sky-300">
-                      <VolumeX className="size-5" />
-                    </ReelActionBtn>
-                    <ReelActionBtn className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300">
-                      <Ellipsis className="size-5" />
-                    </ReelActionBtn>
-                  </div>
-                    <ReelActionBtn className="group-hover/ReelPlayer:!flex !hidden backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white hover:text-sky-300">
-                      <Play className="size-8" />
-                    </ReelActionBtn>
-                </div>
-              </a>
-              <Card className="absolute bottom-0 z-20 w-full rounded-none border-none !bg-transparent bg-gradient-to-t from-[#0d1117] to-transparent">
-                <CardContent className="p-4 space-y-4">
-                    <div className="">
-                      <div className="flex flex-col items-start space-y-3">
-                        <div className="flex items-start space-x-3">
-                          <ReelActionBtn className="!w-10 !h-10 rounded-full backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30">
-                            <Avatar className="w-full h-full">
-                              <AvatarImage
-                                src={post.avatar || "/placeholder.svg"}
-                                alt={post.user}
-                              />
-                              <AvatarFallback className="bg-[#a2d6f9] text-[#072ac8] dark:bg-[#7037e4] dark:text-[#fafafa]">
-                                {post.user.charAt(0)}
-                              </AvatarFallback>
-                            </Avatar>
-                          </ReelActionBtn>
-                          <div className="flex flex-col items-start">
-                            <div className="flex items-center space-x-2">
-                              <span className="font-medium text-sm text-white">
-                                {post.user}
-                              </span>
-                              <span className="text-xs text-white">
-                                in {post.community}
-                              </span>
-                            </div>
-                            <span className="text-xs text-white mb-1">{post.time}</span>
-                          </div>
+    <div className={cn(
+      "max-w-7xl w-full h-full mx-auto flex flex-col", 
+      )}>
+        <Btd_ReelContainer>
+          <div className={cn("flex flex-col space-y-3 relative overflow-hidden w-full overflow-y-scroll shrink-0", 
+            // isMobile ? "h-[calc(100vh-220px)]" : "h-[calc(100vh-26px)]"
+            )}>
+            {postMetas.map((post, index) => (
+              <Btd_ReelSequence key={index} id={`${index}`} >
+                <div className="flex items-center gap-6 h-full shrink-0 relative">
+                  <div className="flex-1 flex w-fit h-full bg-black relative rounded-xl">
+                    <Btd_ReelPlayer className="rounded-xl"></Btd_ReelPlayer>
+                    <a className="absolute inset-0 z-10 group/Btd_ReelPlayer_ rounded-xl overflow-hidden">
+                      <div className="relative w-full h-full">
+                        <div className="absolute h-14 top-0 z-20 group-hover/Btd_ReelPlayer_:flex hidden items-center justify-between w-full px-4 !bg-transparent bg-gradient-to-b from-[#0d1117] to-transparent transition-all duration-500 ease-in">
+                          <Btd_ReelAction_Btn className="!w-8 !h-8 items-center justify-center text-white hover:text-sky-300">
+                            <VolumeX className="size-8" />
+                          </Btd_ReelAction_Btn>
+                          <Btd_ReelAction_Btn className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300">
+                            <Ellipsis className="size-8" />
+                          </Btd_ReelAction_Btn>
                         </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-base text-white mb-2 line-clamp-2">
-                            {post.content}
-                          </p>
-                          <div className="flex flex-col space-y-4 text-xs text-gray-500 dark:text-[#fafafa]/50">
-                            <div className="flex items-center space-x-3">
-                              <ReelActionDiv>
-                                <ReelActionBtn className="!w-5 !h-5 rounded overflow-hidden backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30">
-                                  <img className="w-full h-full text-white" src="/images/happy_beet.jpg" alt="Follow" />
-                                </ReelActionBtn>
-                              </ReelActionDiv>
-                              <span className="text-sm text-white hover:text-sky-300 mb-1 line-clamp-1">
-                                {post.audio}
-                              </span>
-                            </div>
-                            <progress value={35} max={100} className="w-full rounded-xl h-1" />
-                          </div>
-                        </div>
+                          <Btd_ReelAction_Btn className="group-hover/Btd_ReelPlayer_:!flex !hidden backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117] rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white hover:text-sky-300 transition-all duration-500 ease-in">
+                            <Play className="size-8" />
+                          </Btd_ReelAction_Btn>
                       </div>
+                    </a>
+                    <Card className="absolute bottom-0 z-20 w-full rounded-b-xl border-none !bg-transparent bg-gradient-to-t from-[#0d1117] to-transparent overflow-hidden">
+                      <CardContent className="p-0 space-y-4">
+                          <div className="">
+                            <div className="flex flex-col items-start space-y-1">
+                              <div className="flex items-start space-x-2 px-2 w-full">
+                                <Btd_ReelAction_Btn className="!w-10 !h-10 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                                  <Avatar className="w-full h-full">
+                                    <AvatarImage
+                                      src={post.avatar || "/placeholder.svg"}
+                                      alt={post.user}
+                                    />
+                                    <AvatarFallback className="bg-[#a2d6f9] text-[#072ac8] dark:bg-[#7037e4] dark:text-[#fafafa]">
+                                      {post.user.charAt(0)}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                </Btd_ReelAction_Btn>
+                                <div className="flex flex-col items-start">
+                                  <div className="flex items-center space-x-2">
+                                    <span className="font-medium text-sm text-white">
+                                      {post.user}
+                                    </span>
+                                    <span className="text-xs text-white">
+                                      in {post.community}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-white mb-1">{post.time}</span>
+                                </div>
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-base text-white mb-2 line-clamp-2 px-2">
+                                  {post.content}
+                                </p>
+                                <div className="flex flex-col space-y-2 text-xs text-gray-500 dark:text-[#fafafa]/50">
+                                  <div className="flex items-center space-x-3 px-2">
+                                    <Btd_ReelAction_Div>
+                                      <Btd_ReelAction_Btn className="!w-5 !h-5 rounded overflow-hidden backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                                        <img className="w-full h-full text-white" src="/images/happy_beet.jpg" alt="Follow" />
+                                      </Btd_ReelAction_Btn>
+                                    </Btd_ReelAction_Div>
+                                    <span className="text-sm text-white hover:text-sky-300 mb-1 line-clamp-1">
+                                      {post.audio}
+                                    </span>
+                                  </div>
+                                  <input type="range" min={1} max={100} value={value} onChange={(e) => setValue(Number(e.target.value))} className="w-full rounded-xl h-1.5" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                  <Btd_ReelPlayer_EngagementPanel className={cn("", isMobile ? "absolute top-0 right-0 overflow-hidden" : "relative")}>
+                    <div className="w-full flex flex-col gap-2 items-center justify-center">
+                      <Btd_ReelAction_Div>
+                        <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                          <Heart className="size-6" />
+                        </Btd_ReelAction_Btn>
+                        <Btd_ReelAction_Span className="text-black dark:text-white">{post.likes}</Btd_ReelAction_Span>
+                      </Btd_ReelAction_Div>
+                      <Btd_ReelAction_Div>
+                        <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                          <MessageCircleMore className="size-6" />
+                        </Btd_ReelAction_Btn>
+                        <Btd_ReelAction_Span className="text-black dark:text-white">{post.comments}</Btd_ReelAction_Span>
+                      </Btd_ReelAction_Div>
+                      <Btd_ReelAction_Div>
+                        <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                          <Bookmark className="size-6" />
+                        </Btd_ReelAction_Btn>
+                        <Btd_ReelAction_Span className="text-black dark:text-white">{post.shares}</Btd_ReelAction_Span>
+                      </Btd_ReelAction_Div>
                     </div>
-                </CardContent>
-              </Card>
-            </div>
-            <div className={cn("h-full w-16 flex flex-col justify-end", isMobile ? "absolute top-0 right-0 overflow-hidden" : "relative")}>
-              <div className="w-full flex flex-col gap-2 items-center justify-center">
-                <ReelActionDiv>
-                  <ReelActionBtn className="rounded-full backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30">
-                    <Heart className="size-6 text-white" />
-                  </ReelActionBtn>
-                  <ReelActionSpan className="text-black dark:text-white">{post.likes}</ReelActionSpan>
-                </ReelActionDiv>
-                <ReelActionDiv>
-                  <ReelActionBtn className="rounded-full backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30">
-                    <MessageCircleMore className="size-6 text-white" />
-                  </ReelActionBtn>
-                  <ReelActionSpan className="text-black dark:text-white">{post.comments}</ReelActionSpan>
-                </ReelActionDiv>
-                <ReelActionDiv>
-                  <ReelActionBtn className="rounded-full backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30">
-                    <Bookmark className="size-6 text-white" />
-                  </ReelActionBtn>
-                  <ReelActionSpan className="text-black dark:text-white">{post.shares}</ReelActionSpan>
-                </ReelActionDiv>
-              </div>
-              <div className="h-40 w-full">
-              </div>
-            </div>
-          </section>
-        ))}
+                    <div className="h-40 w-full">
+                    </div>
+                  </Btd_ReelPlayer_EngagementPanel>
+                </div>
+              </Btd_ReelSequence>
+            ))}
+          </div>
+        </Btd_ReelContainer>
         <div className={cn("w-16 justify-end absolute bottom-1/2 right-8 overflow-hidden", isMobile ? "hidden" : "flex flex-col")}>
           <div className="w-full flex flex-col gap-2 items-center justify-center">
-            <ReelActionDiv>
-              <ReelActionBtn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
-                <ChevronUp className="size-6 text-white" />
-              </ReelActionBtn>
-            </ReelActionDiv>
-            <ReelActionDiv>
-              <ReelActionBtn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
-                <ChevronDown className="size-6 text-white" />
-              </ReelActionBtn>
-            </ReelActionDiv>
+            <Btd_ReelAction_Div>
+              <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
+                <ChevronUp className="size-6" />
+              </Btd_ReelAction_Btn>
+            </Btd_ReelAction_Div>
+            <Btd_ReelAction_Div>
+              <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
+                <ChevronDown className="size-6" />
+              </Btd_ReelAction_Btn>
+            </Btd_ReelAction_Div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

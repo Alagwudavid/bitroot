@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --btd-topheader: 56px;
+  --btd-ratio: 0.5625;
+  --btd-reelPlayer-width: calc(100vh - 260px);
+  --btd-reelPlayer-height: min(calc((100vh - 96px)* 0.5625),calc(100vw - 240px - 192px));
+}
+
 body{
   cursor: url('/cursor/cursor.svg') 12 12, auto;
 }

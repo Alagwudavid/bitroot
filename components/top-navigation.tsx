@@ -61,8 +61,7 @@ export function TopNavigation() {
 
   return (
     <>
-    {!isMobile && (
-      <header className="absolute top-0 z-40 w-full h-14 mt-2 pl-4 lg:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
+      <header className="fixed top-0 z-40 w-full h-14 pl-5 lg:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware">
         <div className={"flex items-center"}>
           <img
             src={`/images/placeholder.png`}
@@ -74,7 +73,7 @@ export function TopNavigation() {
         <div className="flex items-center justify-end gap-4">
           <Link
             href={"/notifications"}
-            className="relative h-10 w-10 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 shrink-0 text-lg flex items-center justify-center border-2 theme-aware"
+            className="relative h-10 w-10 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 shrink-0 text-lg flex items-center justify-center border theme-aware"
           >
             <BellDot className="size-6" />
           </Link>
@@ -86,7 +85,7 @@ export function TopNavigation() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className="relative h-10 w-10 rounded-full p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 overflow-hidden border-2 theme-aware"
+                  className="relative h-10 w-10 rounded-full p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 overflow-hidden border theme-aware"
                 >
                   <img
                     src={`/flag/${currentLanguage}.png`}
@@ -119,7 +118,7 @@ export function TopNavigation() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="relative h-10 w-10 rounded p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 border-2 theme-aware"
+                className="relative h-10 w-10 rounded p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 border theme-aware"
               >
                 <AlignRight className="!size-8 shrink-0" />
               </Button>
@@ -173,7 +172,6 @@ export function TopNavigation() {
           </DropdownMenu>
         </div>
       </header>
-    )}
     </>
   );
 }
