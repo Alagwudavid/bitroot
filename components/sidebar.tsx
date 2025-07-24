@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { AudioWaveform, Compass, Video, Trophy, Heart, Image, Podcast, Flame, Headphones, UsersRound } from "lucide-react";
+import { House, AudioWaveform, Compass, Video, Trophy, Heart, Image, Podcast, Flame, Headphones, UsersRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -14,6 +14,13 @@ export function Sidebar() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const menuItems = [
+    { id: "Home",
+      label: "Home",
+      icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" clipRule="evenodd" d="M2.5192 7.82274C2 8.77128 2 9.91549 2 12.2039V13.725C2 17.6258 2 19.5763 3.17157 20.7881C4.34315 22 6.22876 22 10 22H14C17.7712 22 19.6569 22 20.8284 20.7881C22 19.5763 22 17.6258 22 13.725V12.2039C22 9.91549 22 8.77128 21.4808 7.82274C20.9616 6.87421 20.0131 6.28551 18.116 5.10812L16.116 3.86687C14.1106 2.62229 13.1079 2 12 2C10.8921 2 9.88939 2.62229 7.88403 3.86687L5.88403 5.10813C3.98695 6.28551 3.0384 6.87421 2.5192 7.82274ZM9.44661 15.3975C9.11385 15.1508 8.64413 15.2206 8.39747 15.5534C8.15082 15.8862 8.22062 16.3559 8.55339 16.6025C9.5258 17.3233 10.715 17.75 12 17.75C13.285 17.75 14.4742 17.3233 15.4466 16.6025C15.7794 16.3559 15.8492 15.8862 15.6025 15.5534C15.3559 15.2206 14.8862 15.1508 14.5534 15.3975C13.825 15.9373 12.9459 16.25 12 16.25C11.0541 16.25 10.175 15.9373 9.44661 15.3975Z" fill="currentColor"/>
+            </svg>,
+      href: "/home"
+    },
     { id: "learn",
       label: "Learn",
       icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -22,10 +29,10 @@ export function Sidebar() {
             </svg>,
       href: "/learn"
     },
-    { id: "beet-ai",
-      label: "Beet Ai",
-      icon: <AudioWaveform className="shrink-0 size-8" />,
-      href: "/beet" },
+    // { id: "beet-ai",
+    //   label: "Beet Ai",
+    //   icon: <AudioWaveform className="shrink-0 size-8" />,
+    //   href: "/beet" },
     { id: "courses", 
       label: "Courses", 
       icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +69,7 @@ export function Sidebar() {
       href: "/profile" },
   ];
   const MoreMenuOptions = [
-    { label: "Reels", icon: <Flame />, value: "reels", href: "/feed" },
+    // { label: "Reels", icon: <Flame />, value: "reels", href: "/feed" },
     { label: "Explore", icon: <Compass />, value: "explore", href: "/explore" },
     { label: "Community", icon: <UsersRound />, value: "community", href: "/community" },
     // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
@@ -105,6 +112,26 @@ const MenuRef = useRef<HTMLDivElement>(null);
     >
       {!isMobile && (
         <div className="mt-4 mb-5 h-11 w-11 mx-auto shrink-0 overflow-hidden">
+        </div>
+      )}
+      {!isMobile && (
+        <div className="mt-4 mb-5 w-full shrink-0 overflow-hidden">
+          <Link href={"/beet"} id="beet-ai" legacyBehavior>
+                  <a
+                    className={cn(
+                      "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
+                      pathname.startsWith("/beet")
+                        ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
+                        : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
+                      isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
+                    )}
+                  >
+                    <AudioWaveform className="shrink-0 size-8" />
+                    <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
+                      Beet Ai
+                    </span>
+                  </a>
+                </Link>
         </div>
       )}
       <nav className="flex-1 w-full">

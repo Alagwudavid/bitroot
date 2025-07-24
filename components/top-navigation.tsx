@@ -124,7 +124,7 @@ export function TopNavigation() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
-              className="w-56 rounded-xl theme-aware"
+              className="w-72 rounded-xl theme-aware"
               align="end"
             >
               <DropdownMenuItem
@@ -142,27 +142,34 @@ export function TopNavigation() {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onClick={() => setTheme("light")}
-                className="rounded-lg theme-aware"
+              <div
+                className="rounded-lg theme-aware !bg-transparent hover:!bg-transparent flex flex-col items-start px-2 py-1 gap-1"
               >
-                <Sun className="mr-2 h-4 w-4" />
-                Light mode
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => setTheme("dark")}
-                className="rounded-lg theme-aware"
-              >
-                <Moon className="mr-2 h-4 w-4" />
-                Dark mode
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => setTheme("system")}
-                className="rounded-lg theme-aware"
-              >
-                <Monitor className="mr-2 h-4 w-4" />
-                System
-              </DropdownMenuItem>
+                <span className="font-medium">Theme</span>
+                <div className="flex items-center justify-between p-1 rounded-md border gap-0 w-full">
+                <DropdownMenuItem
+                  onClick={() => setTheme("light")}
+                  className="p-1 px-3 rounded-md theme-aware"
+                >
+                  <Sun className="h-4 w-4" />
+                  Light
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setTheme("dark")}
+                  className="p-1 px-3 rounded-md theme-aware"
+                >
+                  <Moon className="h-4 w-4" />
+                  Dark
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => setTheme("system")}
+                  className="p-1 px-3 rounded-md theme-aware"
+                >
+                  <Monitor className="h-4 w-4" />
+                  System
+                </DropdownMenuItem>
+                </div>
+              </div>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="rounded-lg text-red-600 theme-aware">
                 <LogOut className="mr-2 h-4 w-4" />

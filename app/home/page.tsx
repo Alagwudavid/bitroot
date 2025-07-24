@@ -15,14 +15,36 @@ import styled from "@emotion/styled";
 //   description: "Learn more about our team and mission.",
 // };
 
-export default function MyFeed() {
+export default function Home() {
   const [value, setValue] = useState(50);
   const [currentReelIndex, setCurrentReelIndex] = useState(0);
   const [isButtonScroll, setIsButtonScroll] = useState(false);
   const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAutoScroll, setIsAutoScroll] = useState(false);
   const reelContainerRef = useRef<HTMLElement | null>(null);
   const reelRefs = useRef<(HTMLElement | null)[]>([]);
+  const menuRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useIsMobile();
+  
+  // Handle outside clicks for the menu
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    }
+    
+    // Add event listener when menu is open
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
 
   const postMetas = [
     {
@@ -401,12 +423,29 @@ export default function MyFeed() {
                           <Btd_ReelAction_Btn className="!w-8 !h-8 items-center justify-center text-white hover:text-sky-300 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
                             <VolumeX className="size-6" />
                           </Btd_ReelAction_Btn>
-                          <div className="relative group/menu">
-                            <Btd_ReelAction_Btn className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                          <div className="relative">
+                            <Btd_ReelAction_Btn 
+                              className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsMenuOpen(!isMenuOpen);
+                              }}
+                            >
                               <Ellipsis className="size-6" />
                             </Btd_ReelAction_Btn>
-                            <div className="absolute right-0 top-full mt-2 hidden group-hover/menu:block z-50 bg-[#1a1a1a] rounded-lg shadow-lg w-64 overflow-hidden">
-                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                            <div 
+                              ref={menuRef}
+                              className={`absolute right-0 top-full mt-2 ${isMenuOpen ? 'block' : 'hidden'} z-50 bg-[#1a1a1a] rounded-lg shadow-lg w-64 overflow-hidden`}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <div 
+                                className="p-3 flex items-center justify-between border-b border-gray-800 cursor-pointer hover:bg-[#2a2a2a] transition-colors duration-200"
+                                onClick={() => {
+                                  // Handle quality selection
+                                  console.log('Quality selected');
+                                  setIsMenuOpen(false);
+                                }}
+                              >
                                 <div className="flex items-center gap-3">
                                   <div className="flex items-center justify-center w-6 h-6">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
@@ -441,7 +480,7 @@ export default function MyFeed() {
                                   <span className="text-white text-sm font-medium">Captions</span>
                                 </div>
                               </div>
-                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800 cursor-pointer hover:bg-[#2a2a2a] transition-colors duration-200">
                                 <div className="flex items-center gap-3">
                                   <div className="flex items-center justify-center w-6 h-6">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
@@ -451,8 +490,14 @@ export default function MyFeed() {
                                   </div>
                                   <span className="text-white text-sm font-medium">Auto scroll</span>
                                 </div>
-                                <div className="w-12 h-6 bg-gray-700 rounded-full flex items-center p-1">
-                                  <div className="w-4 h-4 bg-gray-400 rounded-full ml-0"></div>
+                                <div 
+                                  className={`w-12 h-6 ${isAutoScroll ? 'bg-blue-600' : 'bg-gray-700'} rounded-full flex items-center p-1 transition-colors duration-200`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setIsAutoScroll(!isAutoScroll);
+                                  }}
+                                >
+                                  <div className={`w-4 h-4 ${isAutoScroll ? 'bg-white ml-6' : 'bg-gray-400 ml-0'} rounded-full transition-all duration-200`}></div>
                                 </div>
                               </div>
                               <div className="p-3 flex items-center justify-between border-b border-gray-800">
@@ -476,7 +521,14 @@ export default function MyFeed() {
                                   <span className="text-white text-sm font-medium">Not interested</span>
                                 </div>
                               </div>
-                              <div className="p-3 flex items-center justify-between">
+                              <div 
+                                className="p-3 flex items-center justify-between cursor-pointer hover:bg-[#2a2a2a] transition-colors duration-200"
+                                onClick={() => {
+                                  // Handle report action
+                                  console.log('Report clicked');
+                                  setIsMenuOpen(false);
+                                }}
+                              >
                                 <div className="flex items-center gap-3">
                                   <div className="flex items-center justify-center w-6 h-6">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
