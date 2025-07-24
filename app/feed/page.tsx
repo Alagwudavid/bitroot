@@ -17,65 +17,13 @@ import styled from "@emotion/styled";
 
 export default function MyFeed() {
   const [value, setValue] = useState(50);
+  const [currentReelIndex, setCurrentReelIndex] = useState(0);
+  const [isButtonScroll, setIsButtonScroll] = useState(false);
+  const [isUserScrolling, setIsUserScrolling] = useState(false);
+  const reelContainerRef = useRef<HTMLElement | null>(null);
+  const reelRefs = useRef<(HTMLElement | null)[]>([]);
   const isMobile = useIsMobile();
-  const communities = [
-    {
-      name: "Swahili Learners",
-      flag: "tz",
-      members: 12500,
-      posts: 1240,
-      description: "Connect with fellow Swahili learners and native speakers",
-      trending: true,
-      moderators: "2",
-    },
-    {
-      name: "Yoruba Culture & Language",
-      flag: "ng",
-      members: 8900,
-      posts: 890,
-      description:
-        "Explore Yoruba traditions, language, and cultural practices",
-      trending: false,
-      moderators: "4",
-    },
-    {
-      name: "Amharic Study Group",
-      flag: "et",
-      members: 5600,
-      posts: 456,
-      description: "Study Amharic together with structured learning sessions",
-      trending: true,
-      moderators: "1",
-    },
-    {
-      name: "Hausa Language Exchange",
-      flag: "ng",
-      members: 7200,
-      posts: 678,
-      description: "Practice Hausa with native speakers and learners",
-      trending: false,
-      moderators: "6",
-    },
-    {
-      name: "Igbo Heritage",
-      flag: "ng",
-      members: 4300,
-      posts: 234,
-      description:
-        "Learn Igbo language while discovering rich cultural heritage",
-      trending: false,
-      moderators: "3",
-    },
-    {
-      name: "Zulu Conversations",
-      flag: "za",
-      members: 6800,
-      posts: 567,
-      description: "Practice Zulu through daily conversations and discussions",
-      trending: true,
-      moderators: "30",
-    },
-  ];
+
   const postMetas = [
     {
       user: "Amara K.",
@@ -118,19 +66,25 @@ export default function MyFeed() {
   const Btd_ReelContainer = styled.section`
     display: flex;
     justify-content: center;
-    height: calc(100vh - var(--btd-topheader));
+    height: calc(100vh - var(--btd-topheader, 0px));
     overflow: hidden scroll;
     scroll-snap-type: y mandatory;
     scroll-padding-top: 0;
     margin-top: var(--top-margin-free-scroll-override, 0px);
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scroll-padding: 10px;
+    overscroll-behavior: contain;
   `;
   const Btd_ReelSequence = styled.section`
     position: relative;
     width: fit-content;
-    height: 100%;
-    background: #fafafa;
+    height: 100vh;
+    // background: #fafafa;
     ${isMobile ?
       `
         min-width: 315px;
@@ -152,6 +106,9 @@ export default function MyFeed() {
     contain: size layout;
     scroll-snap-align: start;
     scroll-snap-stop: always;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   `;
 
   const Btd_ReelPlayer = styled.section`
@@ -206,28 +163,332 @@ export default function MyFeed() {
     font-size: 14px;
     line-height: 1.5;
   `;
+  // Function to scroll to the next reel
+  const scrollToNextReel = () => {
+    console.log('scrollToNextReel called, current index:', currentReelIndex);
+    if (currentReelIndex < postMetas.length - 1) {
+      const nextIndex = currentReelIndex + 1;
+      console.log('Scrolling to next reel:', nextIndex);
+      if (reelContainerRef.current && reelRefs.current[nextIndex]) {
+        // Set flag to indicate this is a button-initiated scroll
+        setIsButtonScroll(true);
+        
+        // Immediately update the current index
+        setCurrentReelIndex(nextIndex);
+        
+        const container = reelContainerRef.current;
+        const targetReel = reelRefs.current[nextIndex];
+        
+        console.log('Target position:', targetReel.offsetTop);
+        
+        // Force scroll to the exact position with a slight delay to ensure state is updated
+        setTimeout(() => {
+          if (container && targetReel) {
+            container.scrollTo({
+              top: targetReel.offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        }, 10);
+      } else {
+        console.log('Container or target reel not available');
+      }
+    } else {
+      console.log('Already at last reel');
+    }
+  };
+
+  // Function to scroll to the previous reel
+  const scrollToPrevReel = () => {
+    console.log('scrollToPrevReel called, current index:', currentReelIndex);
+    if (currentReelIndex > 0) {
+      const prevIndex = currentReelIndex - 1;
+      console.log('Scrolling to previous reel:', prevIndex);
+      if (reelContainerRef.current && reelRefs.current[prevIndex]) {
+        // Set flag to indicate this is a button-initiated scroll
+        setIsButtonScroll(true);
+        
+        // Immediately update the current index
+        setCurrentReelIndex(prevIndex);
+        
+        const container = reelContainerRef.current;
+        const targetReel = reelRefs.current[prevIndex];
+        
+        console.log('Target position:', targetReel.offsetTop);
+        
+        // Force scroll to the exact position with a slight delay to ensure state is updated
+        setTimeout(() => {
+          if (container && targetReel) {
+            container.scrollTo({
+              top: targetReel.offsetTop,
+              behavior: 'smooth'
+            });
+          }
+        }, 10);
+      } else {
+        console.log('Container or target reel not available');
+      }
+    } else {
+      console.log('Already at first reel');
+    }
+  };
+
+  // Initialize refs array when postMetas changes
+  useEffect(() => {
+    // Pre-initialize the refs array with the correct length
+    reelRefs.current = new Array(postMetas.length).fill(null);
+  }, [postMetas.length]);
+
+  // Handle scroll events to update current reel index
+  useEffect(() => {
+    let isScrolling = false;
+    
+    const handleScroll = () => {
+      if (!reelContainerRef.current || isButtonScroll) return;
+      
+      // Set a flag to indicate we're handling a user-initiated scroll
+      isScrolling = true;
+      
+      const container = reelContainerRef.current;
+      const scrollTop = container.scrollTop;
+      const containerHeight = container.clientHeight;
+      
+      // Find which reel is most visible in the viewport
+      let maxVisibleIndex = 0;
+      let maxVisibleArea = 0;
+      
+      reelRefs.current.forEach((reelRef, index) => {
+        if (!reelRef) return;
+        
+        const reelTop = reelRef.offsetTop;
+        const reelHeight = reelRef.clientHeight;
+        const visibleTop = Math.max(reelTop, scrollTop);
+        const visibleBottom = Math.min(reelTop + reelHeight, scrollTop + containerHeight);
+        
+        if (visibleBottom > visibleTop) {
+          const visibleArea = visibleBottom - visibleTop;
+          if (visibleArea > maxVisibleArea) {
+            maxVisibleArea = visibleArea;
+            maxVisibleIndex = index;
+          }
+        }
+      });
+      
+      // Only update the index if this is a user-initiated scroll and the index has changed
+      if (!isButtonScroll && maxVisibleIndex !== currentReelIndex) {
+        console.log('User scroll detected, updating to index:', maxVisibleIndex);
+        setCurrentReelIndex(maxVisibleIndex);
+      }
+      
+      // Clear the scrolling flag after a short delay
+      setTimeout(() => {
+        isScrolling = false;
+      }, 50);
+    };
+    
+    const container = reelContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScroll);
+      return () => container.removeEventListener('scroll', handleScroll);
+    }
+  }, [isButtonScroll, currentReelIndex]);  // Add dependencies to ensure proper behavior
+  
+  // Track whether scroll was initiated by button or user
+  
+  // Auto-snap to the nearest reel when scrolling stops (only for user-initiated scrolls)
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    let snapTimeout: NodeJS.Timeout;
+    
+    const handleScrollEnd = () => {
+      if (!reelContainerRef.current) return;
+      
+      // Clear any existing timeout
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      
+      // Mark that user is scrolling
+      setIsUserScrolling(true);
+      
+      // Set a new timeout to detect when scrolling stops
+      scrollTimeout = setTimeout(() => {
+        // Only auto-snap if the scroll was NOT initiated by a button click
+        if (!isButtonScroll && reelContainerRef.current && reelRefs.current[currentReelIndex]) {
+          const container = reelContainerRef.current;
+          const targetReel = reelRefs.current[currentReelIndex];
+          
+          console.log('Auto-snapping to reel:', currentReelIndex, 'at position:', targetReel.offsetTop);
+          
+          // Snap to the current reel with a slightly longer duration for smoother animation
+          container.scrollTo({
+            top: targetReel.offsetTop,
+            behavior: 'smooth'
+          });
+        }
+        
+        // Reset the user scrolling flag after a delay
+        snapTimeout = setTimeout(() => {
+          setIsUserScrolling(false);
+          
+          // Reset the button scroll flag after the scroll completes
+          setIsButtonScroll(false);
+        }, 300);
+      }, 200); // Increased to 200ms for better detection of scroll stop
+    };
+    
+    const container = reelContainerRef.current;
+    if (container) {
+      container.addEventListener('scroll', handleScrollEnd);
+      return () => {
+        container.removeEventListener('scroll', handleScrollEnd);
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        if (snapTimeout) clearTimeout(snapTimeout);
+      };
+    }
+  }, [currentReelIndex, isButtonScroll]);
+
+  // Add keyboard navigation support
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only handle keyboard navigation if user is not actively scrolling
+      if (!isUserScrolling) {
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          scrollToNextReel();
+          e.preventDefault();
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          scrollToPrevReel();
+          e.preventDefault();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isUserScrolling]); // Add isUserScrolling dependency to prevent keyboard navigation during scrolling
+  
+  // Initial scroll to first reel on component mount
+  useEffect(() => {
+    // Wait for refs to be populated
+    const timer = setTimeout(() => {
+      if (reelContainerRef.current && reelRefs.current[0]) {
+        reelContainerRef.current.scrollTo({
+          top: 0,
+          behavior: 'auto'
+        });
+      }
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className={cn(
       "max-w-7xl w-full h-full mx-auto flex flex-col", 
       )}>
-        <Btd_ReelContainer>
-          <div className={cn("flex flex-col space-y-3 relative overflow-hidden w-full overflow-y-scroll shrink-0", 
-            // isMobile ? "h-[calc(100vh-220px)]" : "h-[calc(100vh-26px)]"
-            )}>
+        <Btd_ReelContainer ref={reelContainerRef}>
+          <div className={cn("flex flex-col space-y-3 relative w-full shrink-0")}>
             {postMetas.map((post, index) => (
-              <Btd_ReelSequence key={index} id={`${index}`} >
+              <Btd_ReelSequence 
+                key={index} 
+                id={`${index}`} 
+                ref={(el) => reelRefs.current[index] = el}
+              >
                 <div className="flex items-center gap-6 h-full shrink-0 relative">
                   <div className="flex-1 flex w-fit h-full bg-black relative rounded-xl">
                     <Btd_ReelPlayer className="rounded-xl"></Btd_ReelPlayer>
                     <a className="absolute inset-0 z-10 group/Btd_ReelPlayer_ rounded-xl overflow-hidden">
                       <div className="relative w-full h-full">
                         <div className="absolute h-14 top-0 z-20 group-hover/Btd_ReelPlayer_:flex hidden items-center justify-between w-full px-4 !bg-transparent bg-gradient-to-b from-[#0d1117] to-transparent transition-all duration-500 ease-in">
-                          <Btd_ReelAction_Btn className="!w-8 !h-8 items-center justify-center text-white hover:text-sky-300">
-                            <VolumeX className="size-8" />
+                          <Btd_ReelAction_Btn className="!w-8 !h-8 items-center justify-center text-white hover:text-sky-300 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                            <VolumeX className="size-6" />
                           </Btd_ReelAction_Btn>
-                          <Btd_ReelAction_Btn className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300">
-                            <Ellipsis className="size-8" />
-                          </Btd_ReelAction_Btn>
+                          <div className="relative group/menu">
+                            <Btd_ReelAction_Btn className="!w-8 !h-8 flex items-center justify-center text-white hover:text-sky-300 rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                              <Ellipsis className="size-6" />
+                            </Btd_ReelAction_Btn>
+                            <div className="absolute right-0 top-full mt-2 hidden group-hover/menu:block z-50 bg-[#1a1a1a] rounded-lg shadow-lg w-64 overflow-hidden">
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                      <line x1="7" y1="2" x2="7" y2="22"></line>
+                                      <line x1="17" y1="2" x2="17" y2="22"></line>
+                                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                                      <line x1="2" y1="7" x2="7" y2="7"></line>
+                                      <line x1="2" y1="17" x2="7" y2="17"></line>
+                                      <line x1="17" y1="17" x2="22" y2="17"></line>
+                                      <line x1="17" y1="7" x2="22" y2="7"></line>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Quality</span>
+                                </div>
+                                <span className="text-white text-sm">Auto</span>
+                              </div>
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+                                      <path d="M7 2v20"></path>
+                                      <path d="M17 2v20"></path>
+                                      <path d="M2 12h20"></path>
+                                      <path d="M2 7h5"></path>
+                                      <path d="M2 17h5"></path>
+                                      <path d="M17 17h5"></path>
+                                      <path d="M17 7h5"></path>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Captions</span>
+                                </div>
+                              </div>
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <path d="M12 19V5"></path>
+                                      <path d="M5 12l7-7 7 7"></path>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Auto scroll</span>
+                                </div>
+                                <div className="w-12 h-6 bg-gray-700 rounded-full flex items-center p-1">
+                                  <div className="w-4 h-4 bg-gray-400 rounded-full ml-0"></div>
+                                </div>
+                              </div>
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                                      <polyline points="17 2 12 7 7 2"></polyline>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Floating Player</span>
+                                </div>
+                              </div>
+                              <div className="p-3 flex items-center justify-between border-b border-gray-800">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Not interested</span>
+                                </div>
+                              </div>
+                              <div className="p-3 flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                  <div className="flex items-center justify-center w-6 h-6">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                                      <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                                      <line x1="4" y1="22" x2="4" y2="15"></line>
+                                    </svg>
+                                  </div>
+                                  <span className="text-white text-sm font-medium">Report</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                           <Btd_ReelAction_Btn className="group-hover/Btd_ReelPlayer_:!flex !hidden backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117] rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white hover:text-sky-300 transition-all duration-500 ease-in">
                             <Play className="size-8" />
@@ -314,20 +575,46 @@ export default function MyFeed() {
             ))}
           </div>
         </Btd_ReelContainer>
-        <div className={cn("w-16 justify-end absolute bottom-1/2 right-8 overflow-hidden", isMobile ? "hidden" : "flex flex-col")}>
+        {/* <div className={cn("w-16 justify-end absolute bottom-1/2 right-8 overflow-hidden", isMobile ? "hidden" : "flex flex-col")}>
           <div className="w-full flex flex-col gap-2 items-center justify-center">
             <Btd_ReelAction_Div>
-              <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
+              <Btd_ReelAction_Btn 
+                className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30 hover:bg-[#0d1117]/50 dark:hover:bg-white/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                onClick={() => {
+                  // Prevent action if user is currently scrolling
+                  if (!isUserScrolling) {
+                    scrollToPrevReel();
+                    // Force focus on the button to ensure the click is registered
+                    document.activeElement.blur();
+                  }
+                }}
+                disabled={currentReelIndex === 0 || isUserScrolling}
+                style={{ opacity: currentReelIndex === 0 || isUserScrolling ? 0.5 : 1 }}
+                aria-label="Previous reel"
+              >
                 <ChevronUp className="size-6" />
               </Btd_ReelAction_Btn>
             </Btd_ReelAction_Div>
             <Btd_ReelAction_Div>
-              <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30">
+              <Btd_ReelAction_Btn 
+                className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30 hover:bg-[#0d1117]/50 dark:hover:bg-white/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                onClick={() => {
+                  // Prevent action if user is currently scrolling
+                  if (!isUserScrolling) {
+                    scrollToNextReel();
+                    // Force focus on the button to ensure the click is registered
+                    document.activeElement.blur();
+                  }
+                }}
+                disabled={currentReelIndex === postMetas.length - 1 || isUserScrolling}
+                style={{ opacity: currentReelIndex === postMetas.length - 1 || isUserScrolling ? 0.5 : 1 }}
+                aria-label="Next reel"
+              >
                 <ChevronDown className="size-6" />
               </Btd_ReelAction_Btn>
             </Btd_ReelAction_Div>
           </div>
-        </div>
+        </div> */}
     </div>
   );
 }
