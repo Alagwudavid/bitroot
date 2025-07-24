@@ -22,6 +22,7 @@ export default function Home() {
   const [isUserScrolling, setIsUserScrolling] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAutoScroll, setIsAutoScroll] = useState(false);
+  const [showComments, setShowComments] = useState(false);
   const reelContainerRef = useRef<HTMLElement | null>(null);
   const reelRefs = useRef<(HTMLElement | null)[]>([]);
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -88,11 +89,13 @@ export default function Home() {
   const Btd_ReelContainer = styled.section`
     display: flex;
     justify-content: center;
+    width: 100%;
     height: calc(100vh - var(--btd-topheader, 0px));
     overflow: hidden scroll;
     scroll-snap-type: y mandatory;
     scroll-padding-top: 0;
-    margin-top: var(--top-margin-free-scroll-override, 0px);
+    margin-top: var(--top-margin-free-scroll-override, 0px) !important;
+    margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
     scroll-behavior: smooth;
@@ -403,9 +406,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className={cn(
-      "max-w-7xl w-full h-full mx-auto flex flex-col", 
-      )}>
+    <div className={cn("max-w-7xl w-full h-full mx-auto flex", )}>
         <Btd_ReelContainer ref={reelContainerRef}>
           <div className={cn("flex flex-col space-y-3 relative w-full shrink-0")}>
             {postMetas.map((post, index) => (
@@ -607,7 +608,10 @@ export default function Home() {
                         <Btd_ReelAction_Span className="text-black dark:text-white">{post.likes}</Btd_ReelAction_Span>
                       </Btd_ReelAction_Div>
                       <Btd_ReelAction_Div>
-                        <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
+                        <Btd_ReelAction_Btn 
+                          className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]"
+                          onClick={() => isMobile ? setShowComments(true) : null}
+                        >
                           <MessageCircleMore className="size-6" />
                         </Btd_ReelAction_Btn>
                         <Btd_ReelAction_Span className="text-black dark:text-white">{post.comments}</Btd_ReelAction_Span>
@@ -627,46 +631,257 @@ export default function Home() {
             ))}
           </div>
         </Btd_ReelContainer>
-        {/* <div className={cn("w-16 justify-end absolute bottom-1/2 right-8 overflow-hidden", isMobile ? "hidden" : "flex flex-col")}>
-          <div className="w-full flex flex-col gap-2 items-center justify-center">
-            <Btd_ReelAction_Div>
-              <Btd_ReelAction_Btn 
-                className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30 hover:bg-[#0d1117]/50 dark:hover:bg-white/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                onClick={() => {
-                  // Prevent action if user is currently scrolling
-                  if (!isUserScrolling) {
-                    scrollToPrevReel();
-                    // Force focus on the button to ensure the click is registered
-                    document.activeElement.blur();
-                  }
-                }}
-                disabled={currentReelIndex === 0 || isUserScrolling}
-                style={{ opacity: currentReelIndex === 0 || isUserScrolling ? 0.5 : 1 }}
-                aria-label="Previous reel"
-              >
-                <ChevronUp className="size-6" />
-              </Btd_ReelAction_Btn>
-            </Btd_ReelAction_Div>
-            <Btd_ReelAction_Div>
-              <Btd_ReelAction_Btn 
-                className="rounded-full backdrop-blur-md bg-[#0d1117]/30 dark:bg-white/30 hover:bg-[#0d1117]/50 dark:hover:bg-white/50 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                onClick={() => {
-                  // Prevent action if user is currently scrolling
-                  if (!isUserScrolling) {
-                    scrollToNextReel();
-                    // Force focus on the button to ensure the click is registered
-                    document.activeElement.blur();
-                  }
-                }}
-                disabled={currentReelIndex === postMetas.length - 1 || isUserScrolling}
-                style={{ opacity: currentReelIndex === postMetas.length - 1 || isUserScrolling ? 0.5 : 1 }}
-                aria-label="Next reel"
-              >
-                <ChevronDown className="size-6" />
-              </Btd_ReelAction_Btn>
-            </Btd_ReelAction_Div>
+        {showComments && (
+          isMobile ? (
+           <div className={`fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4`}>
+            <div className="bg-[#1a1a1a] rounded-lg shadow-lg w-full max-w-[480px] max-h-[90vh] overflow-hidden">
+              <div className="flex items-center justify-between p-4 border-b border-gray-800">
+                <h3 className="text-white font-semibold">Comments</h3>
+                <span className="text-white/70 text-sm">3.6K</span>
+                <button 
+                   className="text-white/70 hover:text-white"
+                   onClick={() => setShowComments(false)}
+                 >
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                   </svg>
+                 </button>
+              </div>
+              <div className="overflow-y-auto p-4 max-h-[calc(90vh-120px)]">
+                <div className="flex gap-3 mb-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-semibold">P</div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-white font-medium">@PeterClark-ez2of</span>
+                      <span className="text-white/50 text-sm">1 month ago</span>
+                    </div>
+                    <p className="text-white">All fun and games until they get caught with the flash drives.</p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        <span>74K</span>
+                      </button>
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                        </svg>
+                      </button>
+                      <button className="text-white/70 hover:text-white">Reply</button>
+                    </div>
+                    <button className="flex items-center gap-1 text-blue-400 mt-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 10 4 15 9 20"></polyline>
+                        <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                      </svg>
+                      <span>146 replies</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3 mb-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img src="/placeholder-user.jpg" alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-white font-medium">@flamixin</span>
+                      <span className="text-white/50 text-sm">1 month ago</span>
+                    </div>
+                    <p className="text-white">North Koreans who found this: "wow look at those beautiful little boxes. I wish I know what are those for."</p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        <span>28K</span>
+                      </button>
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                        </svg>
+                      </button>
+                      <button className="text-white/70 hover:text-white">Reply</button>
+                    </div>
+                    <button className="flex items-center gap-1 text-blue-400 mt-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="9 10 4 15 9 20"></polyline>
+                        <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                      </svg>
+                      <span>57 replies</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="flex gap-3 mb-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img src="/placeholder-user1.png" alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-white font-medium">@him053</span>
+                      <span className="text-white/50 text-sm">11 days ago</span>
+                    </div>
+                    <p className="text-white">"Give me your personal information and I promise I won't steal it man, scouts honour."</p>
+                    <div className="flex items-center gap-4 mt-2">
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                        </svg>
+                        <span>12K</span>
+                      </button>
+                      <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                        </svg>
+                      </button>
+                      <button className="text-white/70 hover:text-white">Reply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border-t border-gray-800">
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img src="/placeholder-user.jpg" alt="User" className="w-full h-full object-cover" />
+                    </div>
+                  </div>
+                  <div className="flex-grow">
+                    <input type="text" placeholder="Add a comment..." className="w-full bg-[#2a2a2a] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div> */}
+        ) : (
+          <div className={`min-w-[280px] max-w-[480px] w-full bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden ml-4 block`}>
+            <div className="flex items-center justify-between p-4 border-b border-gray-800">
+              <h3 className="text-white font-semibold">Comments</h3>
+              <span className="text-white/70 text-sm">3.6K</span>
+            </div>
+            <div className="overflow-y-auto p-4 max-h-[calc(100vh-200px)]">
+              <div className="flex gap-3 mb-6">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-semibold">P</div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-white font-medium">@PeterClark-ez2of</span>
+                    <span className="text-white/50 text-sm">1 month ago</span>
+                  </div>
+                  <p className="text-white">All fun and games until they get caught with the flash drives.</p>
+                  <div className="flex items-center gap-4 mt-2">
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                      </svg>
+                      <span>74K</span>
+                    </button>
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                      </svg>
+                    </button>
+                    <button className="text-white/70 hover:text-white">Reply</button>
+                  </div>
+                  <button className="flex items-center gap-1 text-blue-400 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 10 4 15 9 20"></polyline>
+                      <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                    </svg>
+                    <span>146 replies</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex gap-3 mb-6">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src="/placeholder-user.jpg" alt="User" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-white font-medium">@flamixin</span>
+                    <span className="text-white/50 text-sm">1 month ago</span>
+                  </div>
+                  <p className="text-white">North Koreans who found this: "wow look at those beautiful little boxes. I wish I know what are those for."</p>
+                  <div className="flex items-center gap-4 mt-2">
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                      </svg>
+                      <span>28K</span>
+                    </button>
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                      </svg>
+                    </button>
+                    <button className="text-white/70 hover:text-white">Reply</button>
+                  </div>
+                  <button className="flex items-center gap-1 text-blue-400 mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="9 10 4 15 9 20"></polyline>
+                      <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+                    </svg>
+                    <span>57 replies</span>
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex gap-3 mb-6">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src="/placeholder-user1.png" alt="User" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-white font-medium">@him053</span>
+                    <span className="text-white/50 text-sm">11 days ago</span>
+                  </div>
+                  <p className="text-white">"Give me your personal information and I promise I won't steal it man, scouts honour."</p>
+                  <div className="flex items-center gap-4 mt-2">
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                      </svg>
+                      <span>12K</span>
+                    </button>
+                    <button className="flex items-center gap-1 text-white/70 hover:text-white">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
+                      </svg>
+                    </button>
+                    <button className="text-white/70 hover:text-white">Reply</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="p-4 border-t border-gray-800">
+              <div className="flex gap-3">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full overflow-hidden">
+                    <img src="/placeholder-user.jpg" alt="User" className="w-full h-full object-cover" />
+                  </div>
+                </div>
+                <div className="flex-grow">
+                  <input type="text" placeholder="Add a comment..." className="w-full bg-[#2a2a2a] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500" />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

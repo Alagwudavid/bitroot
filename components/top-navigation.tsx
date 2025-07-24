@@ -149,21 +149,30 @@ export function TopNavigation() {
                 <div className="flex items-center justify-between p-1 rounded-md border gap-0 w-full">
                 <DropdownMenuItem
                   onClick={() => setTheme("light")}
-                  className="p-1 px-3 rounded-md theme-aware"
+                  className={cn(
+                    "p-1 px-3 rounded-md theme-aware",
+                    theme === "light" && "bg-accent text-accent-foreground"
+                  )}
                 >
                   <Sun className="h-4 w-4" />
                   Light
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setTheme("dark")}
-                  className="p-1 px-3 rounded-md theme-aware"
+                  className={cn(
+                    "p-1 px-3 rounded-md theme-aware",
+                    theme === "dark" && "bg-accent text-accent-foreground"
+                  )}
                 >
                   <Moon className="h-4 w-4" />
                   Dark
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setTheme("system")}
-                  className="p-1 px-3 rounded-md theme-aware"
+                  className={cn(
+                    "p-1 px-3 rounded-md theme-aware",
+                    theme === "system" && "bg-accent text-accent-foreground"
+                  )}
                 >
                   <Monitor className="h-4 w-4" />
                   System
