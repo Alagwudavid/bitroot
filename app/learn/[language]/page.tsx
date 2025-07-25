@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Card } from "@/components/ui/card";
+import { Dot } from "@/components/ui/dot";
 import { Badge } from "@/components/ui/badge";
 import {
   BotMessageSquare,
@@ -321,40 +322,38 @@ export default function LanguageSectionsPage() {
   };
 
   return (
-    <div className="max-w-screen-lg mx-auto">
-      <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full md:gap-5 gap-0 mb-10 md:mb-20">
-        <div className="flex-1 flex flex-col items-start gap-2 max-w-xl w-full md:mt-10">
-          <span className="flex items-center justify-center capitalize text-3xl font-bold">
-            {lang}
-          </span>
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
-              <svg
-                className="size-7"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M19.3697 4.89109L13.5097 2.28109C12.6497 1.90109 11.3497 1.90109 10.4897 2.28109L4.62969 4.89109C3.14969 5.55109 2.92969 6.45109 2.92969 6.93109C2.92969 7.41109 3.14969 8.31109 4.62969 8.97109L10.4897 11.5811C10.9197 11.7711 11.4597 11.8711 11.9997 11.8711C12.5397 11.8711 13.0797 11.7711 13.5097 11.5811L19.3697 8.97109C20.8497 8.31109 21.0697 7.41109 21.0697 6.93109C21.0697 6.45109 20.8597 5.55109 19.3697 4.89109Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M12.0003 17.04C11.6203 17.04 11.2403 16.96 10.8903 16.81L4.15031 13.81C3.12031 13.35 2.32031 12.12 2.32031 10.99C2.32031 10.58 2.65031 10.25 3.06031 10.25C3.47031 10.25 3.80031 10.58 3.80031 10.99C3.80031 11.53 4.25031 12.23 4.75031 12.45L11.4903 15.45C11.8103 15.59 12.1803 15.59 12.5003 15.45L19.2403 12.45C19.7403 12.23 20.1903 11.54 20.1903 10.99C20.1903 10.58 20.5203 10.25 20.9303 10.25C21.3403 10.25 21.6703 10.58 21.6703 10.99C21.6703 12.11 20.8703 13.35 19.8403 13.81L13.1003 16.81C12.7603 16.96 12.3803 17.04 12.0003 17.04Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M12.0003 22.0009C11.6203 22.0009 11.2403 21.9209 10.8903 21.7709L4.15031 18.7709C3.04031 18.2809 2.32031 17.1709 2.32031 15.9509C2.32031 15.5409 2.65031 15.2109 3.06031 15.2109C3.47031 15.2109 3.80031 15.5409 3.80031 15.9509C3.80031 16.5809 4.17031 17.1509 4.75031 17.4109L11.4903 20.4109C11.8103 20.5509 12.1803 20.5509 12.5003 20.4109L19.2403 17.4109C19.8103 17.1609 20.1903 16.5809 20.1903 15.9509C20.1903 15.5409 20.5203 15.2109 20.9303 15.2109C21.3403 15.2109 21.6703 15.5409 21.6703 15.9509C21.6703 17.1709 20.9503 18.2709 19.8403 18.7709L13.1003 21.7709C12.7603 21.9209 12.3803 22.0009 12.0003 22.0009Z"
-                  fill="currentColor"
-                />
-              </svg>
-              <span>23 Sections</span>
-            </div>
-            <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
+    <div className="max-w-3xl mx-auto px-4">
+      <div className="flex flex-col items-center md:items-start justify-between max-w-7xl mx-auto w-full md:gap-5 gap-0 mb-10">
+        <div className="flex-1 justify-center items-center w-full my-4">
+          <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] flex items-center justify-center w-full overflow-hidden relative">
+            <img
+              src={"/placeholder-banner.png"}
+              alt="Most Viewed Playlist"
+              className="object-cover w-full h-full"
+            />
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col items-start gap-2 w-full">
+          <Link href={"/learn"} className="flex items-center justify-center capitalize text-3xl font-bold">
+            <ChevronLeft className="mr-2 !size-8" /> {lang}
+          </Link>
+          <div className="flex items-center space-x-2 mb-1 text-gray-500 dark:text-[#fafafa]/60">
+              <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
+                <span className="text-base line-clamp-1">25/25</span>
+              </div>
+              <Dot />
+              <div className="flex flex-row items-center gap-2">
+                <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
+                  <span className="text-base font-medium">
+                    100%
+                  </span>
+                </div>
+              </div>
+            <Dot />
             <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
               <span>103 Units</span>
             </div>
-            <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
+            <Dot />
             <div className="flex items-center gap-2 text-gray-500 dark:text-[#fafafa]/60">
               <svg
                 className="size-7"
@@ -396,13 +395,13 @@ export default function LanguageSectionsPage() {
               <span>AI assisted</span>
             </div>
           </div>
-          <div className="mt-3 mb-5">
+          <div className="">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci,
             cumque eligendi ipsa illum nesciunt animi, in placeat assumenda
             dolores inventore dolore nisi exercitationem quibusdam hic
             consectetur repellat nihil. Ducimus, id.
           </div>
-          <div className="flex items-center gap-3 mb-2">
+          <div className="flex items-center gap-3">
             <div className="w-14 h-14">
               <img
                 src={`/stickers/bookie.png`}
@@ -425,32 +424,10 @@ export default function LanguageSectionsPage() {
               />
             </div>
           </div>
-          <div className="flex items-center justify-between gap-6">
-            <Button
-              onClick={() => router.push("/learn")}
-              className="flex items-center w-fit text-base dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white bg-[#C51E3A] dark:bg-[#1e96fc]/50 text-white"
-            >
-              <ChevronLeft className="mr-1 !size-6" /> Back
-            </Button>
-          </div>
-        </div>
-        {/* Right: Dynamic Featured Card */}
-        <div className="flex-1 hidden md:flex justify-center items-center w-full mb-10 md:mb-0">
-          <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] flex items-center justify-center w-full max-w-md h-80 md:h-96 overflow-hidden relative">
-            <img
-              src={"/images/happy_beet.jpg"}
-              alt="Most Viewed Playlist"
-              className="object-cover w-full h-full"
-            />
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2 cursor-pointer-custom">
-              <Eye className="w-4 h-4 text-[#7037e4] dark:text-[#8ddeed]" />{" "}
-              Beet root
-            </div>
-          </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {Sections.map((Section, idx) => {
           // Find first unmarked unit
           return (

@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Users, Ellipsis, TrendingUp, Globe, Heart, MessageCircleMore, Bookmark, ChevronUp, ChevronDown, Play, VolumeX } from "lucide-react";
+import { Users, Ellipsis, TrendingUp, Globe, Heart, MessageCircleMore, Bookmark, ChevronUp, ChevronDown, Play, VolumeX, Smile, Frown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
+import { useIsTablet } from "@/components/ui/use-tablet";
 import styled from "@emotion/styled";
 
 // export const metadata = {
@@ -27,7 +28,8 @@ export default function Home() {
   const reelRefs = useRef<(HTMLElement | null)[]>([]);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const isMobile = useIsMobile();
-  
+  const isTablet = useIsTablet();
+
   // Handle outside clicks for the menu
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -59,18 +61,20 @@ export default function Home() {
       comments: 12,
       shares: 3,
       time: "2 hours ago",
+      success: true,
     },
     {
-      user: "Kwame A.",
-      avatar: "/placeholder-user.jpg",
-      community: "Yoruba Culture & Language",
-      audio: "Understanding Yoruba Proverbs",
+      user: "Unknown",
+      avatar: null,
+      community: null,
+      audio: null,
       content:
-        'Today I learned a beautiful proverb: "Bi a ba n gun igi bi aja..."',
-      likes: 32,
-      comments: 8,
-      shares: 6,
-      time: "4 hours ago",
+        null,
+      likes: 0,
+      comments: 0,
+      shares: 0,
+      time: null,
+      success: false,
     },
     {
       user: "Desta M.",
@@ -83,11 +87,26 @@ export default function Home() {
       comments: 15,
       shares: 9,
       time: "1 day ago",
+      success: true,
+    },
+    {
+      user: "Kwame A.",
+      avatar: "/placeholder-user.jpg",
+      community: "Yoruba Culture & Language",
+      audio: "Understanding Yoruba Proverbs",
+      content:
+        'Today I learned a beautiful proverb: "Bi a ba n gun igi bi aja..."',
+      likes: 32,
+      comments: 8,
+      shares: 6,
+      time: "4 hours ago",
+      success: true,
     },
   ];
 
   const Btd_ReelContainer = styled.section`
     display: flex;
+    flex: 1;
     justify-content: center;
     width: 100%;
     height: calc(100vh - var(--btd-topheader, 0px));
@@ -105,9 +124,23 @@ export default function Home() {
     scroll-padding: 10px;
     overscroll-behavior: contain;
   `;
+
+  const Btd_iSReel = styled.section`
+    position: relative;
+  `;
+
+  const Btd_ReelNotFound = styled.section`
+    position: relative;
+  `;
+
   const Btd_ReelSequence = styled.section`
     position: relative;
-    width: fit-content;
+    ${isTablet ?
+      `
+        width: 420px;
+      ` : `
+        width: fit-content;
+      `}
     height: 100vh;
     // background: #fafafa;
     ${isMobile ?
@@ -117,7 +150,7 @@ export default function Home() {
        `
       :
       `
-      min-width: 354px;
+        min-width: 354px;
         min-height: 629px;
         `
     }
@@ -164,7 +197,7 @@ export default function Home() {
     display: flexbox;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: center;
     pointer-events: auto;
     width: 62px;
     height: 100%;
@@ -405,8 +438,12 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  
+  if (isMobile === undefined) return null;
+  if (isTablet === undefined) return null;
+  
   return (
-    <div className={cn("max-w-7xl w-full h-full mx-auto flex", )}>
+    <div className={cn("max-w-7xl w-full h-full mx-auto flex gap-2", )}>
         <Btd_ReelContainer ref={reelContainerRef}>
           <div className={cn("flex flex-col space-y-3 relative w-full shrink-0")}>
             {postMetas.map((post, index) => (
@@ -415,7 +452,8 @@ export default function Home() {
                 id={`${index}`} 
                 ref={(el) => reelRefs.current[index] = el}
               >
-                <div className="flex items-center gap-6 h-full shrink-0 relative">
+                {post.success ? (
+                <Btd_iSReel className="flex items-center gap-2 h-full shrink-0 relative">
                   <div className="flex-1 flex w-fit h-full bg-black relative rounded-xl">
                     <Btd_ReelPlayer className="rounded-xl"></Btd_ReelPlayer>
                     <a className="absolute inset-0 z-10 group/Btd_ReelPlayer_ rounded-xl overflow-hidden">
@@ -548,7 +586,7 @@ export default function Home() {
                           </Btd_ReelAction_Btn>
                       </div>
                     </a>
-                    <Card className="absolute bottom-0 z-20 w-full rounded-b-xl border-none !bg-transparent bg-gradient-to-t from-[#0d1117] to-transparent overflow-hidden">
+                    <Card className="absolute bottom-0 z-30 w-full rounded-b-xl border-none !bg-transparent bg-gradient-to-t from-[#0d1117] to-transparent overflow-hidden">
                       <CardContent className="p-0 space-y-4">
                           <div className="">
                             <div className="flex flex-col items-start space-y-1">
@@ -599,7 +637,7 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
-                  <Btd_ReelPlayer_EngagementPanel className={cn("", isMobile ? "absolute top-0 right-0 overflow-hidden" : "relative")}>
+                  <Btd_ReelPlayer_EngagementPanel className={cn("", isMobile ? "absolute top-0 right-0 z-20 overflow-hidden" : "relative")}>
                     <div className="w-full flex flex-col gap-2 items-center justify-center">
                       <Btd_ReelAction_Div>
                         <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">
@@ -610,7 +648,7 @@ export default function Home() {
                       <Btd_ReelAction_Div>
                         <Btd_ReelAction_Btn 
                           className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]"
-                          onClick={() => isMobile ? setShowComments(true) : null}
+                          onClick={() => setShowComments(true)}
                         >
                           <MessageCircleMore className="size-6" />
                         </Btd_ReelAction_Btn>
@@ -623,17 +661,22 @@ export default function Home() {
                         <Btd_ReelAction_Span className="text-black dark:text-white">{post.shares}</Btd_ReelAction_Span>
                       </Btd_ReelAction_Div>
                     </div>
-                    <div className="h-40 w-full">
-                    </div>
                   </Btd_ReelPlayer_EngagementPanel>
-                </div>
+                </Btd_iSReel>
+                ) : (
+                <Btd_ReelNotFound className="flex flex-col items-center justify-center gap-2 w-full h-full shrink-0 relative rounded-xl bg-black">
+                  <Frown className="size-8 text-white" />
+                  <span className="text-white font-semibold text-xl">Sorry,</span>
+                  <span className="text-red-500 text-lg">This reel is not available.</span>
+                </Btd_ReelNotFound>
+                )}
               </Btd_ReelSequence>
             ))}
           </div>
         </Btd_ReelContainer>
         {showComments && (
-          isMobile ? (
-           <div className={`fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4`}>
+          isTablet ? (
+          <div className={`fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4`}>
             <div className="bg-[#1a1a1a] rounded-lg shadow-lg w-full max-w-[480px] max-h-[90vh] overflow-hidden">
               <div className="flex items-center justify-between p-4 border-b border-gray-800">
                 <h3 className="text-white font-semibold">Comments</h3>
@@ -763,10 +806,19 @@ export default function Home() {
             </div>
           </div>
         ) : (
-          <div className={`min-w-[280px] max-w-[480px] w-full bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden ml-4 block`}>
+          <div className={`w-[clamp(280px,80vw,480px)] mr-2 bg-[#1a1a1a] rounded-lg shadow-lg overflow-hidden flex flex-col justify-between`}>
             <div className="flex items-center justify-between p-4 border-b border-gray-800">
               <h3 className="text-white font-semibold">Comments</h3>
               <span className="text-white/70 text-sm">3.6K</span>
+              <button 
+                   className="text-white/70 hover:text-white"
+                   onClick={() => setShowComments(false)}
+                 >
+                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                     <line x1="18" y1="6" x2="6" y2="18"></line>
+                     <line x1="6" y1="6" x2="18" y2="18"></line>
+                   </svg>
+              </button>
             </div>
             <div className="overflow-y-auto p-4 max-h-[calc(100vh-200px)]">
               <div className="flex gap-3 mb-6">

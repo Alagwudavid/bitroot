@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Dot } from "@/components/ui/dot";
 import { Button } from "@/components/ui/button";
-import { Play, Star, Clock, Combine, CircleCheck } from "lucide-react";
+import { Play, BatteryCharging, Clock, Combine, CircleCheck } from "lucide-react";
 
 interface LanguageCardProps {
   language: {
@@ -40,12 +41,10 @@ export function LanguageCard({
           onLanguageSelect(language.name);
         }}
       >
-        {isContinous ? (
-          <CircleCheck className="size-5 absolute top-2 right-2 text-green-500" />
-        ) : (
-          ""
+        {isContinous && language.learned === language.lessons && (
+          <CircleCheck className="size-6 absolute top-2 right-2 text-green-500" />
         )}
-        <div className="flex flex-row items-center gap-3">
+        <div className="flex flex-col items-center justify-center gap-2">
           <div className="w-12 h-12 rounded-full overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
             <img
               src={`/flag/${language.flag}.png`}
@@ -53,16 +52,17 @@ export function LanguageCard({
               className="w-full h-full object-cover rounded"
             />
           </div>
-          <div className="flex flex-col items-start cursor-pointer-custom">
-            <span className="text-xl line-clamp-1">{language.name}</span>
-            <h3 className="text-xs font-semibold line-clamp-1 text-gray-800 dark:text-[#fafafa]">
+          <div className="flex flex-col items-center justify-center cursor-pointer-custom">
+            <span className="text-xl font-semibold">{language.name}</span>
+            <h3 className="text-base text-center text-gray-800 dark:text-[#fafafa]">
               {language.country}
             </h3>
           </div>
         </div>
-        <div className="w-full flex items-center flex-col mt-4">
+        <div className="w-full flex items-center justify-center flex-col mt-2">
           <div className="w-full flex items-center justify-center space-x-2 mb-1 text-gray-500 dark:text-[#fafafa]/60">
             <div className="flex items-center space-x-1 text-gray-500 dark:text-[#fafafa]/60">
+              {language.progress === 0 && (
               <svg
                 className="size-4"
                 viewBox="0 0 24 24"
@@ -82,25 +82,25 @@ export function LanguageCard({
                   fill="currentColor"
                 />
               </svg>
-              <span className="text-sm">{language.lessons} Sections</span>
-            </div>
-            <span className="block mt-0.5 w-1 h-1 shrink-0 bg-gray-400 rounded-full"></span>
-            <div className="flex flex-row items-center gap-2">
+              )}
               {language.progress > 0 ? (
-                <>
-                  <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="text-sm font-medium">
-                      {language.progress}%
-                    </span>
-                  </div>
-                </>
+              <span className="text-sm line-clamp-1">{language.learned}/{language.lessons}</span>
               ) : (
-                <>
-                  <span className="dark:text-[#8ddeed] text-sky-500">new</span>
-                </>
+                <span className="text-sm line-clamp-1">{language.lessons} Sections</span>
               )}
             </div>
+              {language.progress > 0 && (
+              <>
+                <Dot />
+                <div className="flex flex-row items-center gap-2">
+                      <div className="flex items-center space-x-1 text-[#ffc600] dark:text-[#8ddeed]">
+                        <span className="text-sm font-medium">
+                          {Math.floor((language.learned / language.lessons) * 100)}%
+                        </span>
+                      </div>
+                </div>
+              </>
+              )}
           </div>
           <div className="w-full dark:text-[#8ddeed] text-sky-500 text-base text-center font-semibold">
             {language.learned} Learners

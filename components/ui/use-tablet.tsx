@@ -1,23 +1,23 @@
 import * as React from "react";
 
-const MOBILE_BREAKPOINT = 768;
+const TABLET_BREAKPOINT = 1170;
 
-export function useIsMobile() {
+export function useIsTablet() {
   const [mounted, setMounted] = React.useState(false);
-  const [isMobile, setIsMobile] = React.useState<boolean>(
+  const [isTablet, setIsTablet] = React.useState<boolean>(
     typeof window !== "undefined"
-      ? window.innerWidth < MOBILE_BREAKPOINT
+      ? window.innerWidth < TABLET_BREAKPOINT
       : false // SSR fallback
   );
 
   React.useEffect(() => {
     setMounted(true);
     const onChange = () => {
-      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+      setIsTablet(window.innerWidth < TABLET_BREAKPOINT);
     };
     window.addEventListener("resize", onChange);
     // Set initial value again in case of hydration mismatch
-    setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    setIsTablet(window.innerWidth < TABLET_BREAKPOINT);
     return () => window.removeEventListener("resize", onChange);
   }, []);
 
@@ -26,5 +26,5 @@ export function useIsMobile() {
     return undefined;
   }
 
-  return isMobile;
+  return isTablet;
 }

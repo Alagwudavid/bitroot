@@ -20,7 +20,7 @@ export default function LearnPage() {
       flag: "tz",
       country: "Tanzania",
       level: "Beginner",
-      progress: 0,
+      progress: 12,
       lessons: 24,
       learned: 12,
       description: "Learn the most widely spoken language in East Africa",
@@ -32,7 +32,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 15,
       lessons: 7,
-      learned: 16,
+      learned: 1,
       description: "Discover the rich language of the Yoruba people",
     },
     {
@@ -40,9 +40,9 @@ export default function LearnPage() {
       flag: "et",
       country: "Ethiopia",
       level: "Beginner",
-      progress: 0,
+      progress: 12,
       lessons: 28,
-      learned: 14,
+      learned: 28,
       description: "Learn the official language of Ethiopia",
     },
     {
@@ -52,7 +52,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 26,
-      learned: 13,
+      learned: 0,
       description: "Master the lingua franca of West Africa",
     },
     {
@@ -62,7 +62,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 30,
-      learned: 15,
+      learned: 0,
       description: "Learn the language of the Igbo people",
     },
     {
@@ -72,7 +72,7 @@ export default function LearnPage() {
       level: "Beginner",
       progress: 0,
       lessons: 25,
-      learned: 12,
+      learned: 0,
       description: "Discover South Africa's most spoken language",
     },
   ];
@@ -104,7 +104,7 @@ export default function LearnPage() {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 max-w-6xl h-full mx-auto">
       <div className="mb-8">
         <Input
           placeholder="Search languages..."
@@ -114,7 +114,7 @@ export default function LearnPage() {
         />
       </div>
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {[...Array(3)].map((_, i) => (
             <Skeleton key={i} className="h-40 w-full rounded-3xl" />
           ))}
@@ -123,7 +123,7 @@ export default function LearnPage() {
         <>
           {continueLearningLanguages.length > 0 && (
             <div className="mb-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {continueLearningLanguages.map((language) => (
                   <LanguageCard
                     key={language.name}
@@ -138,10 +138,7 @@ export default function LearnPage() {
           )}
 
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-800 dark:text-[#fafafa] mb-4">
-              New Languages
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {newLanguages.map((language) => (
                 <LanguageCard
                   key={language.name}

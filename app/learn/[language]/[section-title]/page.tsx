@@ -87,11 +87,6 @@ export default function SectionPage({
     );
   }
 
-  // S-curve offsets for visual path - more natural winding pattern
-  const offsets = [
-    0, 60, 80, 40, -20, -70, -50, 30, 90, 20, -60, -30, 50, -40, 70, -20,
-  ]; // much more dramatic curves for natural flow
-
   return (
     <div className={`flex flex-col items-center ${sectionAnim}`}>
       <div className="mb-2 mt-4 flex items-center justify-between gap-5 w-full">

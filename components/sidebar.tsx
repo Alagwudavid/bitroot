@@ -101,6 +101,7 @@ const MenuRef = useRef<HTMLDivElement>(null);
     };
   }, []);
 
+  if (isMobile === undefined) return null;
   return (
     <div
       className={cn(
@@ -195,8 +196,7 @@ const MenuRef = useRef<HTMLDivElement>(null);
               </>
             ) : (
                 <Link href={item.href} legacyBehavior>
-                  <a
-                    className={cn(
+                  <a className={cn(
                       "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
                       isActive
                         ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"

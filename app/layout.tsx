@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar";
 import { TopNavigation } from "@/components/top-navigation";
-// import { MdTopNavigation } from "@/components/md-top-navigation";
+import { AsideBar } from "@/components/aside-bar";
 import { ThemeProvider } from "@/components/theme-provider";
 
 // export const metadata: Metadata = {
@@ -51,11 +51,12 @@ export default function RootLayout({
           <div className="flex h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <TopNavigation />
             <Sidebar />
-            <div className="flex-1 flex flex-col h-screen overflow-hidden">
-              {/* <MdTopNavigation /> */}
-              {/* <div className="h-14 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div> */}
-              <main className="flex-1 overflow-y-auto pt-14 p-2">{children}</main>
-              <div className="h-20 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
+            <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto">
+              <main className="flex-1 pt-14 p-2">
+                {children}
+                <div className="h-20 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
+              </main>
+              <AsideBar />
             </div>
           </div>
         </ThemeProvider>

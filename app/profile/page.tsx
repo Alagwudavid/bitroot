@@ -157,12 +157,11 @@ export default function ProfilePage() {
     },
   ];
   const isMobile = useIsMobile();
+  if (isMobile === undefined) return null;
 
   return (
-    <div className="max-w-7xl mx-auto flex lg:flex-row flex-col gap-4">
+    <div className="max-w-7xl mx-auto flex flex-col gap-4 items-center">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex flex-col gap-4 items-center">
           <div className="flex items-center flex-col md:flex-row w-full gap-4">
             {isMobile ? (
               <div className="relative w-full bg-[#fbde84] border border-gray-300 dark:border-gray-700 rounded-lg">
@@ -504,26 +503,6 @@ export default function ProfilePage() {
           <div className="w-full my-2">
             <ContributionGrid />
           </div>
-        </div>
-      </div>
-      {/* Side Overview */}
-      <div className="bg-transparent text-white flex flex-col justify-between h-full w-full lg:w-96 p-0 font-mono rounded-lg theme-aware">
-
-        <div className="grid grid-cols-1 w-full gap-4">
-            <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
-              <p className="text-base uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-              Suggested follows
-              </p>
-              
-            </div>
-            <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
-              <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
-                focus mode
-              </p>
-
-            </div>
-          </div>
-      </div>
     </div>
   );
 }
