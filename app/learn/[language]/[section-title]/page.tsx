@@ -1,11 +1,13 @@
 "use client";
-import { courses } from "@/data/courses";
+import { languages } from "@/data/learn";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, X, CheckCircle, Circle } from "lucide-react";
+import { ChevronRight, X, CheckCircle, Circle, Book } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { useIsTablet } from "@/components/ui/use-tablet"; // You must have this hook
+import { useParams, useRouter } from "next/navigation";
+
 
 export default function SectionPage({
   params: paramsPromise,
@@ -13,8 +15,8 @@ export default function SectionPage({
   params: Promise<{ language: string; "section-title": string }>;
 }) {
   const params = React.use(paramsPromise);
-  const course = courses[params.language as keyof typeof courses];
-  const section = course.sections.find(
+  const language = languages[params.language as keyof typeof languages];
+  const section = language.sections.find(
     (s) => s.title === params["section-title"]
   );
   const [selectedUnit, setSelectedUnit] = useState<null | typeof section.units[0]>(null);
@@ -26,10 +28,11 @@ export default function SectionPage({
   function getLessonStatus(idx: number) {
     return idx === 0 ? "completed" : "incomplete";
   }
+  const router = useRouter();
 
   function LessonList({ unit, onClose }: { unit: typeof section.units[0]; onClose: () => void }) {
     return (
-      <div className="w-full max-w-xs bg-white dark:bg-gray-900 rounded-lg relative">
+      <div className="w-full max-w-xs bg-white dark:bg-gray-900 rounded-lg relative p-4">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
           onClick={onClose}
@@ -40,10 +43,14 @@ export default function SectionPage({
         <div className="flex flex-col gap-2">
           {unit.lessons.map((lesson, idx) => (
             <div
+              onClick={() => router.push(`/learn/${params.language}/${params["section-title"]}/${unit.title}/${lesson.id}`)}
               key={lesson.id}
               className="flex items-center justify-between px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
             >
-              <span className="font-medium">{lesson.id}</span>
+              <div className="flex items-center gap-2">
+                <Book className="w-5 h-5 text-gray-400" />
+                <span className="font-medium">{lesson.label || lesson.phrase || lesson.id}</span>
+              </div>
               {getLessonStatus(idx) === "completed" ? (
                 <CheckCircle className="w-5 h-5 text-green-500" />
               ) : (
@@ -61,16 +68,16 @@ export default function SectionPage({
       <div className="flex-1">
         <div className="mb-2 mt-4 px-4 flex items-center gap-2 w-full text-xl font-semibold">
           <Link href="/" className="hover:underline text-gray-500">Home</Link>
-          <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
+          <ChevronRight className="w-5 h-5 text-gray-400" />
           <Link href="/learn" className="hover:underline text-gray-500">Learn</Link>
-          <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
+          <ChevronRight className="w-5 h-5 text-gray-400" />
           <Link
             href={`/learn/${params.language}`}
             className="hover:underline text-gray-500"
           >
             {params["language"]}
           </Link>
-          <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
+          <ChevronRight className="w-5 h-5 text-gray-400" />
           <span className="capitalize text-sky-400">{params["section-title"]}</span>
         </div>
         <div className="max-w-3xl px-4">
