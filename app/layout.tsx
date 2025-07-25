@@ -54,7 +54,7 @@ export default function RootLayout({
             <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto">
               <main className="flex-1 pt-14 p-2">
                 {children}
-                <div className="h-20 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
+                <div className="h-14 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
               </main>
               <AsideBar />
             </div>

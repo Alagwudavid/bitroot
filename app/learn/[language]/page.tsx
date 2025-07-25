@@ -254,7 +254,7 @@ export default function LanguageSectionsPage() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4">
+    <div className="max-w-5xl mx-auto px-4">
       <div className="flex flex-col items-center md:items-start justify-between max-w-7xl mx-auto w-full md:gap-5 gap-0 mb-10">
         <div className="flex-1 justify-center items-center w-full my-4">
           <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] flex items-center justify-center w-full overflow-hidden relative">

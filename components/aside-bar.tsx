@@ -7,7 +7,10 @@ import { SkeletonAside } from "@/components/ui/skeleton-aside";
 export function AsideBar() {
   const isTablet = useIsTablet();
   const pathname = usePathname();
-  const hideAsideBar = ["/beet", "/settings", "/home", "/"].includes(pathname);
+  // const hideAsideBar = ["/beet", "/settings", "/home", "/"].includes(pathname);
+  const hideAsideBar =
+  ["/beet", "/settings", "/home", "/"].includes(pathname) ||
+  pathname.startsWith("/learn");
 
   if (isTablet || hideAsideBar) {
     return null;
@@ -16,11 +19,16 @@ export function AsideBar() {
 
   return (
     <>
-    <aside className="sticky top-0 right-0 bg-transparent text-white flex flex-col justify-between h-full w-80 pt-16 pr-2 p-0 font-mono rounded-lg theme-aware">
+    <aside className="sticky top-0 right-0 bg-background text-white flex flex-col justify-between h-full w-80 pt-16 pr-2 p-0 font-mono rounded-lg theme-aware">
       {isTablet === undefined ? (
         <SkeletonAside />
       ) : (
         <div className="grid grid-cols-1 w-full gap-4">
+          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
+            <p className="text-sm uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
+              Premium
+            </p>
+          </div>
           <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col justify-between h-52 w-full  p-5 font-mono rounded-lg theme-aware border border-gray-300 dark:border-gray-700">
             <p className="text-base uppercase font-bold text-gray-600 dark:text-[#fafafa]/70">
               Suggested follows
