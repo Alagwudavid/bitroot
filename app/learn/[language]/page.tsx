@@ -54,7 +54,7 @@ const languageSectionsData: Record<string, Array<any>> = {
     },
     {
       id: 4,
-      title: "Upper-Intermediate",
+      title: "Upper Intermediate",
       level: "B2",
       status: "locked",
       progress: 0,
@@ -231,74 +231,6 @@ const unitsBySection: Record<
   // Add more sections as needed
 };
 
-function UnitCarousel({
-  units,
-  lang,
-  section,
-}: {
-  units: any[];
-  lang: string;
-  section: any;
-}) {
-  const [idx, setIdx] = useState(0);
-
-  if (!units || units.length === 0) {
-    return (
-      <div className="flex w-full flex-row gap-2 items-center mb-4 justify-center text-gray-400">
-        No units available for this section.
-      </div>
-    );
-  }
-
-  const unit = units[idx];
-  return (
-    <div className="flex w-full flex-row gap-2 items-center mb-4">
-      <Button
-        className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white"
-        onClick={() => setIdx((idx - 1 + units.length) % units.length)}
-        aria-label="Previous unit"
-      >
-        <ChevronLeft className="!size-6" />
-      </Button>
-      <Link
-        href={`/learn/${lang}/${sanitizeUrl(section.title)}/${sanitizeUrl(
-          unit.title
-        )}`}
-        className="flex w-full flex-col items-center rounded-lg p-2 hover:bg-slate-700 duration-500 cursor-pointer-custom"
-      >
-        <div className="w-20 h-20 mx-auto mb-4">
-          <img
-            src={`/stickers/earlyBurner.png`}
-            alt={`Bitroot logo`}
-            className={`w-full h-full object-cover rounded ${
-              unit.status !== "completed" &&
-              unit.status === "locked" &&
-              unit.status !== "progress"
-                ? "grayscale"
-                : ""
-            }`}
-          />
-        </div>
-        <span className="text-white text-center capitalize font-mono">
-          {unit.title}
-        </span>
-        <span className="text-gray-300 capitalize font-mono text-sm">
-          {unit.status === "completed"
-            ? "completed"
-            : `${unit.progress} of ${unit.totalLessons} lessons`}
-        </span>
-      </Link>
-      <Button
-        className="w-8 h-full rounded bg-transparent hover:!bg-transparent text-gray-500 hover:text-white"
-        onClick={() => setIdx((idx + 1) % units.length)}
-        aria-label="Next unit"
-      >
-        <ChevronRight className="!size-6" />
-      </Button>
-    </div>
-  );
-}
-
 // Helper function to sanitize URLs
 function sanitizeUrl(text: string): string {
   return text
@@ -401,22 +333,25 @@ export default function LanguageSectionsPage() {
             dolores inventore dolore nisi exercitationem quibusdam hic
             consectetur repellat nihil. Ducimus, id.
           </div>
-          <div className="flex items-center gap-3">
-            <div className="w-14 h-14">
+          <p className="text-sm uppercase font-bold text-[#8A2BE2]/70">
+            Rewards
+          </p>
+          <div className="flex items-center gap-3 mt-3">
+            <div className="w-16 h-16">
               <img
                 src={`/stickers/bookie.png`}
                 alt={`Bitroot logo`}
                 className="w-full h-full object-cover rounded"
               />
             </div>
-            <div className="w-14 h-14">
+            <div className="w-16 h-16">
               <img
                 src={`/stickers/earlyBurner.png`}
                 alt={`Bitroot logo`}
                 className="w-full h-full object-cover rounded grayscale"
               />
             </div>
-            <div className="w-14 h-14">
+            <div className="w-16 h-16">
               <img
                 src={`/stickers/fighter.png`}
                 alt={`Bitroot logo`}
@@ -433,7 +368,8 @@ export default function LanguageSectionsPage() {
           return (
             <Card
               key={Section.id}
-              className={`flex flex-col justify-between mb-6 p-6 bg-gradient-to-br rounded-lg ${
+              onClick={() => router.push(`/learn/${lang}/${sanitizeUrl(Section.title)}`)}
+              className={`relative overflow-hidden flex flex-col justify-between mb-6 p-6 bg-gradient-to-br rounded-lg ${
                 Section.status === "completed"
                   ? "from-gray-800 to-gray-900"
                   : "from-gray-900 to-gray-800"
@@ -449,58 +385,63 @@ export default function LanguageSectionsPage() {
                     {Section.level} • SECTION {Section.id}{" "}
                     {Section.status === "locked" && "• LOCKED"}
                   </span>
-                  <Link
-                    href={`/learn/${lang}/${sanitizeUrl(
-                      Section.title
-                    )}#${sanitizeUrl(Section.title)}`}
-                    className="text-2xl font-bold text-white mt-1 hover:underline underline-offset-2"
+                  <div
+                    className="text-2xl font-bold text-white mt-1"
                   >
                     {Section.title}
-                  </Link>
+                  </div>
                 </div>
               </div>
               {Section.status !== "locked" && (
                 <>
-                  <UnitCarousel
-                    units={unitsBySection[Section.id] || []}
-                    lang={lang}
-                    section={Section}
-                  />
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center w-full mb-4">
-                      <Progress
-                        value={Math.round(
-                          (Section.progress / Section.totalUnit) * 100
-                        )}
-                        className="h-3 flex-1 mr-5 bg-white max-w-80 mx-auto"
-                      />
-                    </div>
+                  <div className="flex flex-col items-start">
                     <span className="text-sm uppercase text-white font-bold font-mono">
                       {Section.progress} / {Section.totalUnit} Units
                     </span>
                   </div>
+                  {Section.status === "completed" ? (
+                  <svg
+                    className="size-52 absolute -right-14 top-0 rotate-12 text-[#FFD700]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                  <path d="M10.5766 8.70419C11.2099 7.56806 11.5266 7 12 7C12.4734 7 12.7901 7.56806 13.4234 8.70419L13.5873 8.99812C13.7672 9.32097 13.8572 9.48239 13.9975 9.5889C14.1378 9.69541 14.3126 9.73495 14.6621 9.81402L14.9802 9.88601C16.2101 10.1643 16.825 10.3034 16.9713 10.7739C17.1176 11.2443 16.6984 11.7345 15.86 12.715L15.643 12.9686C15.4048 13.2472 15.2857 13.3865 15.2321 13.5589C15.1785 13.7312 15.1965 13.9171 15.2325 14.2888L15.2653 14.6272C15.3921 15.9353 15.4554 16.5894 15.0724 16.8801C14.6894 17.1709 14.1137 16.9058 12.9622 16.3756L12.6643 16.2384C12.337 16.0878 12.1734 16.0124 12 16.0124C11.8266 16.0124 11.663 16.0878 11.3357 16.2384L11.0378 16.3756C9.88634 16.9058 9.31059 17.1709 8.92757 16.8801C8.54456 16.5894 8.60794 15.9353 8.7347 14.6272L8.76749 14.2888C8.80351 13.9171 8.82152 13.7312 8.76793 13.5589C8.71434 13.3865 8.59521 13.2472 8.35696 12.9686L8.14005 12.715C7.30162 11.7345 6.88241 11.2443 7.02871 10.7739C7.17501 10.3034 7.78993 10.1643 9.01977 9.88601L9.33794 9.81402C9.68743 9.73495 9.86217 9.69541 10.0025 9.5889C10.1428 9.48239 10.2328 9.32097 10.4127 8.99812L10.5766 8.70419Z" fill="currentColor"/>
+                  <path opacity="0.8" fillRule="evenodd" clipRule="evenodd" d="M12 1.25C12.4142 1.25 12.75 1.58579 12.75 2V4C12.75 4.41421 12.4142 4.75 12 4.75C11.5858 4.75 11.25 4.41421 11.25 4V2C11.25 1.58579 11.5858 1.25 12 1.25ZM1.25 12C1.25 11.5858 1.58579 11.25 2 11.25H4C4.41421 11.25 4.75 11.5858 4.75 12C4.75 12.4142 4.41421 12.75 4 12.75H2C1.58579 12.75 1.25 12.4142 1.25 12ZM19.25 12C19.25 11.5858 19.5858 11.25 20 11.25H22C22.4142 11.25 22.75 11.5858 22.75 12C22.75 12.4142 22.4142 12.75 22 12.75H20C19.5858 12.75 19.25 12.4142 19.25 12ZM12 19.25C12.4142 19.25 12.75 19.5858 12.75 20V22C12.75 22.4142 12.4142 22.75 12 22.75C11.5858 22.75 11.25 22.4142 11.25 22V20C11.25 19.5858 11.5858 19.25 12 19.25Z" fill="currentColor"/>
+                  <g opacity="0.5">
+                  <path d="M18.5304 5.46967C18.8233 5.76256 18.8233 6.23744 18.5304 6.53033L18.1872 6.87359C17.8943 7.16648 17.4194 7.16648 17.1265 6.87359C16.8336 6.5807 16.8336 6.10583 17.1265 5.81293L17.4698 5.46967C17.7627 5.17678 18.2376 5.17678 18.5304 5.46967Z" fill="currentColor"/>
+                  <path d="M5.46967 5.46979C5.76256 5.17689 6.23744 5.17689 6.53033 5.46979L6.87359 5.81305C7.16648 6.10594 7.16648 6.58081 6.87359 6.87371C6.5807 7.1666 6.10583 7.1666 5.81293 6.87371L5.46967 6.53045C5.17678 6.23755 5.17678 5.76268 5.46967 5.46979Z" fill="currentColor"/>
+                  <path d="M6.87348 17.1266C7.16637 17.4195 7.16637 17.8944 6.87348 18.1873L6.53043 18.5303C6.23754 18.8232 5.76266 18.8232 5.46977 18.5303C5.17688 18.2375 5.17688 17.7626 5.46977 17.4697L5.81282 17.1266C6.10571 16.8337 6.58058 16.8337 6.87348 17.1266Z" fill="currentColor"/>
+                  <path d="M17.1265 17.1269C17.4194 16.834 17.8943 16.834 18.1872 17.1269L18.5302 17.4699C18.8231 17.7628 18.8231 18.2377 18.5302 18.5306C18.2373 18.8235 17.7624 18.8235 17.4695 18.5306L17.1265 18.1875C16.8336 17.8946 16.8336 17.4198 17.1265 17.1269Z" fill="currentColor"/>
+                  </g>
+                  </svg>
+                  ) : (
+                  <svg
+                    className="size-52 absolute -right-14 top-0 rotate-12 text-[#8A2BE2]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                  <path d="M18.4834 16.7674C17.8471 16.9195 17.1829 17 16.5 17C11.8056 17 8 13.1944 8 8.50001C8 8.01653 8.04036 7.54249 8.11791 7.08105C8.08172 7.11586 8.04432 7.14792 8.00494 7.17781C7.72433 7.39083 7.37485 7.46991 6.67589 7.62806L6.03954 7.77204C3.57986 8.32856 2.35002 8.60682 2.05742 9.54774C1.76482 10.4887 2.60325 11.4691 4.2801 13.4299L4.71392 13.9372C5.19042 14.4944 5.42868 14.773 5.53586 15.1177C5.64305 15.4624 5.60703 15.8341 5.53498 16.5776L5.4694 17.2544C5.21588 19.8706 5.08912 21.1787 5.85515 21.7602C6.62117 22.3417 7.77267 21.8116 10.0757 20.7512L10.6715 20.4768C11.3259 20.1755 11.6531 20.0249 12 20.0249C12.3469 20.0249 12.6741 20.1755 13.3285 20.4768L13.9243 20.7512C16.2273 21.8116 17.3788 22.3417 18.1449 21.7602C18.9109 21.1787 18.7841 19.8706 18.5306 17.2544L18.4834 16.7674Z" fill="currentColor"/>
+                  <path opacity="0.5" d="M9.15302 5.40838L8.82532 5.99623C8.46538 6.64194 8.28541 6.96479 8.0048 7.17781C8.04418 7.14791 8.08158 7.11586 8.11777 7.08105C8.04022 7.54249 7.99986 8.01653 7.99986 8.50001C7.99986 13.1944 11.8054 17 16.4999 17C17.1828 17 17.8469 16.9195 18.4833 16.7674L18.4649 16.5776C18.3928 15.8341 18.3568 15.4624 18.464 15.1177C18.5712 14.773 18.8094 14.4944 19.2859 13.9372L19.7198 13.4299C21.3966 11.4691 22.235 10.4886 21.9424 9.54773C21.6498 8.60682 20.42 8.32856 17.9603 7.77203L17.324 7.62805C16.625 7.4699 16.2755 7.39083 15.9949 7.17781C15.7143 6.96479 15.5343 6.64194 15.1744 5.99624L14.8467 5.40837C13.58 3.13612 12.9467 2 11.9999 2C11.053 2 10.4197 3.13613 9.15302 5.40838Z" fill="currentColor"/>
+                  </svg>)}
                 </>
               )}
               {Section.status === "locked" && (
                 <>
-                  <UnitCarousel
-                    units={unitsBySection[Section.id] || []}
-                    lang={lang}
-                    section={Section}
-                  />
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center w-full mb-4">
-                      <Progress
-                        value={Math.round(
-                          (Section.progress / Section.totalUnit) * 100
-                        )}
-                        className="h-3 flex-1 mr-5 bg-white max-w-80 mx-auto"
-                      />
-                    </div>
+                  <div className="flex flex-col items-start">
                     <span className="text-sm uppercase text-gray-400 font-bold font-mono">
                       {Section.progress} / {Section.totalUnit} Units
                     </span>
                   </div>
+                  <svg
+                    className="size-52 absolute -right-14 top-0 rotate-12 text-[#9d9d9d]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                  <path d="M7 10.0737C7.47142 10.0449 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10.0449 17 10.0737M7 10.0737C6.41168 10.1096 5.99429 10.1904 5.63803 10.3719C5.07354 10.6595 4.6146 11.1185 4.32698 11.683C4 12.3247 4 13.1648 4 14.8449V16.2449C4 17.9251 4 18.7652 4.32698 19.4069C4.6146 19.9714 5.07354 20.4303 5.63803 20.7179C6.27976 21.0449 7.11984 21.0449 8.8 21.0449H15.2C16.8802 21.0449 17.7202 21.0449 18.362 20.7179C18.9265 20.4303 19.3854 19.9714 19.673 19.4069C20 18.7652 20 17.9251 20 16.2449V14.8449C20 13.1648 20 12.3247 19.673 11.683C19.3854 11.1185 18.9265 10.6595 18.362 10.3719C18.0057 10.1904 17.5883 10.1096 17 10.0737M7 10.0737V8.04492C7 5.2835 9.23858 3.04492 12 3.04492C14.7614 3.04492 17 5.2835 17 8.04492V10.0737M10 18L10.2857 17M14 18L13.7143 17M10.2857 17L10.8308 15.0922C11.1799 13.8702 11.3545 13.2592 11.6244 13.1058C11.8573 12.9733 12.1427 12.9733 12.3756 13.1058C12.6455 13.2592 12.8201 13.8702 13.1692 15.0922L13.7143 17M10.2857 17H13.7143" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
                 </>
               )}
             </Card>

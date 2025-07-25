@@ -28,6 +28,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { SkeletonTopBar } from "@/components/ui/skeleton-topbar";
 
 
 export function TopNavigation() {
@@ -61,10 +62,13 @@ export function TopNavigation() {
     { id: 8, label: "French", flag: "fr" },
   ];
 
-  if (isMobile === undefined) return null;
+  // if (isMobile === undefined) return null;
   
   return (
     <>
+      {isMobile === undefined ? (
+        <SkeletonTopBar />
+      ) : (
       <header className={cn("fixed top-0 z-40 w-full h-14 pl-5 lg:pl-8 pr-8 grid grid-cols-[1fr_auto_1fr] gap-1 md:grid-cols-[minmax(100px,_1fr)_minmax(300px,_auto)_minmax(100px,_1fr)] md:gap-4 theme-aware", isMobile && "backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30")}>
         <div className={"flex items-center"}>
           <img
@@ -192,6 +196,7 @@ export function TopNavigation() {
           </DropdownMenu>
         </div>
       </header>
+      )}
     </>
   );
 }

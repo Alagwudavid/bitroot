@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
+import { SkeletonSide } from "@/components/ui/skeleton-side";
+
 
 export function Sidebar() {
   const router = useRouter();
@@ -81,7 +83,7 @@ export function Sidebar() {
   // const [MoreSelected, setMoreSelected] = useState("Explore");
   const MoreBtnRef = useRef<HTMLButtonElement>(null);
 
-const MenuRef = useRef<HTMLDivElement>(null);
+  const MenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -101,8 +103,9 @@ const MenuRef = useRef<HTMLDivElement>(null);
     };
   }, []);
 
-  if (isMobile === undefined) return null;
+  // if (isMobile === undefined) return null;
   return (
+    <>
     <div
       className={cn(
         "bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex theme-aware border-gray-300 dark:border-gray-700 z-30",
@@ -110,93 +113,55 @@ const MenuRef = useRef<HTMLDivElement>(null);
           ? "fixed bottom-0 left-0 right-0 h-20 flex-row justify-around items-center border-t z-50"
           : "w-20 px-2 lg:w-52 lg:px-4 flex-col dark:border-r sticky top-0"
       )}
-    >
-      {!isMobile && (
-        <div className="mt-4 mb-5 h-11 w-11 mx-auto shrink-0 overflow-hidden">
-        </div>
-      )}
-      {!isMobile && (
-        <div className="mt-4 mb-5 w-full shrink-0 overflow-hidden">
-          <Link href={"/beet"} id="beet-ai" legacyBehavior>
-                  <a
-                    className={cn(
-                      "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
-                      pathname.startsWith("/beet")
-                        ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
-                        : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
-                      isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
-                    )}
-                  >
-                    <AudioWaveform className="shrink-0 size-8" />
-                    <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
-                      Beet Ai
-                    </span>
-                  </a>
-                </Link>
-        </div>
-      )}
-      <nav className="flex-1 w-full">
-        <ul
-          className={cn(
-            "",
-            isMobile
-              ? "flex flex-row justify-around w-full h-full items-center space-x-2 px-3"
-              : "flex flex-col space-y-2"
-          )}
-        >
-          {menuItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname.startsWith(item.href);
-            const isMore = item.id === "More";
-            return (
-              <li key={item.id} className="w-full relative">
-            {isMore ? (
-              <>
-                <button
-                  ref={MoreBtnRef}
-                  onClick={() => setMoreMenuOpen((v) => !v)}
-                  className={cn(
-                    "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
-                    isActive
-                      ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
-                      : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
-                    isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
-                  )}
-                >
-                  {item.icon}
-                  <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
-                    {item.label}
-                  </span>
-                </button>
-                {MoreMenuOpen && (
-                  <div 
-                  ref={MenuRef}
-                  className={cn("absolute z-10 bg-white dark:bg-[#181c2a] rounded-2xl shadow-xl border p-2 w-56 ", isMobile ? "right-0 bottom-full" : "left-full top-0 mt-2 ml-2")}
-                  >
-                    {MoreMenuOptions.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => {
-                          setMoreMenuOpen(false);
-                          router.push(opt.href);
-                        }}
-                        className={cn(
-                          "flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#23263a] text-black dark:text-white transition",
-                          isActive
+    >{isMobile === undefined ? (
+        <SkeletonSide />
+      ) : (
+      <>
+        {!isMobile && (
+          <div className="mt-4 mb-5 h-11 w-11 mx-auto shrink-0 overflow-hidden">
+          </div>
+        )}
+        {!isMobile && (
+          <div className="mt-4 mb-5 w-full shrink-0 overflow-hidden">
+            <Link href={"/beet"} id="beet-ai" legacyBehavior>
+                    <a
+                      className={cn(
+                        "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
+                        pathname.startsWith("/beet")
                           ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
                           : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
-                        )}
-                      >
-                        {opt.icon}
-                        <span className="ml-3 flex-1 text-left">{opt.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-                <Link href={item.href} legacyBehavior>
-                  <a className={cn(
+                        isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
+                      )}
+                    >
+                      <AudioWaveform className="shrink-0 size-8" />
+                      <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
+                        Beet Ai
+                      </span>
+                    </a>
+                  </Link>
+          </div>
+        )}
+        <nav className="flex-1 w-full">
+          <ul
+            className={cn(
+              "",
+              isMobile
+                ? "flex flex-row justify-around w-full h-full items-center space-x-2 px-3"
+                : "flex flex-col space-y-2"
+            )}
+          >
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname.startsWith(item.href);
+              const isMore = item.id === "More";
+              return (
+                <li key={item.id} className="w-full relative">
+              {isMore ? (
+                <>
+                  <button
+                    ref={MoreBtnRef}
+                    onClick={() => setMoreMenuOpen((v) => !v)}
+                    className={cn(
                       "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
                       isActive
                         ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
@@ -204,16 +169,60 @@ const MenuRef = useRef<HTMLDivElement>(null);
                       isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
                     )}
                   >
-                    {Icon}
+                    {item.icon}
                     <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
                       {item.label}
                     </span>
-                  </a>
-                </Link>)}
-              </li>
-          )})}
-        </ul>
-      </nav>
+                  </button>
+                  {MoreMenuOpen && (
+                    <div 
+                    ref={MenuRef}
+                    className={cn("absolute z-10 bg-white dark:bg-[#181c2a] rounded-2xl shadow-xl border p-2 w-56 ", isMobile ? "right-0 bottom-full" : "left-full top-0 mt-2 ml-2")}
+                    >
+                      {MoreMenuOptions.map((opt) => (
+                        <button
+                          key={opt.value}
+                          onClick={() => {
+                            setMoreMenuOpen(false);
+                            router.push(opt.href);
+                          }}
+                          className={cn(
+                            "flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#23263a] text-black dark:text-white transition",
+                            isActive
+                            ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
+                            : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
+                          )}
+                        >
+                          {opt.icon}
+                          <span className="ml-3 flex-1 text-left">{opt.label}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                  <Link href={item.href} legacyBehavior>
+                    <a className={cn(
+                        "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
+                        isActive
+                          ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
+                          : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
+                        isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
+                      )}
+                    >
+                      {Icon}
+                      <span className={cn("font-medium line-clamp-1 font-mono ", isMobile ? "text-xs" : "text-lg")}>
+                        {item.label}
+                      </span>
+                    </a>
+                  </Link>)}
+                </li>
+            )})}
+          </ul>
+        </nav>
+      </>
+          )}
     </div>
+    </>
   );
 }
