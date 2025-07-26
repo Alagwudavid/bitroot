@@ -20,20 +20,20 @@ export function AsideBar() {
 
   return (
     <>
-    <aside className="bg-background text-white flex flex-col justify-between h-full w-80 pt-16 pr-2 p-0 font-mono theme-aware shrink-0">
+    <aside className="bg-background flex flex-col justify-between h-full w-80 pt-16 pr-2 p-0 font-mono theme-aware shrink-0">
       {isTablet === undefined ? (
         <SkeletonAside />
       ) : (
         <div className="grid grid-cols-1 w-full gap-4">
-          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-row items-center justify-between h-40 w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
+          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-row items-center justify-between h-40 w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
             <div className="flex flex-col items-start justify-center h-full">
-              <p className="text-base font-semibold text-white">
+              <p className="text-base font-semibold">
                 Your Streak
               </p>
-            <p className="text-7xl font-semibold text-white">
+            <p className="text-7xl font-semibold">
               20
             </p>
-            <p className="text-base font-semibold text-white">
+            <p className="text-base font-semibold">
               days streak.
             </p>
             </div>
@@ -47,9 +47,9 @@ export function AsideBar() {
             <path fillRule="evenodd" clipRule="evenodd" d="M11.6 15C13.7333 15 18 13.7615 18 8.80745C18 5.776 16.1512 3.5774 14.4009 2.2646C13.503 1.59108 12.3529 2.28965 12.3529 3.38896C12.3529 4.13169 12.1424 5.36614 11.5596 6.27998C10.8777 7.34944 9.75127 6.421 9.57296 5.17624C9.48354 4.55201 8.79638 4.29388 8.26099 4.65274C7.20839 5.35826 6 6.71017 6 8.80745C6 13.7615 9.73333 15 11.6 15ZM15.2155 9.28163C15.6123 9.40065 15.8374 9.81877 15.7184 10.2155C15.4495 11.1119 14.3344 12.75 12 12.75C11.5858 12.75 11.25 12.4142 11.25 12C11.25 11.5858 11.5858 11.25 12 11.25C13.5056 11.25 14.1505 10.2215 14.2816 9.78449C14.4007 9.38774 14.8188 9.16261 15.2155 9.28163Z" fill="currentColor"/>
             </svg>
           </div>
-          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] text-white flex flex-col w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
+          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-col w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
             <div className="flex items-center gap-2">
-              <p className="text-base font-semibold text-white">
+              <p className="text-base font-semibold">
                 Add friends
               </p>
             </div>
@@ -59,29 +59,29 @@ export function AsideBar() {
             <div className="mt-4 flex flex-col gap-2">
               <div className="flex items-center gap-2 mb-4">
                 <img src="/placeholder-user1.png" alt="Mascot" className="w-10 h-10 rounded-lg bg-[#23263a]" />
-                <p className="text-base font-semibold text-white">
+                <p className="text-base font-semibold">
                   Louis N.
                 </p>
               </div>
               <div className="flex items-center gap-2 mb-4">
                 <img src="/placeholder-user.jpg" alt="Mascot" className="w-10 h-10 rounded-lg bg-[#23263a]" />
-                <p className="text-base font-semibold text-white">
+                <p className="text-base font-semibold">
                   Unknown N.
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <img src="/placeholder-user1.png" alt="Mascot" className="w-10 h-10 rounded-lg bg-[#23263a]" />
-                <p className="text-base font-semibold text-white">
+                <p className="text-base font-semibold">
                   Mark D.
                 </p>
               </div>
             </div>
           </div>
           <div className="relative overflow-hidden bg-[#8A2BE2] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-3xl theme-aware">
-            <p className="text-xl uppercase font-bold text-white">
+            <p className="text-xl uppercase font-bold">
               Get premium Now!
             </p>
-            <p className="text-base font-semibold text-white">
+            <p className="text-base font-semibold">
               Access our premium features, Courses, Ai and more.
             </p>
             <Link href="/premium" className="bg-white rounded-2xl flex items-center justify-center text-[#8A2BE2] hover:underline mt-2 py-3 px-5 font-semibold">
