@@ -103,7 +103,7 @@ export default function CommunityPage() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="max-w-7xl mx-auto p-4">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-800 dark:text-[#fafafa] mb-2">
           Language Communities

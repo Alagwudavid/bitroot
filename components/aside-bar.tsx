@@ -10,8 +10,8 @@ export function AsideBar() {
   const pathname = usePathname();
   // const hideAsideBar = ["/beet", "/settings", "/home", "/"].includes(pathname);
   const hideAsideBar =
-  ["/beet", "/settings", "/home", "/"].includes(pathname) ||
-  pathname.startsWith("/learn");
+  ["/beet", "/settings", "/reels"].includes(pathname) ||
+  ["/learn", "/community"].some((route) => pathname.startsWith(route));
 
   if (isTablet || hideAsideBar) {
     return null;
@@ -47,6 +47,31 @@ export function AsideBar() {
             <path fillRule="evenodd" clipRule="evenodd" d="M11.6 15C13.7333 15 18 13.7615 18 8.80745C18 5.776 16.1512 3.5774 14.4009 2.2646C13.503 1.59108 12.3529 2.28965 12.3529 3.38896C12.3529 4.13169 12.1424 5.36614 11.5596 6.27998C10.8777 7.34944 9.75127 6.421 9.57296 5.17624C9.48354 4.55201 8.79638 4.29388 8.26099 4.65274C7.20839 5.35826 6 6.71017 6 8.80745C6 13.7615 9.73333 15 11.6 15ZM15.2155 9.28163C15.6123 9.40065 15.8374 9.81877 15.7184 10.2155C15.4495 11.1119 14.3344 12.75 12 12.75C11.5858 12.75 11.25 12.4142 11.25 12C11.25 11.5858 11.5858 11.25 12 11.25C13.5056 11.25 14.1505 10.2215 14.2816 9.78449C14.4007 9.38774 14.8188 9.16261 15.2155 9.28163Z" fill="currentColor"/>
             </svg>
           </div>
+          <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-col items-start justify-start w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
+            <p className="text-base font-semibold">
+              Today&#39;s Milestone
+            </p>
+            <div className="mt-4 flex flex-row justify-between gap-2 w-full">
+                <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
+                <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
+                <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
+                <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
+            </div>
+            <Link href="/premium" className="w-full bg-white rounded-2xl flex items-center justify-center text-[#000000] hover:underline mt-4 py-3 px-5 font-semibold">
+              View all
+            </Link>
+          </div>
+          <div className="relative overflow-hidden bg-[#8A2BE2] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-3xl theme-aware">
+            <p className="text-xl uppercase font-bold">
+              Get premium Now!
+            </p>
+            <p className="text-base font-semibold">
+              Access our premium features, Courses, Ai and more.
+            </p>
+            <Link href="/premium" className="bg-white rounded-2xl flex items-center justify-center text-[#8A2BE2] hover:underline mt-2 py-3 px-5 font-semibold">
+              Upgrade Now <ArrowUpFromDot className="inline-block w-4 h-4 ml-1" />
+            </Link>
+          </div>
           <div className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-col w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
             <div className="flex items-center gap-2">
               <p className="text-base font-semibold">
@@ -76,17 +101,6 @@ export function AsideBar() {
                 </p>
               </div>
             </div>
-          </div>
-          <div className="relative overflow-hidden bg-[#8A2BE2] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-3xl theme-aware">
-            <p className="text-xl uppercase font-bold">
-              Get premium Now!
-            </p>
-            <p className="text-base font-semibold">
-              Access our premium features, Courses, Ai and more.
-            </p>
-            <Link href="/premium" className="bg-white rounded-2xl flex items-center justify-center text-[#8A2BE2] hover:underline mt-2 py-3 px-5 font-semibold">
-              Upgrade Now <ArrowUpFromDot className="inline-block w-4 h-4 ml-1" />
-            </Link>
           </div>
         </div>
       )}

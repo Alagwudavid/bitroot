@@ -13,7 +13,6 @@ export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [selectedTab, setSelectedTab] = useState("courses");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const categories = [
@@ -181,22 +180,6 @@ export default function CoursesPage() {
     };
   });
 
-  // Featured card logic
-  let featuredCard;
-  if (selectedTab === "courses") {
-    featuredCard = featuredCourses.reduce(
-      (max, course) => (course.students > max.students ? course : max),
-      featuredCourses[0]
-    );
-  } else if (selectedTab === "playlists") {
-    featuredCard = playlists.reduce(
-      (max, playlist) => (playlist.views > max.views ? playlist : max),
-      playlists[0]
-    );
-  } else if (selectedTab === "instructors") {
-    featuredCard = teachers.find((t) => t.teacherOfMonth) || teachers[0];
-  }
-
   // Debounce search
   useEffect(() => {
     setLoading(true);
@@ -236,7 +219,7 @@ export default function CoursesPage() {
       <div className="w-full max-w-4xl px-4 md:px-8">
         <div className="relative w-full">
           <Input
-            placeholder={`Search ${selectedTab}...`}
+            placeholder={`Search courses...`}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-12 pr-12 py-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
@@ -269,103 +252,38 @@ export default function CoursesPage() {
         {/* Left: Headline, Search, Tabs, Tags */}
         <div className="flex-1 flex flex-col items-start justify-center max-w-xl w-full">
           <h1 className="text-4xl font-extrabold leading-tight mb-0 text-[#101828] dark:text-[#fafafa]">
-            Discover Top curated{" "}
-            {selectedTab === "courses"
-              ? "Courses"
-              : selectedTab === "playlists"
-              ? "Playlists"
-              : "Instructors"}
+            Earn as you teach,<br />learn as you grow
           </h1>
-          <p className="text-lg text-gray-600 dark:text-[#fafafa]/70 mb-4">
-            {selectedTab === "courses" &&
-              "Explore work from the most talented and accomplished instructors ready to help you master a new language."}
-            {selectedTab === "playlists" &&
-              "Browse curated playlists of courses by our top instructors."}
-            {selectedTab === "instructors" &&
-              "Meet the educators making a difference in language learning."}
+          <p className="text-lg text-gray-600 dark:text-[#fafafa]/70 my-4">
+              "Explore work from the most talented and accomplished instructors ready to help you master a new language.
           </p>
           {/* Tabs */}
           <div className="flex items-center gap-2 mb-6">
             <Button
-              variant={selectedTab === "courses" ? "default" : "outline"}
-              className={`rounded-full px-6 py-2 font-semibold text-base ${
-                selectedTab === "courses"
-                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
-                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
-              }`}
-              onClick={() => setSelectedTab("courses")}
+              variant={"default"}
+              className={`rounded-full px-6 py-2 font-semibold text-base bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]`}
+              // onClick={() => setSelectedTab("courses")}
             >
-              Courses
+              My courses
             </Button>
             <Button
-              variant={selectedTab === "instructors" ? "default" : "outline"}
-              className={`rounded-full px-6 py-2 font-semibold text-base ${
-                selectedTab === "instructors"
-                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
-                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
-              }`}
-              onClick={() => setSelectedTab("instructors")}
+              variant={"outline"}
+              className={`rounded-full px-6 py-2 font-semibold text-base bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]`}
+              // onClick={() => setSelectedTab("instructors")}
             >
-              Instructors
-            </Button>
-            <Button
-              variant={selectedTab === "playlists" ? "default" : "outline"}
-              className={`rounded-full px-6 py-2 font-semibold text-base ${
-                selectedTab === "playlists"
-                  ? "bg-[#101828] text-white dark:bg-[#fafafa] dark:text-[#101828]"
-                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa]"
-              }`}
-              onClick={() => setSelectedTab("playlists")}
-            >
-              Playlists
+              Earn
             </Button>
           </div>
         </div>
         {/* Right: Dynamic Featured Card */}
           <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] flex items-center justify-center overflow-hidden w-60 h-60 relative">
-            {selectedTab === "courses" &&
-              featuredCard &&
-              "thumbnail" in featuredCard && (
                 <>
                   <img
-                    src={featuredCard.thumbnail}
-                    alt="Bestseller Course"
-                    className="object-contain w-full h-full rounded-2xl shadow-lg"
-                  />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-400" /> Bestseller
-                  </div>
-                </>
-              )}
-            {selectedTab === "playlists" &&
-              featuredCard &&
-              "thumbnail" in featuredCard && (
-                <>
-                  <img
-                    src={featuredCard.thumbnail}
+                    src={"/placeholder.svg?height=300&width=300"}
                     alt="Most Viewed Playlist"
                     className="object-contain w-full h-full rounded-2xl shadow-lg"
                   />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
-                    <Eye className="w-4 h-4 text-[#7037e4] dark:text-[#8ddeed]" />{" "}
-                    Most Viewed
-                  </div>
                 </>
-              )}
-            {selectedTab === "instructors" &&
-              featuredCard &&
-              "avatar" in featuredCard && (
-                <>
-                  <img
-                    src={featuredCard.avatar}
-                    alt="Teacher of the Month"
-                    className="object-contain w-32 h-32 rounded-full shadow-lg border-4 border-[#7037e4] dark:border-[#8ddeed] mx-auto"
-                  />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-400" /> Teacher of the Month
-                  </div>
-                </>
-              )}
           </div>
       </div>
       {/* Tab Content Grids */}

@@ -51,7 +51,7 @@ export default function RootLayout({
           <div className="flex h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <TopNavigation />
             <Sidebar />
-            <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto">
+            <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto lg:w-full">
               <main className="flex-1 pt-14 p-2 shrink-0">
                 {children}
                 <div className="h-16 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>

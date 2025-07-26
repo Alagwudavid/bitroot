@@ -74,13 +74,13 @@ export function Sidebar() {
           </svg>, },
   ];
   const MoreMenuOptions = [
-    // { label: "Reels", icon: <Flame />, value: "reels", href: "/feed" },
+    { label: "Reels", icon: <Flame />, value: "reels", href: "/reels" },
     { label: "Explore", icon: <Compass />, value: "explore", href: "/explore" },
     { label: "Community", icon: <UsersRound />, value: "community", href: "/community" },
     // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
     { label: "Listen", icon: <Headphones />, value: "listen", href: "/explore/listen" },
     { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/leaderboard" },
-    { label: "Favourite", icon: <Heart />, value: "favourite", href: "/b/user/favourite" },
+    // { label: "Favourite", icon: <Heart />, value: "favourite", href: "/b/user/favourite" },
   ];
   const [MoreMenuOpen, setMoreMenuOpen] = useState(false);
   // const [MoreSelected, setMoreSelected] = useState("Explore");
@@ -107,6 +107,10 @@ export function Sidebar() {
   }, []);
 
   // if (isMobile === undefined) return null;
+  
+  // Hide sidebar on large screens since navigation is now in top bar
+  if (!isMobile) return null;
+  
   return (
     <>
     <div
