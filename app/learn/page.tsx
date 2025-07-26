@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { LanguageCard } from "@/components/language-card";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
+import { getLanguagesList } from "@/data/learn";
 
 export default function LearnPage() {
   const [selectedLanguage, setSelectedLanguage] = useState("");
@@ -14,68 +15,7 @@ export default function LearnPage() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const languages = [
-    {
-      name: "Swahili",
-      flag: "tz",
-      country: "Tanzania",
-      level: "Beginner",
-      progress: 12,
-      lessons: 24,
-      learned: 12,
-      description: "Learn the most widely spoken language in East Africa",
-    },
-    {
-      name: "Yoruba",
-      flag: "ng",
-      country: "Nigeria",
-      level: "Beginner",
-      progress: 15,
-      lessons: 7,
-      learned: 1,
-      description: "Discover the rich language of the Yoruba people",
-    },
-    {
-      name: "Amharic",
-      flag: "et",
-      country: "Ethiopia",
-      level: "Beginner",
-      progress: 12,
-      lessons: 28,
-      learned: 28,
-      description: "Learn the official language of Ethiopia",
-    },
-    {
-      name: "Hausa",
-      flag: "ng",
-      country: "Nigeria",
-      level: "Beginner",
-      progress: 0,
-      lessons: 26,
-      learned: 0,
-      description: "Master the lingua franca of West Africa",
-    },
-    {
-      name: "Igbo",
-      flag: "ng",
-      country: "Nigeria",
-      level: "Beginner",
-      progress: 0,
-      lessons: 30,
-      learned: 0,
-      description: "Learn the language of the Igbo people",
-    },
-    {
-      name: "Zulu",
-      flag: "za",
-      country: "South-Africa",
-      level: "Beginner",
-      progress: 0,
-      lessons: 25,
-      learned: 0,
-      description: "Discover South Africa's most spoken language",
-    },
-  ];
+  const languages = getLanguagesList();
 
   // Debounce search
   useEffect(() => {

@@ -200,7 +200,8 @@ export default function Home() {
     justify-content: center;
     pointer-events: auto;
     width: 62px;
-    height: 100%;
+    height: fit-content;
+    margin: auto 0;
     padding: 0 12px 0 12px;
   `;
 
@@ -637,7 +638,7 @@ export default function Home() {
                       </CardContent>
                     </Card>
                   </div>
-                  <Btd_ReelPlayer_EngagementPanel className={cn("", isMobile ? "absolute top-0 right-0 z-20 overflow-hidden" : "relative")}>
+                  <Btd_ReelPlayer_EngagementPanel className={cn("", isMobile ? "absolute top-1/2 right-0 z-20 overflow-hidden" : "relative")}>
                     <div className="w-full flex flex-col gap-2 items-center justify-center">
                       <Btd_ReelAction_Div>
                         <Btd_ReelAction_Btn className="rounded-full backdrop-blur-md bg-[#0d1117]/20 dark:bg-[#0d1117]/70 dark:hover:bg-[#0d1117]">

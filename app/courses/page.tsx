@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Play, Clock, Users, Search, BookOpen, Star, Eye } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -229,12 +230,45 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col pb-6">
+    <div className="min-h-screen max-w-5xl w-full bg-background text-foreground flex flex-col pb-6">
       {/* Main Section */}
-      <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full px-4 md:px-8 pt-10 gap-10 md:gap-0">
+      {/* Search Bar */}
+      <div className="w-full max-w-4xl px-4 md:px-8">
+        <div className="relative w-full">
+          <Input
+            placeholder={`Search ${selectedTab}...`}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-12 pr-12 py-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
+          />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
+        </div>
+      </div>
+      {/* Bottom Navigation (Tabs) */}
+      <div className="fixed md:static bottom-0 left-0 w-full bg-background z-10 border-t md:border-0 flex justify-center py-3 px-4 md:px-8">
+        <div className="flex flex-row gap-2 md:gap-4 overflow-x-auto px-2 md:px-0">
+          {categories.map((category) => (
+            <Button
+              key={category.id}
+              variant={selectedCategory === category.id ? "default" : "outline"}
+              onClick={() => setSelectedCategory(category.id)}
+              className={`rounded-full px-6 py-2 font-semibold text-base whitespace-nowrap ${
+                selectedCategory === category.id
+                  ? "bg-[#7037e4] text-white dark:bg-[#8ddeed] dark:text-[#010B13]"
+                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa] border border-[#e0e7ef] dark:border-[#23263a]"
+              }`}
+            >
+              {category.label}
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      
+      <div className="flex flex-col-reverse md:flex-row items-center md:items-start justify-between max-w-7xl mx-auto w-full px-4 md:px-8 pt-10 gap-5">
         {/* Left: Headline, Search, Tabs, Tags */}
-        <div className="flex-1 flex flex-col items-start max-w-xl w-full">
-          <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-4 text-[#101828] dark:text-[#fafafa]">
+        <div className="flex-1 flex flex-col items-start justify-center max-w-xl w-full">
+          <h1 className="text-4xl font-extrabold leading-tight mb-0 text-[#101828] dark:text-[#fafafa]">
             Discover Top curated{" "}
             {selectedTab === "courses"
               ? "Courses"
@@ -242,7 +276,7 @@ export default function CoursesPage() {
               ? "Playlists"
               : "Instructors"}
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 dark:text-[#fafafa]/70 mb-8">
+          <p className="text-lg text-gray-600 dark:text-[#fafafa]/70 mb-4">
             {selectedTab === "courses" &&
               "Explore work from the most talented and accomplished instructors ready to help you master a new language."}
             {selectedTab === "playlists" &&
@@ -286,22 +320,9 @@ export default function CoursesPage() {
               Playlists
             </Button>
           </div>
-          {/* Search Bar */}
-          <div className="w-full mb-4">
-            <div className="relative w-full">
-              <Input
-                placeholder={`Search ${selectedTab}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-12 py-4 rounded-full bg-[#f5f6fa] dark:bg-[#101828] border border-gray-300 dark:border-gray-700 text-lg shadow-sm focus:ring-2 focus:ring-[#7037e4]"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-[#7037e4] w-6 h-6" />
-            </div>
-          </div>
         </div>
         {/* Right: Dynamic Featured Card */}
-        <div className="flex-1 hidden md:flex justify-center items-center w-full mb-10 md:mb-0">
-          <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] p-6 md:p-12 flex items-center justify-center w-full max-w-md h-80 md:h-96 relative">
+          <div className="rounded-3xl bg-[#fdf6fa] dark:bg-[#23263a] flex items-center justify-center overflow-hidden w-60 h-60 relative">
             {selectedTab === "courses" &&
               featuredCard &&
               "thumbnail" in featuredCard && (
@@ -341,44 +362,30 @@ export default function CoursesPage() {
                     className="object-contain w-32 h-32 rounded-full shadow-lg border-4 border-[#7037e4] dark:border-[#8ddeed] mx-auto"
                   />
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 dark:bg-[#101828]/90 px-4 py-2 rounded-full shadow text-sm font-semibold flex items-center gap-2">
-                    <Star className="w-4 h-4 text-yellow-400" /> Teacher of the
-                    Month
+                    <Star className="w-4 h-4 text-yellow-400" /> Teacher of the Month
                   </div>
                 </>
               )}
           </div>
-        </div>
-      </div>
-      {/* Bottom Navigation (Tabs) */}
-      <div className="fixed md:static bottom-0 left-0 w-full bg-background z-10 border-t md:border-0 flex justify-center py-3 mt-8 md:mt-16">
-        <div className="flex flex-row gap-2 md:gap-4 overflow-x-auto px-2 md:px-0">
-          {categories.map((category) => (
-            <Button
-              key={category.id}
-              variant={selectedCategory === category.id ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`rounded-full px-6 py-2 font-semibold text-base whitespace-nowrap ${
-                selectedCategory === category.id
-                  ? "bg-[#7037e4] text-white dark:bg-[#8ddeed] dark:text-[#010B13]"
-                  : "bg-white dark:bg-[#101828] text-[#101828] dark:text-[#fafafa] border border-[#e0e7ef] dark:border-[#23263a]"
-              }`}
-            >
-              {category.label}
-            </Button>
-          ))}
-        </div>
       </div>
       {/* Tab Content Grids */}
-      {selectedTab === "courses" && (
         <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-8 md:mt-16">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl capitalize font-bold mb-6 text-[#101828] dark:text-[#fafafa]">
+               Recommended courses for you
+            </h2>
+            <Link href="/courses" className="text-blue-500 hover:underline inline-block">
+              See All
+            </Link>
+          </div>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {[...Array(3)].map((_, i) => (
                 <Skeleton key={i} className="h-80 w-full rounded-md" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
               {filteredCourses.map((course) => {
                 // Determine if this is the bestseller
                 const isBestseller =
@@ -460,20 +467,18 @@ export default function CoursesPage() {
             </div>
           )}
         </div>
-      )}
-      {selectedTab === "instructors" && (
         <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-12">
           <h2 className="text-2xl font-bold mb-6 text-[#101828] dark:text-[#fafafa]">
-            Meet Our Top Instructors
+            Top Instructors
           </h2>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {[...Array(4)].map((_, i) => (
                 <Skeleton key={i} className="h-80 w-full rounded-3xl" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
               {filteredTeachers.map((teacher) => (
                 <Card
                   key={teacher.name}
@@ -505,20 +510,18 @@ export default function CoursesPage() {
             </div>
           )}
         </div>
-      )}
-      {selectedTab === "playlists" && (
         <div className="max-w-7xl mx-auto w-full px-4 md:px-8 mt-12 mb-16">
           <h2 className="text-2xl font-bold mb-6 text-[#101828] dark:text-[#fafafa]">
             Curated Playlists
           </h2>
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {[...Array(4)].map((_, i) => (
                 <Skeleton key={i} className="h-64 w-full rounded-2xl" />
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {filteredPlaylists.map((playlist) => (
                 <Card
                   key={playlist.id}
@@ -551,7 +554,6 @@ export default function CoursesPage() {
             </div>
           )}
         </div>
-      )}
     </div>
   );
 }

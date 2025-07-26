@@ -17,219 +17,11 @@ import {
   ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
+import { getLanguageSections, getUnitsBySection } from "@/data/learn";
 
 const mascotUrl = "/images/mascot.png"; // Replace with your mascot image if available
 
-const languageSectionsData: Record<string, Array<any>> = {
-  yoruba: [
-    {
-      id: 1,
-      title: "Beginner",
-      level: "A1",
-      status: "completed",
-      progress: 26,
-      totalUnit: 26,
-      phrase: "Mo fẹ́ kọ́ ẹ̀dá Yorùbá.",
-      locked: false,
-    },
-    {
-      id: 2,
-      title: "Elementary",
-      level: "A2",
-      status: "in-progress",
-      progress: 20,
-      totalUnit: 26,
-      phrase: "Mo fẹ́ kọ́ ẹ̀dá Yorùbá.",
-      locked: false,
-    },
-    {
-      id: 3,
-      title: "Intermediate",
-      level: "B1",
-      status: "locked",
-      progress: 0,
-      totalUnit: 28,
-      phrase: "Mo mọ̀ díẹ̀ nínú àwọn ọ̀rọ̀.",
-      locked: true,
-    },
-    {
-      id: 4,
-      title: "Upper Intermediate",
-      level: "B2",
-      status: "locked",
-      progress: 0,
-      totalUnit: 28,
-      phrase: "Mo mọ̀ díẹ̀ nínú àwọn ọ̀rọ̀.",
-      locked: true,
-    },
-    {
-      id: 5,
-      title: "Advanced",
-      level: "C1",
-      status: "locked",
-      progress: 0,
-      totalUnit: 52,
-      phrase: "",
-      locked: true,
-    },
-    {
-      id: 6,
-      title: "Proficiency",
-      level: "C2",
-      status: "locked",
-      progress: 0,
-      totalUnit: 50,
-      phrase: "",
-      locked: true,
-    },
-    {
-      id: 7,
-      title: "Certification",
-      level: "EXAM",
-      status: "locked",
-      progress: 0,
-      totalUnit: 50,
-      phrase: "",
-      locked: true,
-    },
-  ],
-  // Add more languages as needed
-};
-
-// Mock units data for demonstration
-// const units = [
-//   {
-//     id: 10,
-//     title: "Basic Greetings",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "completed",
-//     progress: 3,
-//     totalLessons: 3,
-//   },
-//   {
-//     id: 11,
-//     title: "Polite Phrases",
-//     placeholder: "/placeholder-user.jpg",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "progress",
-//     progress: 1,
-//     totalLessons: 9,
-//   },
-//   {
-//     id: 12,
-//     title: "Checkpoint",
-//     placeholder: "/placeholder-user.jpg",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "locked",
-//     progress: 0,
-//     totalLessons: 6,
-//   },
-//   {
-//     id: 13,
-//     title: "At the Market",
-//     placeholder: "/placeholder-user.jpg",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "locked",
-//     progress: 0,
-//     totalLessons: 6,
-//   },
-//   {
-//     id: 14,
-//     title: "Practice: Ordering",
-//     placeholder: "/placeholder-user.jpg",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "locked",
-//     progress: 0,
-//     totalLessons: 6,
-//   },
-//   {
-//     id: 14,
-//     title: "Audio: Payment Dialogues",
-//     placeholder: "/placeholder-user.jpg",
-//     sectionId: 1,
-//     languageId: "yoruba",
-//     status: "locked",
-//     progress: 0,
-//     totalLessons: 6,
-//   },
-// ];
-
-// Grouped units by sectionId for demonstration
-const unitsBySection: Record<
-  number,
-  Array<{
-    id: number;
-    title: string;
-    sectionId: number;
-    languageId: string;
-    status: string;
-    progress: number;
-    totalLessons: number;
-  }>
-> = {
-  1: [
-    {
-      id: 10,
-      title: "Basic Greetings",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "completed",
-      progress: 2,
-      totalLessons: 3,
-    },
-    {
-      id: 11,
-      title: "Polite Phrases",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "locked",
-      progress: 0,
-      totalLessons: 9,
-    },
-    {
-      id: 12,
-      title: "Checkpoint",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "locked",
-      progress: 0,
-      totalLessons: 6,
-    },
-    {
-      id: 13,
-      title: "At the Market",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "locked",
-      progress: 0,
-      totalLessons: 6,
-    },
-    {
-      id: 14,
-      title: "Practice: Ordering",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "locked",
-      progress: 0,
-      totalLessons: 6,
-    },
-    {
-      id: 15,
-      title: "Audio: Payment Dialogues",
-      sectionId: 1,
-      languageId: "yoruba",
-      status: "locked",
-      progress: 0,
-      totalLessons: 6,
-    },
-  ],
-  // Add more sections as needed
-};
+// Units data is now centralized in @/data/learn.ts
 
 // Helper function to sanitize URLs
 function sanitizeUrl(text: string): string {
@@ -245,11 +37,11 @@ export default function LanguageSectionsPage() {
   const { language } = useParams();
   const router = useRouter();
   const lang = (language as string)?.toLowerCase();
-  const Sections = languageSectionsData[lang] || [];
+  const Sections = getLanguageSections(lang);
 
   const handleSectionClick = (Section: any) => {
     if (!Section.locked) {
-      router.push(`/learn/${lang}/section/${Section.id}`);
+      router.push(`/learn/${lang}/${sanitizeUrl(Section.title)}`);
     }
   };
 

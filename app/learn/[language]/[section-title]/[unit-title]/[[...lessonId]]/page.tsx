@@ -16,6 +16,15 @@ import {
 import { useIsTablet } from "@/components/ui/use-tablet"; // Make sure this exists
 import { useRouter } from "next/navigation";
 
+function sanitizeUrl(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .trim();
+}
+
 export default function UnitPage({
   params: paramsPromise,
 }: {
@@ -29,37 +38,29 @@ export default function UnitPage({
   const params = React.use(paramsPromise);
   const language = languages[params.language as keyof typeof languages];
   const section = language?.sections.find(
-    (s) => s.title === params["section-title"]
+    (s) => sanitizeUrl(s.title) === params["section-title"]
   );
-  const unit = section?.units.find((u) => u.title === params["unit-title"]);
+  const unit = section?.units.find((u) => sanitizeUrl(u.title) === params["unit-title"]);
   const isTablet = useIsTablet();
   const isLarge = !isTablet; // You can refine this if you have a useIsLarge hook
 
   if (!unit || !section) return <div>Unit not found</div>;
 
-  // Mock progress logic - first 2 lessons completed, rest pending
-  const mockSteps = unit.lessons.map((lesson, idx) => ({
-    id: lesson.id,
-    title: `Lesson ${idx + 1}: ${lesson.id}`,
-    type:
-      idx === 2
-        ? "checkpoint"
-        : idx === 3
-        ? "practice"
-        : idx === 4
-        ? "audio"
-        : "lesson",
-    done: idx < 2, // First 2 lessons completed
-    href: `/learn/${params.language}/${section.title}/${unit.title}/${lesson.id}`,
+  // Use lessons directly from centralized data
+  const lessons = unit.lessons.map((lesson, idx) => ({
+    ...lesson,
+    title: `Lesson ${idx + 1}: ${lesson.phrase}`,
+    done: lesson.completed || false,
+    href: `/learn/${params.language}/${sanitizeUrl(section.title)}/${sanitizeUrl(unit.title)}/${lesson.id}`,
   }));
 
   // State for selected lesson and list visibility
   const lessonId = params.lessonId; // get from params if available
-  const initialIdx = unit.lessons.findIndex((l) => l.id === lessonId);
+  const initialIdx = lessons.findIndex((l) => l.id === lessonId);
   const [selectedIdx, setSelectedIdx] = useState(initialIdx >= 0 ? initialIdx : 0);
   const [showList, setShowList] = useState(isLarge);
 
-  const selectedLesson = unit.lessons[selectedIdx];
+  const selectedLesson = lessons[selectedIdx];
 
   function stepIcon(type: string, done: boolean) {
     if (done) return <CheckCircle className="text-blue-400 w-5 h-5" />;
@@ -78,7 +79,7 @@ export default function UnitPage({
   }
 
   // Player component
-  function LessonPlayer({ lesson }: { lesson: typeof mockSteps[0] }) {
+  function LessonPlayer({ lesson }: { lesson: typeof lessons[0] }) {
     // Add state for answer selection
     const [selected, setSelected] = useState<string[]>([]);
     const [timer] = useState(5);
@@ -95,12 +96,6 @@ export default function UnitPage({
       <>
             {/* Progress bar and close */}
             <div className="w-full flex items-center px-8 pt-6">
-              {/* <button
-                onClick={() => router.back()}
-                className="text-gray-400 hover:text-white"
-              >
-                <X size={28} />
-              </button> */}
               <div className="flex-1 mx-4 h-2 bg-gray-700 rounded-full overflow-hidden">
                 <div className="h-full bg-[#22c55e] w-1/3" />
               </div>
@@ -150,7 +145,7 @@ export default function UnitPage({
                   disabled={selected.includes(word)}
                   className={`px-4 py-2 rounded-lg border border-gray-600 font-semibold text-white transition ${
                     selected.includes(word)
-                      ? "opacity-40 cursor-not-allowed"
+                      ? "opacity-40 cursor-not-allowed text-black dark:text-gray-400"
                       : "bg-[#23263a] hover:bg-[#22c55e] hover:text-black"
                   }`}
                 >
@@ -199,14 +194,14 @@ export default function UnitPage({
         )}
         <h3 className="text-lg font-bold mb-4">Lessons</h3>
         <div className="flex flex-col gap-2 overflow-y-auto">
-          {mockSteps.map((step, idx) => (
+          {lessons.map((lesson, idx) => (
             <button
-              key={step.id}
+              key={lesson.id}
               onClick={() => {
                 onSelect(idx);
                 // Update the route to include the lesson id
                 router.push(
-                  `/learn/${params.language}/${params["section-title"]}/${params["unit-title"]}/${step.id}`
+                  `/learn/${params.language}/${params["section-title"]}/${params["unit-title"]}/${lesson.id}`
                 );
                 if (onClose) onClose();
               }}
@@ -214,8 +209,8 @@ export default function UnitPage({
                 selectedIdx === idx ? "bg-sky-100 dark:bg-sky-900" : ""
               }`}
             >
-              <span className="font-medium">{step.title}</span>
-              {stepIcon(step.type, step.done)}
+              <span className="font-medium">{lesson.title}</span>
+              {stepIcon(lesson.type || "lesson", lesson.done)}
             </button>
           ))}
         </div>
@@ -228,7 +223,7 @@ export default function UnitPage({
     setSelectedIdx((idx) => (idx > 0 ? idx - 1 : idx));
   }
   function handleNext() {
-    setSelectedIdx((idx) => (idx < mockSteps.length - 1 ? idx + 1 : idx));
+    setSelectedIdx((idx) => (idx < lessons.length - 1 ? idx + 1 : idx));
   }
   function handleToggleList() {
     setShowList((v) => !v);
@@ -237,14 +232,6 @@ export default function UnitPage({
   return (
     <div className="min-h-screen flex flex-col px-2">
       <div className="mb-2 mt-4 px-4 flex items-center flex-wrap gap-2 w-full text-xl font-semibold">
-        <Link href="/" className="hover:underline text-gray-500">
-          Home
-        </Link>
-        <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
-        <Link href="/learn" className="hover:underline text-gray-500">
-          Learn
-        </Link>
-        <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
         <Link
           href={`/learn/${params.language}`}
           className="hover:underline text-gray-500"
@@ -261,7 +248,7 @@ export default function UnitPage({
         <ChevronLeft className="rotate-180 w-5 h-5 text-gray-400" />
         <span className="capitalize text-sky-400">{params["unit-title"]}</span>
       </div>
-      <div className="flex-1 flex w-full mt-4 relative">
+      <div className="flex-1 flex w-full mt-4 relative p-4">
         {/* Sidebar for large screens */}
         {isLarge && showList && (
           <div className="hidden lg:block h-full mr-6">
@@ -269,7 +256,7 @@ export default function UnitPage({
           </div>
         )}
         {/* Player */}
-        <div className="flex-1 flex flex-col items-center">
+        <div className="flex-1 flex flex-col items-center border-2 rounded-xl">
           <LessonPlayer lesson={selectedLesson} />
           <div className="flex gap-4 mt-6">
             <Button
@@ -285,7 +272,7 @@ export default function UnitPage({
             </Button>
             <Button
               onClick={handleNext}
-              disabled={selectedIdx === mockSteps.length - 1}
+              disabled={selectedIdx === lessons.length - 1}
               variant="outline"
             >
               Next <ChevronRight className="w-5 h-5" />

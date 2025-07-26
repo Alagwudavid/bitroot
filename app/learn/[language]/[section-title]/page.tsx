@@ -9,6 +9,15 @@ import { useIsTablet } from "@/components/ui/use-tablet"; // You must have this 
 import { useParams, useRouter } from "next/navigation";
 
 
+function sanitizeUrl(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "") // Remove special characters except spaces and hyphens
+    .replace(/\s+/g, "-") // Replace spaces with hyphens
+    .replace(/-+/g, "-") // Replace multiple hyphens with single hyphen
+    .trim();
+}
+
 export default function SectionPage({
   params: paramsPromise,
 }: {
@@ -17,16 +26,16 @@ export default function SectionPage({
   const params = React.use(paramsPromise);
   const language = languages[params.language as keyof typeof languages];
   const section = language.sections.find(
-    (s) => s.title === params["section-title"]
+    (s) => sanitizeUrl(s.title) === params["section-title"]
   );
   const [selectedUnit, setSelectedUnit] = useState<null | typeof section.units[0]>(null);
   const isTablet = useIsTablet();
 
   if (!section) return <div>Section not found</div>;
 
-  // Mock lesson completion: first lesson completed, rest not
-  function getLessonStatus(idx: number) {
-    return idx === 0 ? "completed" : "incomplete";
+  // Get lesson completion status from centralized data
+  function getLessonStatus(lesson: any) {
+    return lesson.completed ? "completed" : "incomplete";
   }
   const router = useRouter();
 
@@ -43,7 +52,7 @@ export default function SectionPage({
         <div className="flex flex-col gap-2">
           {unit.lessons.map((lesson, idx) => (
             <div
-              onClick={() => router.push(`/learn/${params.language}/${params["section-title"]}/${unit.title}/${lesson.id}`)}
+              onClick={() => router.push(`/learn/${params.language}/${params["section-title"]}/${sanitizeUrl(unit.title)}/${lesson.id}`)}
               key={lesson.id}
               className="flex items-center justify-between px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
             >
@@ -51,7 +60,7 @@ export default function SectionPage({
                 <Book className="w-5 h-5 text-gray-400" />
                 <span className="font-medium">{lesson.label || lesson.phrase || lesson.id}</span>
               </div>
-              {getLessonStatus(idx) === "completed" ? (
+              {getLessonStatus(lesson) === "completed" ? (
                 <CheckCircle className="w-5 h-5 text-green-500" />
               ) : (
                 <Circle className="w-5 h-5 text-gray-400" />
