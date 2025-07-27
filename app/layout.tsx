@@ -5,11 +5,6 @@ import { TopNavigation } from "@/components/top-navigation";
 import { AsideBar } from "@/components/aside-bar";
 import { ThemeProvider } from "@/components/theme-provider";
 
-// export const metadata: Metadata = {
-//   title: "Bitroot App",
-//   description: "Where language takes root — and culture comes alive.",
-//   generator: "Techgators",
-// };
 export const metadata: Metadata = {
   title: "Bitroot App",
   description: "Where language takes root — and culture comes alive.",
@@ -52,7 +47,8 @@ export default function RootLayout({
             <TopNavigation />
             <Sidebar />
             <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto lg:w-full">
-              <main className="flex-1 pt-14 p-2 shrink-0">
+              <main className="flex-1 p-2 shrink-0">
+                <div className="h-16 w-full shrink-0 bg-transparent border-0 flex"></div>
                 {children}
                 <div className="h-16 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
               </main>

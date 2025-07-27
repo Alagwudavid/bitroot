@@ -1,18 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { House, AudioWaveform, Compass, Video, Trophy, Heart, Image, Podcast, Flame, Headphones, UsersRound } from "lucide-react";
+import { AudioWaveform } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { useRouter } from "next/navigation";
 import { SkeletonSide } from "@/components/ui/skeleton-side";
 
 
 export function Sidebar() {
-  const router = useRouter();
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const menuItems = [
@@ -53,58 +50,7 @@ export function Sidebar() {
       </AvatarFallback>
     </Avatar>, 
       href: "/profile" },
-    { id: "More", 
-      label: "Menu", 
-      icon: <svg className="shrink-0 size-8 group-hover/sidebar:scale-110 group-hover/sidebar:-rotate-12 duration-500 ease-in-out" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path
-              d="M20.5 16.75H18.25V14.5C18.25 14.09 17.91 13.75 17.5 13.75C17.09 13.75 16.75 14.09 16.75 14.5V16.75H14.5C14.09 16.75 13.75 17.09 13.75 17.5C13.75 17.91 14.09 18.25 14.5 18.25H16.75V20.5C16.75 20.91 17.09 21.25 17.5 21.25C17.91 21.25 18.25 20.91 18.25 20.5V18.25H20.5C20.91 18.25 21.25 17.91 21.25 17.5C21.25 17.09 20.91 16.75 20.5 16.75Z"
-              fill="currentColor"
-            />
-            <path
-              d="M22 8.52V3.98C22 2.57 21.36 2 19.77 2H15.73C14.14 2 13.5 2.57 13.5 3.98V8.51C13.5 9.93 14.14 10.49 15.73 10.49H19.77C21.36 10.5 22 9.93 22 8.52Z"
-              fill="currentColor"
-            />
-            <path
-              d="M10.5 8.52V3.98C10.5 2.57 9.86 2 8.27 2H4.23C2.64 2 2 2.57 2 3.98V8.51C2 9.93 2.64 10.49 4.23 10.49H8.27C9.86 10.5 10.5 9.93 10.5 8.52Z"
-              fill="currentColor"
-            />
-            <path
-              d="M10.5 19.77V15.73C10.5 14.14 9.86 13.5 8.27 13.5H4.23C2.64 13.5 2 14.14 2 15.73V19.77C2 21.36 2.64 22 4.23 22H8.27C9.86 22 10.5 21.36 10.5 19.77Z"
-              fill="currentColor"
-            />
-          </svg>, },
   ];
-  const MoreMenuOptions = [
-    { label: "Reels", icon: <Flame />, value: "reels", href: "/reels" },
-    { label: "Explore", icon: <Compass />, value: "explore", href: "/explore" },
-    { label: "Community", icon: <UsersRound />, value: "community", href: "/community" },
-    // { label: "Galleries", icon: <Image />, value: "gallery", href: "/explore/gallery" },
-    { label: "Listen", icon: <Headphones />, value: "listen", href: "/explore/listen" },
-    { label: "Leaderboard", icon: <Trophy />, value: "leaderboard", href: "/leaderboard" },
-    // { label: "Favourite", icon: <Heart />, value: "favourite", href: "/b/user/favourite" },
-  ];
-  const [MoreMenuOpen, setMoreMenuOpen] = useState(false);
-  // const [MoreSelected, setMoreSelected] = useState("Explore");
-  const MoreBtnRef = useRef<HTMLButtonElement>(null);
-
-  const MenuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        MenuRef.current &&
-        !MenuRef.current.contains(event.target as Node) &&
-        MoreBtnRef.current &&
-        !MoreBtnRef.current.contains(event.target as Node)
-      ) {
-        setMoreMenuOpen(false);
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   // if (isMobile === undefined) return null;
   
@@ -160,56 +106,8 @@ export function Sidebar() {
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname.startsWith(item.href);
-              const isMore = item.id === "More";
               return (
                 <li key={item.id} className="w-full relative">
-              {isMore ? (
-                <>
-                  <button
-                    ref={MoreBtnRef}
-                    onClick={() => setMoreMenuOpen((v) => !v)}
-                    className={cn(
-                      "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
-                      isActive
-                        ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
-                        : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
-                      isMobile ? "flex-col text-xs p-2 justify-center" : "flex-row gap-3 px-4 py-3"
-                    )}
-                  >
-                    {item.icon}
-                    {!isMobile && (
-                        <span className={"font-medium line-clamp-1 font-mono text-lg"}>
-                          {item.label}
-                        </span>
-                      )}
-                  </button>
-                  {MoreMenuOpen && (
-                    <div 
-                    ref={MenuRef}
-                    className={cn("absolute z-10 bg-white dark:bg-[#181c2a] rounded-2xl shadow-xl border p-2 w-56 ", isMobile ? "right-0 bottom-full" : "left-full top-0 mt-2 ml-2")}
-                    >
-                      {MoreMenuOptions.map((opt) => (
-                        <button
-                          key={opt.value}
-                          onClick={() => {
-                            setMoreMenuOpen(false);
-                            router.push(opt.href);
-                          }}
-                          className={cn(
-                            "flex items-center w-full px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-[#23263a] text-black dark:text-white transition",
-                            isActive
-                            ? "bg-[#C51E3A] dark:bg-[#1e96fc] text-white shadow-lg"
-                            : "text-gray-600 dark:text-[#fafafa]/70 hover:bg-[#C51E3A]/70 dark:hover:bg-[#1e96fc]/20 hover:text-white",
-                          )}
-                        >
-                          {opt.icon}
-                          <span className="ml-3 flex-1 text-left">{opt.label}</span>
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
                   <Link href={item.href} legacyBehavior>
                     <a className={cn(
                         "w-full flex items-center gap-1 rounded-xl transition-all duration-200 theme-aware group/sidebar",
@@ -226,7 +124,7 @@ export function Sidebar() {
                         </span>
                       )}
                     </a>
-                  </Link>)}
+                  </Link>
                 </li>
             )})}
           </ul>

@@ -1,19 +1,39 @@
 "use client";
 
-import { BellDot } from "lucide-react";
+import { BellDot, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { SkeletonTopBar } from "@/components/ui/skeleton-topbar";
 import { AppLogo } from "@/components/app-logo";
-import { LanguageSelector } from "@/components/language-selector";
 import { MainMenu } from "@/components/main-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 export function TopNavigation() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
+  const [currentLanguage, setCurrentLanguage] = useState("us");
+
+  const languages = [
+    { id: 0, label: "Local", flag: "ea" },
+    { id: 1, label: "English", flag: "us" },
+    { id: 2, label: "Swahili", flag: "tz" },
+    { id: 3, label: "Yoruba", flag: "ng" },
+    { id: 4, label: "Amharic", flag: "et" },
+    { id: 5, label: "Hausa", flag: "ng" },
+    { id: 6, label: "Igbo", flag: "ng" },
+    { id: 7, label: "Zulu", flag: "za" },
+    { id: 8, label: "French", flag: "fr" },
+  ];
 
   const menuItems = [
     { 
@@ -79,7 +99,40 @@ export function TopNavigation() {
             >
               <BellDot className="size-6" />
             </Link>
-            <LanguageSelector />
+            {/* Compact Language Selector */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="relative h-10 px-3 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 border theme-aware flex items-center gap-2"
+                >
+                  <img
+                    src={`/flag/${currentLanguage}.png`}
+                    alt={`${currentLanguage} flag`}
+                    className="w-5 h-5 object-cover rounded-sm"
+                  />
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48 rounded-xl theme-aware">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.id}
+                    onClick={() => setCurrentLanguage(language.flag)}
+                    className="rounded-lg theme-aware cursor-pointer flex items-center gap-3"
+                  >
+                    <div className="w-5 h-5 rounded-sm overflow-hidden flex-shrink-0">
+                      <img
+                        src={`/flag/${language.flag}.png`}
+                        alt={`${language.label} flag`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="flex-1">{language.label}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
             <MainMenu />
           </div>
         </header>
@@ -89,7 +142,7 @@ export function TopNavigation() {
           <AppLogo />
           
           {/* Center navigation menu items */}
-          <nav className="flex items-center gap-6">
+          <nav className="flex items-center gap-3">
             {menuItems.map((item) => {
               const isActive = pathname.startsWith(item.href);
               return (

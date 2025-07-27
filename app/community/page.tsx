@@ -112,6 +112,35 @@ export default function CommunityPage() {
           Connect with learners and native speakers from around the world
         </p>
       </div>
+      {/* Stats Bar */}
+      <div>
+        <h2 className="text-lg font-semibold mb-4">Overview</h2>
+        <div className="space-y-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+          <Card className="p-4 text-center bg-gradient-to-br from-threads-primary/10 to-threads-primary/5 border-threads-primary/20">
+            <div className="flex items-center justify-center space-x-2 mb-1">
+              <TrendingUp className="h-4 w-4 text-threads-primary" />
+              <span className="text-xl font-bold text-threads-primary">2.4M</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Total Visits</p>
+          </Card>
+          
+          <Card className="p-4 text-center bg-gradient-to-br from-threads-secondary/10 to-threads-secondary/5 border-threads-secondary/20">
+            <div className="flex items-center justify-center space-x-2 mb-1">
+              <Users className="h-4 w-4 text-threads-secondary" />
+              <span className="text-xl font-bold text-threads-secondary">156K</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Learners</p>
+          </Card>
+          
+          <Card className="p-4 text-center bg-gradient-to-br from-accent/10 to-accent/5 border-accent/20">
+            <div className="flex items-center justify-center space-x-2 mb-1">
+              <Globe className="h-4 w-4 text-accent" />
+              <span className="text-xl font-bold text-accent">25</span>
+            </div>
+            <p className="text-xs text-muted-foreground">Languages</p>
+          </Card>
+        </div>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Communities Grid */}
         <div className="lg:col-span-2">
