@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Camera, TrendingUp, Users, Globe, Crown, Medal, Award, ChevronUp, ChevronDown, Swords } from "lucide-react";
+import { Plus, Camera, TrendingUp, Users, Globe, Crown, Medal, Award, ChevronUp, ChevronDown, Swords, Flame, Compass, UsersRound, Headphones, Play, RefreshCcw } from "lucide-react";
 import { LanguagePost } from "@/components/LanguagePost";
 import { CreateLanguagePostModal } from "@/components/CreateLanguagePostModal";
 import { languagePosts } from "@/data/posts";
@@ -47,8 +47,11 @@ const Home = () => {
   ];
 
   const tabs = [
-    { value: "Feed", label: "Feed", link: ["/home", "/"] },
-    { value: "Community", label: "Community", link: "/community" }
+    { value: "Home", label: "Feed", placeholder: <RefreshCcw className="size-4" />, link: "/home" },
+    { value: "Community", label: "Community", placeholder: <UsersRound className="size-4" />, link: "/community" },
+    { value: "Watch", label: "Watch", placeholder: <Play className="size-4" />, link: "/explore/animations" },
+    { value: "Explore", label: "Explore", placeholder: <Compass className="size-4" />, link: "/explore" },
+    { value: "Listen", label: "Listen", placeholder: <Headphones className="size-4" />, link: "/explore/listen" },
   ];
 
   return (
@@ -56,7 +59,7 @@ const Home = () => {
       <div className="flex">
         {/* Language Sidebar - Large screens only */}
         {!isTablet && (
-          <aside className="w-80 bg-card h-screen overflow-y-auto">
+          <aside className="w-80 bg-card h-full overflow-y-auto">
             <div className="p-4 space-y-6">
               {/* Leaderboard */}
               <Link href={"/"} className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-col items-start justify-start w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
@@ -71,10 +74,14 @@ const Home = () => {
               </Link>
               {/* Top player */}
               <Link href={"/"} className="relative overflow-hidden bg-[#EEEDEC] dark:bg-[#0d1117] flex flex-col items-start justify-start w-full p-5 font-mono rounded-3xl theme-aware border border-gray-300 dark:border-gray-700">
+                <div className="mt-4 flex flex-row justify-between gap-2 w-full">
                 <p className="text-xl font-semibold">
-                  Top Game for the week
+                  Top Games 
+                  for the
+                  week
                 </p>
                 <Swords className="size-6" />
+                </div>
                 <div className="mt-4 flex flex-row justify-between gap-2 w-full">
                     <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
                     <img src="/placeholder-user.jpg" alt="Mascot" className="w-14 h-14 rounded-lg bg-[#23263a] border-2" />
@@ -144,36 +151,12 @@ const Home = () => {
         {/* Main Content */}
         <main className={cn("flex-1", !isTablet && "ml-0")}>
           <div className="max-w-4xl mx-auto">
-            <div className="p-4 flex items-center justify-between gap-4 max-w-xl mx-auto">
-              <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-                <SelectTrigger className="w-48 border-none focus-within:border-none focus:border-none focus:ring-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {languages.map((lang) => (
-                    <SelectItem key={lang.name} value={lang.name}>
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-full mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
-                          <img
-                            src={`/flag/${lang.flag}.png`}
-                            alt={`${lang.name} flag`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <span>{lang.name}</span>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              
-              <TabsSwitcher
-                tabs={tabs}
-              />
-            </div>
+            <TabsSwitcher
+              tabs={tabs}
+              className="mb-4 max-w-xl mx-auto"
+            />
 
-            <div className="px-4 mb-6 max-w-xl mx-auto">
-              <Card className="p-4">
+            <Card className="p-3 mb-4 rounded-3xl max-w-xl mx-auto">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <Avatar className="h-10 w-10">
@@ -190,9 +173,29 @@ const Home = () => {
                         I made some progress...
                       </Button>
                     </div>
+                    <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                      <SelectTrigger className="w-48 border-none focus-within:border-none focus:border-none focus:ring-0">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {languages.map((lang) => (
+                          <SelectItem key={lang.name} value={lang.name}>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-8 h-8 rounded-full mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                                <img
+                                  src={`/flag/${lang.flag}.png`}
+                                  alt={`${lang.name} flag`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                              <span>{lang.name}</span>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-              </Card>
-            </div>
+            </Card>
 
             {/* Filter Header */}
             {selectedLanguage !== "All Languages" && (
@@ -222,10 +225,7 @@ const Home = () => {
             )}
 
             {/* Posts Feed */}
-            <div className={cn(
-              "space-y-6 max-w-xl mx-auto",
-              isTablet ? "px-4" : "px-4 pt-4"
-            )}>
+            <div className={"space-y-6 max-w-xl mx-auto"}>
               {filteredPosts.map((post) => (
                 <LanguagePost
                   key={post.id}
@@ -233,6 +233,7 @@ const Home = () => {
                   author={post.author}
                   content={post.content}
                   language={post.language}
+                  community={post.community}
                   media={post.media}
                   caption={post.caption}
                   timestamp={post.timestamp}

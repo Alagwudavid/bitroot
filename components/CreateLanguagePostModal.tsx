@@ -12,6 +12,8 @@ import { ImageIcon, Video, X, Hash, Shapes, MoreHorizontal, Paintbrush2, Type, S
 import { toast } from "sonner";
 import { VerifiedBadge } from "@/components/verified-badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
+import { communities } from "@/data/communities";
 
 interface CreateLanguagePostModalProps {
   open: boolean;
@@ -33,6 +35,7 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
   const [content, setContent] = useState("");
   const [caption, setCaption] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [selectedCommunity, setSelectedCommunity] = useState("");
   const [tags, setTags] = useState("");
   const [media, setMedia] = useState<{ type: "image" | "video"; url: string } | null>(null);
   const [mode, setMode] = useState<"post" | "canvas">("post");
@@ -48,12 +51,18 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
       toast.error("Please select a language");
       return;
     }
+
+    if (!selectedCommunity) {
+      toast.error("Please select a community");
+      return;
+    }
     
     // Simulate posting
     toast.success("Language learning post shared successfully!");
     setContent("");
     setCaption("");
     setSelectedLanguage("");
+    setSelectedCommunity("");
     setTags("");
     setMedia(null);
     onOpenChange(false);
@@ -71,14 +80,15 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
     setContent("");
     setCaption("");
     setSelectedLanguage("");
+    setSelectedCommunity("");
     setTags("");
     setMedia(null);
     toast.success("Draft deleted successfully!");
   };
 
-  const toggleMode = () => {
-    setMode(mode === "post" ? "canvas" : "post");
-    toast.info(`Switched to ${mode === "post" ? "canvas" : "post"} mode`);
+  const handleModeChange = (newMode: "post" | "canvas") => {
+    setMode(newMode);
+    toast.info(`Switched to ${newMode} mode`);
   };
 
   const handleMediaUpload = (type: "image" | "video") => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,21 +110,38 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
   };
 
   const selectedLang = languages.find(lang => lang.name === selectedLanguage);
+  const selectedComm = communities.find(comm => comm.name === selectedCommunity);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-2xl bg-card border border-border max-h-[90vh] overflow-hidden flex flex-col">
-        <DialogHeader className="flex flex-row items-center justify-between p-4 border-b border-border">
+        <DialogHeader className="flex flex-row items-center justify-between pb-2 border-b border-border">
           <div className="flex items-center space-x-2">
-            <Button
-              variant="ghost"
-              onClick={toggleMode}
-              className="p-2 h-auto text-muted-foreground hover:text-foreground"
-              title={`Switch to ${mode === "post" ? "canvas" : "post"} mode`}
-            >
-              <Shapes className="h-5 w-5" />
-              Canvas
-            </Button>
+            <div className="inline-flex items-center space-x-2 rounded-lg bg-muted p-1">
+              <Button
+                onClick={() => handleModeChange("post")}
+                className={cn(
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  mode === "post"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
+                )}
+              >
+                Post
+              </Button>
+              <Button
+                onClick={() => handleModeChange("canvas")}
+                className={cn(
+                  "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                  mode === "canvas"
+                    ? "bg-background text-foreground shadow-sm"
+                    : "bg-transparent text-muted-foreground hover:text-foreground hover:bg-background/50"
+                )}
+              >
+                <Shapes className="h-4 w-4 mr-1" />
+                Canvas
+              </Button>
+            </div>
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -141,12 +168,12 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <DialogTitle className="text-center text-lg font-semibold">
+          <DialogTitle className="text-center text-base font-semibold">
             Create {mode === "post" ? "Post" : "Canvas"}
           </DialogTitle>
         </DialogHeader>
         <div className="flex-1 overflow-y-auto">
-          <div className="space-y-6 p-4">
+          <div className="space-y-0">
             {mode === "post" ? (
               // Post Mode Content
               <div className="flex space-x-3">
@@ -174,6 +201,20 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
                        </div> {selectedLang.name}
                       </div>
                     )}
+                    {selectedComm && (
+                      <div 
+                        className="px-2 py-1 rounded text-white text-xs font-medium flex items-center"
+                        style={{ backgroundColor: selectedComm.color }}
+                      >
+                        <div className="w-5 h-5 rounded-md mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                         <img
+                           src={`/flag/${selectedComm.flag}.png`}
+                           alt={`${selectedComm.name} flag`}
+                           className="w-full h-full object-cover"
+                         />
+                       </div> {selectedComm.name}
+                      </div>
+                    )}
                   </div>
               
               {/* Language Selection */}
@@ -195,6 +236,32 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
                             />
                         </div>
                           <span>{lang.name}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Community Selection */}
+              <div className="space-y-2">
+                <Label htmlFor="community">Community *</Label>
+                <Select value={selectedCommunity} onValueChange={setSelectedCommunity}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a community to post in" />
+                  </SelectTrigger>
+                  <SelectContent className="max-h-60 overflow-y-auto">
+                    {communities.map((community) => (
+                      <SelectItem key={community.name} value={community.name}>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-5 h-5 rounded-md mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                            <img
+                              src={`/flag/${community.flag}.png`}
+                              alt={`${community.name} flag`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <span>{community.name}</span>
                         </div>
                       </SelectItem>
                     ))}
@@ -298,7 +365,7 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
         </div>
         
         {/* Actions */}
-        <div className="flex items-center justify-between border-t border-border pt-4 px-4">
+        <div className="flex items-center justify-between border-t border-border">
           <div className="flex items-center space-x-2">
             {mode === "post" && (
               <>
@@ -338,7 +405,7 @@ export function CreateLanguagePostModal({ open, onOpenChange }: CreateLanguagePo
           <div className="flex space-x-2">
             <Button
               onClick={handlePost}
-              disabled={mode === "post" ? (!content.trim() || !selectedLanguage || content.length > maxLength) : false}
+              disabled={mode === "post" ? (!content.trim() || !selectedLanguage || !selectedCommunity || content.length > maxLength) : false}
               className="bg-threads-primary hover:bg-threads-primary/90 text-foreground px-6"
             >
               {mode === "post" ? "Share" : "Create Canvas"}

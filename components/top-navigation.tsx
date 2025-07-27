@@ -1,6 +1,6 @@
 "use client";
 
-import { BellDot, ChevronDown } from "lucide-react";
+import { MessageCircleDashed, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/components/ui/use-mobile";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -94,10 +94,10 @@ export function TopNavigation() {
           <div></div>
           <div className="flex items-center justify-end gap-4">
             <Link
-              href="/notifications"
+              href="/beet"
               className="relative h-10 w-10 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 shrink-0 text-lg flex items-center justify-center border theme-aware"
             >
-              <BellDot className="size-6" />
+              <MessageCircleDashed className="size-6" />
             </Link>
             {/* Compact Language Selector */}
             <DropdownMenu>
@@ -165,10 +165,10 @@ export function TopNavigation() {
 
           <div className="flex items-center gap-4">
             <Link
-              href="/notifications"
+              href="/beet"
               className="relative h-10 w-10 rounded-full p-0 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 shrink-0 text-lg flex items-center justify-center border theme-aware"
             >
-              <BellDot className="size-6" />
+              <MessageCircleDashed className="size-6" />
             </Link>
             <MainMenu />
           </div>

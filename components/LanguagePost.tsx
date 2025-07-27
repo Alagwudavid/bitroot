@@ -4,7 +4,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, Share, Eye, Play, MoreHorizontal, Volume2 } from "lucide-react";
+import { Heart, MessageCircle, Share, ChartNoAxesColumn, Play, Flag, Volume2 } from "lucide-react";
+import { VerifiedBadge } from "@/components/verified-badge";
+import { Dot } from "@/components/ui/dot";
 
 interface LanguagePostProps {
   id: string;
@@ -13,10 +15,16 @@ interface LanguagePostProps {
     username: string;
     avatar: string;
     level: string;
+    type: "user" | "creator" | "instructor";
     verified?: boolean;
   };
   content: string;
   language: {
+    name: string;
+    flag: string;
+    color: string;
+  };
+  community?: {
     name: string;
     flag: string;
     color: string;
@@ -42,6 +50,7 @@ export function LanguagePost({
   author,
   content,
   language,
+  community,
   media,
   caption,
   timestamp,
@@ -66,7 +75,7 @@ export function LanguagePost({
   };
 
   return (
-    <Card className="border border-border bg-card hover:bg-threads-surface transition-all duration-300 animate-fade-in">
+    <Card className="border border-border rounded-3xl bg-card hover:bg-threads-surface transition-all duration-300 animate-fade-in">
       <div className="p-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-3">
@@ -77,36 +86,52 @@ export function LanguagePost({
                 {author.name.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            
             <div className="flex-1">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1">
                 <span className="font-semibold text-foreground">{author.name}</span>
                 {author.verified && (
-                  <div className="w-4 h-4 bg-threads-primary rounded-full flex items-center justify-center">
-                    <span className="text-primary-foreground text-xs">✓</span>
+                  <VerifiedBadge accountType={author.type} />
+                )}
+                {community && (
+                  <div 
+                    className="text-foreground text-sm flex items-center space-x-2"
+                  >
+                    <span>in</span>
+                    <div className="flex items-center space-x-1">
+                      <div className="w-4 h-4 rounded-full mr-1 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                        <img
+                          src={`/flag/${community.flag}.png`}
+                          alt={`${community.name} flag`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <span className="text-foreground text-sm font-medium">{community.name}</span>
+                    </div>
                   </div>
                 )}
+              </div>
+              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Badge variant="secondary" className="text-xs px-2 py-0.5">
                   {author.level}
                 </Badge>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <span>@{author.username}</span>
-                <span>·</span>
-                <span>{timestamp}</span>
                 <Badge 
-                  className="text-xs px-2 py-0.5 text-white"
+                  className="text-xs p-0.5 pr-1 text-white"
                   style={{ backgroundColor: language.color }}
                 >
-                  {language.flag} {language.name}
+                  <div className="size-4 rounded-full mr-1 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+                    <img
+                      src={`/flag/${language.flag}.png`}
+                      alt={`${language.name} flag`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                     {language.name}
                 </Badge>
+                <Dot />
+                <span>{timestamp}</span>
               </div>
             </div>
           </div>
-          
-          <Button variant="ghost" size="sm" className="p-1 h-auto">
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
         </div>
 
         {/* Content */}
@@ -163,8 +188,13 @@ export function LanguagePost({
         </div>
 
         {caption && (
-          <p className="text-muted-foreground text-sm mb-4 italic">"{caption}"</p>
+          <p className="text-muted-foreground text-sm mb-2 italic">"{caption}"</p>
         )}
+        {/* Engagement */}
+        <div className="flex items-center space-x-1 mb-4 text-muted-foreground">
+          <ChartNoAxesColumn className="h-4 w-4" />
+          <span className="text-sm">{impressions.toLocaleString()}</span>
+        </div>
 
         {/* Engagement */}
         <div className="flex items-center justify-between">
@@ -195,10 +225,10 @@ export function LanguagePost({
               <span className="ml-2 text-sm font-medium">{shares}</span>
             </Button>
           </div>
-          
           <div className="flex items-center space-x-2 text-muted-foreground">
-            <Eye className="h-4 w-4" />
-            <span className="text-sm">{impressions.toLocaleString()}</span>
+            <Button variant="ghost" size="sm" className="p-2 h-auto text-muted-foreground group transition-all duration-200">
+              <Flag className="size-5 transition-colors duration-200" />
+            </Button>
           </div>
         </div>
       </div>

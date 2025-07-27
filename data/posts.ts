@@ -5,10 +5,16 @@ export interface LanguagePost {
     username: string;
     avatar: string;
     level: string;
+    type: "user" | "creator" | "instructor";
     verified?: boolean;
   };
   content: string;
   language: {
+    name: string;
+    flag: string;
+    color: string;
+  };
+  community?: {
     name: string;
     flag: string;
     color: string;
@@ -35,14 +41,20 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Sofia Martinez",
       username: "sofia_learns",
-      avatar: "/placeholder-user2.jpg",
+      avatar: "/placeholder-user.jpg",
+      type: "user",
       level: "Intermediate",
       verified: true,
     },
     content: "Finally nailed the Spanish rolling 'R' after 6 months of practice! 🎉 The key was practicing with the word 'perro' every morning. Here's my pronunciation journey!",
     language: {
       name: "Spanish",
-      flag: "🇪🇸",
+      flag: "es",
+      color: "#FF6B35",
+    },
+    community: {
+      name: "Spanish Learners Hub",
+      flag: "es",
       color: "#FF6B35",
     },
     media: {
@@ -65,15 +77,21 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Kenji Tanaka",
       username: "kenji_nihongo",
-      avatar: "/placeholder-user5.jpg",
+      avatar: "/placeholder-user.jpg",
+      type: "user",
       level: "Beginner",
       verified: false,
     },
     content: "Studied in this beautiful café in Kyoto today. The atmosphere really helps with memorizing kanji! ☕️📚",
     language: {
       name: "Japanese",
-      flag: "🇯🇵",
+      flag: "jp",
       color: "#E74C3C",
+    },
+    community: {
+      name: "Mandarin Beginners Hub",
+      flag: "cn",
+      color: "#3498DB",
     },
     media: {
       type: "image",
@@ -93,14 +111,20 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Marie Dubois",
       username: "marie_francais",
-      avatar: "/placeholder-user6.jpg",
+      avatar: "/placeholder-user.jpg",
+      type: "instructor",
       level: "Advanced",
       verified: true,
     },
     content: "Had my first full conversation in French with a native speaker today! 🗣️ We talked about literature for 30 minutes straight. Feeling so proud of my progress!",
     language: {
       name: "French",
-      flag: "🇫🇷",
+      flag: "fr",
+      color: "#4A90E2",
+    },
+    community: {
+      name: "Yoruba Culture & Language",
+      flag: "ng",
       color: "#4A90E2",
     },
     media: {
@@ -121,14 +145,15 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Hans Mueller",
       username: "hans_deutsch",
-      avatar: "/placeholder-user3.jpg",
+      avatar: "/placeholder-user.jpg",
+      type: "user",
       level: "Intermediate",
       verified: false,
     },
     content: "German grammar tip: Remember that 'der, die, das' articles change based on the case! Here's my visual guide to help you remember.",
     language: {
       name: "German",
-      flag: "🇩🇪",
+      flag: "de",
       color: "#F39C12",
     },
     media: {
@@ -149,15 +174,21 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Isabella Romano",
       username: "bella_italiano",
-      avatar: "/placeholder-user4.jpg",
-      level: "Beginner",
+      avatar: "/placeholder-user.jpg",
+      type: "user",
+      level: "instructor",
       verified: false,
     },
     content: "Cooking authentic pasta while learning Italian vocabulary! 🍝 Nothing beats learning through doing. Today's words: aglio (garlic), basilico (basil), pomodoro (tomato).",
     language: {
       name: "Italian",
-      flag: "🇮🇹",
+      flag: "it",
       color: "#27AE60",
+    },
+    community: {
+      name: "Zulu Conversations",
+      flag: "za",
+      color: "#E74C3C",
     },
     media: {
       type: "video",
@@ -179,14 +210,15 @@ export const languagePosts: LanguagePost[] = [
     author: {
       name: "Lucas Silva",
       username: "lucas_pt",
-      avatar: "/placeholder-user7.jpg",
+      avatar: "/placeholder-user.jpg",
+      type: "user",
       level: "Advanced",
       verified: true,
     },
     content: "Exploring beautiful Portugal while practicing my Portuguese! 🏔️ The locals are so patient and helpful when I make mistakes. Obrigado! 🙏",
     language: {
       name: "Portuguese",
-      flag: "🇵🇹",
+      flag: "pt",
       color: "#8E44AD",
     },
     media: {

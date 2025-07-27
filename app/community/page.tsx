@@ -5,67 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Users, MessageCircle, TrendingUp, Globe } from "lucide-react";
+import { communities } from "@/data/communities";
 
 export default function CommunityPage() {
-  const communities = [
-    {
-      name: "Swahili Learners",
-      flag: "tz",
-      members: 12500,
-      posts: 1240,
-      description: "Connect with fellow Swahili learners and native speakers",
-      trending: true,
-      moderators: "2",
-    },
-    {
-      name: "Yoruba Culture & Language",
-      flag: "ng",
-      members: 8900,
-      posts: 890,
-      description:
-        "Explore Yoruba traditions, language, and cultural practices",
-      trending: false,
-      moderators: "4",
-    },
-    {
-      name: "Amharic Study Group",
-      flag: "et",
-      members: 5600,
-      posts: 456,
-      description: "Study Amharic together with structured learning sessions",
-      trending: true,
-      moderators: "1",
-    },
-    {
-      name: "Hausa Language Exchange",
-      flag: "ng",
-      members: 7200,
-      posts: 678,
-      description: "Practice Hausa with native speakers and learners",
-      trending: false,
-      moderators: "6",
-    },
-    {
-      name: "Igbo Heritage",
-      flag: "ng",
-      members: 4300,
-      posts: 234,
-      description:
-        "Learn Igbo language while discovering rich cultural heritage",
-      trending: false,
-      moderators: "3",
-    },
-    {
-      name: "Zulu Conversations",
-      flag: "za",
-      members: 6800,
-      posts: 567,
-      description: "Practice Zulu through daily conversations and discussions",
-      trending: true,
-      moderators: "30",
-    },
-  ];
-
   const recentPosts = [
     {
       user: "Amara K.",
