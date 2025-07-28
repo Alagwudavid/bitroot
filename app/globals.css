@@ -2,18 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+:root {
   --btd-topheader: 56px;
   --btd-ratio: 0.5625;
   --btd-reelPlayer-width: calc(100vh - 260px);
-  --btd-reelPlayer-height: min(calc((100vh - 96px)* 0.5625),calc(100vw - 240px - 192px));
+  --btd-reelPlayer-height: min(calc((100vh - 96px)* 0.5625), calc(100vw - 240px - 192px));
 }
 
-body{
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+body {
   cursor: url('/cursor/cursor.svg') 12 12, auto;
 }
 
-a, button{
+a,
+button {
   cursor: url('/cursor/pointer.svg') 12 12, auto;
 }
 
@@ -29,7 +42,8 @@ a, button{
   cursor: url('/cursor/pointer.svg') 12 12, auto;
 } */
 
-::-moz-selection { /* Code for Firefox */
+::-moz-selection {
+  /* Code for Firefox */
   color: #fff;
   background: #ff5757;
 }
@@ -41,11 +55,14 @@ a, button{
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* #fafafa */
+    --background: 0 0% 100%;
+    /* #fafafa */
     --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%; /* #ffffff */
+    --card: 0 0% 100%;
+    /* #ffffff */
     --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%; /* #ffffff */
+    --popover: 0 0% 100%;
+    /* #ffffff */
     --popover-foreground: 0 0% 3.9%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
@@ -68,25 +85,31 @@ a, button{
   }
 
   .dark {
-    --background: 210 100% 4%; /* #010B13 */
+    --background: 210 100% 4%;
+    /* #010B13 */
     --foreground: 210 40% 98%;
-    --card: 210 100% 4%; /* #010B13 */
+    --card: 210 100% 4%;
+    /* #010B13 */
     --card-foreground: 210 40% 98%;
-    --popover: 210 100% 4%; /* #010B13 */
+    --popover: 210 100% 4%;
+    /* #010B13 */
     --popover-foreground: 210 40% 98%;
-    --primary: 262 83% 58%; /* #7037e4 */
+    --primary: 262 83% 58%;
+    /* #7037e4 */
     --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
-    --accent: 195 100% 78%; /* #8ddeed */
+    --accent: 195 100% 78%;
+    /* #8ddeed */
     --accent-foreground: 210 100% 4%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 262 83% 58%; /* #7037e4 */
+    --ring: 262 83% 58%;
+    /* #7037e4 */
   }
 }
 
@@ -96,14 +119,12 @@ a, button{
   }
 
   html {
-    transition: all var(--theme-transition-duration)
-      var(--theme-transition-timing);
+    transition: all var(--theme-transition-duration) var(--theme-transition-timing);
   }
 
   body {
     @apply bg-background text-foreground;
-    transition: background-color var(--theme-transition-duration)
-        var(--theme-transition-timing),
+    transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
       color var(--theme-transition-duration) var(--theme-transition-timing);
   }
 }
@@ -119,15 +140,12 @@ a, button{
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(112, 55, 228, 0.1) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle at center,
+      rgba(112, 55, 228, 0.1) 0%,
+      transparent 70%);
   z-index: 9999;
   opacity: 0;
-  animation: themeTransition var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  animation: themeTransition var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 @keyframes themeTransition {
@@ -135,10 +153,12 @@ a, button{
     opacity: 0;
     transform: scale(0.8);
   }
+
   50% {
     opacity: 1;
     transform: scale(1.1);
   }
+
   100% {
     opacity: 0;
     transform: scale(1);
@@ -147,8 +167,7 @@ a, button{
 
 /* Smooth transitions for all theme-aware elements */
 .theme-aware {
-  transition: background-color var(--theme-transition-duration)
-      var(--theme-transition-timing),
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
     border-color var(--theme-transition-duration) var(--theme-transition-timing),
     color var(--theme-transition-duration) var(--theme-transition-timing),
     box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
@@ -163,33 +182,28 @@ a, button{
 .dark .sidebar-dark {
   background: #0d1117;
   border-color: #7037e4;
-  transition: all var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  transition: all var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .dark .card-dark {
   background: #0d1117;
   border-color: rgba(112, 55, 228, 0.2);
-  transition: all var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  transition: all var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .dark .accent-dark {
   color: #8ddeed;
-  transition: color var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .dark .primary-dark {
   background: #7037e4;
-  transition: background-color var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 .dark .surface-dark {
   background: #0d1117;
-  transition: background-color var(--theme-transition-duration)
-    var(--theme-transition-timing);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
 /* Loading spinner for theme transitions */
@@ -214,6 +228,7 @@ a, button{
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

@@ -9,13 +9,17 @@ import {
   Sun,
   Moon,
   Monitor,
-  AlignRight,
   Languages,
   Flame,
   Compass,
   UsersRound,
   Headphones,
   Trophy,
+  Bell,
+  HelpCircle,
+  LayoutDashboard,
+  Inbox,
+  PencilRuler,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -26,6 +30,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/components/ui/use-mobile";
 interface MainMenuProps {
@@ -50,10 +55,10 @@ export function MainMenu({ className }: MainMenuProps) {
   ];
 
   const moreMenuOptions = [
-    { label: "Reels", icon: <Flame className="h-4 w-4" />, value: "reels", href: "/reels" },
-    { label: "Explore", icon: <Compass className="h-4 w-4" />, value: "explore", href: "/explore" },
-    { label: "Community", icon: <UsersRound className="h-4 w-4" />, value: "community", href: "/community" },
-    { label: "Listen", icon: <Headphones className="h-4 w-4" />, value: "listen", href: "/explore/listen" },
+    { label: "Study Groups", icon: <UsersRound className="h-4 w-4" />, value: "study-groups", href: "/study-groups" },
+    { label: "Learning Paths", icon: <PencilRuler className="h-4 w-4" />, value: "learning-paths", href: "/learning-paths" },
+    { label: "Mentorship", icon: <User className="h-4 w-4" />, value: "mentorship", href: "/mentorship" },
+    { label: "Achievements", icon: <Trophy className="h-4 w-4" />, value: "achievements", href: "/achievements" },
     { label: "Leaderboard", icon: <Trophy className="h-4 w-4" />, value: "leaderboard", href: "/leaderboard" },
   ];
 
@@ -73,107 +78,194 @@ export function MainMenu({ className }: MainMenuProps) {
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className={`relative h-10 w-10 rounded p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 border theme-aware ${className || ""}`}
+          className={`relative h-10 w-10 rounded-xl p-0 hover:bg-gray-100 dark:hover:bg-gray-800 ${className || ""}`}
         >
-          <AlignRight className="!size-8 shrink-0" />
+          <Avatar className="h-10 w-10">
+            <AvatarImage src="/placeholder-user1.png" alt="User Profile" />
+            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-semibold">
+              AJ
+            </AvatarFallback>
+          </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-72 rounded-xl theme-aware"
+        className="w-80 rounded-lg border shadow-lg bg-white dark:bg-gray-900"
         align="end"
+        sideOffset={8}
       >
-        <div className="rounded-lg theme-aware !bg-transparent hover:!bg-transparent flex flex-col items-start px-2 py-1 gap-1">
-          <span className="font-medium">Explore</span>
-          <div className="flex flex-col w-full gap-1">
-            {moreMenuOptions.map((option) => (
-              <DropdownMenuItem
-                key={option.value}
-                onClick={() => router.push(option.href)}
-                className="rounded-lg theme-aware cursor-pointer flex items-center gap-3 px-3 py-2"
-              >
-                {option.icon}
-                <span className="flex-1">{option.label}</span>
-              </DropdownMenuItem>
-            ))}
+        {/* User Profile Section */}
+        <div className="flex items-center gap-3 p-4 border-b border-gray-100 dark:border-gray-800">
+          <Avatar className="h-12 w-12">
+            <AvatarImage src="/placeholder-user1.png" alt="User Profile" />
+            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold">
+              AJ
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
+              Alexander Johnson
+            </p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+              alex.johnson@email.com
+            </p>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="p-2">
+          <div className="grid grid-cols-2 gap-1">
+            <DropdownMenuItem
+              onClick={() => router.push("/profile")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <User className="h-4 w-4 " />
+              <span className="text-sm">Profile</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push("/settings")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <Settings className="h-4 w-4 " />
+              <span className="text-sm">Settings</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push("/notifications")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <Bell className="h-4 w-4 " />
+              <span className="text-sm">Notifications</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push("/support")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <HelpCircle className="h-4 w-4 " />
+              <span className="text-sm">Support</span>
+            </DropdownMenuItem>
+          </div>
+        </div>
+
+        <DropdownMenuSeparator />
+        {/* For Business */}
+        <div className="p-2">
+          <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2 px-2">
+            For Business
+          </div>
+          <div className="grid grid-cols-2 gap-1">
+            <DropdownMenuItem
+              onClick={() => router.push("/dashboard")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <LayoutDashboard className="h-4 w-4 " />
+              <span className="text-sm">Dashboard</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => router.push("/inbox")}
+              className="flex items-center gap-2 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
+            >
+              <Inbox className="h-4 w-4 " />
+              <span className="text-sm">Inbox</span>
+            </DropdownMenuItem>
           </div>
         </div>
         {!isMobile && (
           <>
-          <DropdownMenuSeparator />
-          <div className="rounded-lg theme-aware !bg-transparent hover:!bg-transparent flex flex-col items-start px-2 py-1 gap-1">
-            <span className="font-medium">Language</span>
-            <div className="flex flex-col w-full max-h-48 overflow-y-auto">
-              {languages.map((language) => (
-                <DropdownMenuItem
-                  key={language.id}
-                  onClick={() => setCurrentLanguage(language.flag)}
-                  className={cn(
-                    "rounded-lg theme-aware cursor-pointer flex items-center gap-3 px-3 py-2",
-                    currentLanguage === language.flag && "bg-accent text-accent-foreground"
-                  )}
-                >
-                  <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
-                    <img
-                      src={`/flag/${language.flag}.png`}
-                      alt={`${language.label} flag`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="flex-1">{language.label}</span>
-                </DropdownMenuItem>
-              ))}
+            <DropdownMenuSeparator />
+            {/* Language Section */}
+            <div className="p-2">
+              <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2 px-2">
+                Language
+              </div>
+              <div className="max-h-32 overflow-y-auto space-y-1">
+                {languages.map((language) => (
+                  <DropdownMenuItem
+                    key={language.id}
+                    onClick={() => setCurrentLanguage(language.flag)}
+                    className={cn(
+                      "flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer",
+                      currentLanguage === language.flag && "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400"
+                    )}
+                  >
+                    <div className="w-5 h-5 rounded-sm overflow-hidden flex-shrink-0">
+                      <img
+                        src={`/flag/${language.flag}.png`}
+                        alt={`${language.label} flag`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <span className="text-sm">{language.label}</span>
+                    {currentLanguage === language.flag && (
+                      <div className="ml-auto w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
+              </div>
             </div>
-          </div>
           </>
         )}
+
         <DropdownMenuSeparator />
-        <div className="rounded-lg theme-aware !bg-transparent hover:!bg-transparent flex flex-col items-start px-2 py-1 gap-1">
-          <span className="font-medium">Theme</span>
-          <div className="flex items-center justify-between p-1 rounded-md border gap-0 w-full">
-            <DropdownMenuItem
+
+        {/* Theme Selection */}
+        <div className="p-2">
+          <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2 px-2">
+            Appearance
+          </div>
+          <div className="flex items-center gap-1 p-1 bg-gray-100 dark:bg-gray-800 text-foreground rounded-lg">
+            <Button
+              variant={theme === "light" ? "default" : "ghost"}
+              size="sm"
               onClick={() => setTheme("light")}
               className={cn(
-                "p-1 px-3 rounded-md theme-aware",
-                theme === "light" && "bg-accent text-accent-foreground"
+                "flex-1 h-8 text-xs gap-1",
+                theme === "light"
+                  ? "bg-white dark:bg-gray-700 shadow-sm text-black dark:text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
               )}
             >
-              <Sun className="h-4 w-4" />
+              <Sun className="h-3 w-3" />
               Light
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </Button>
+            <Button
+              variant={theme === "dark" ? "default" : "ghost"}
+              size="sm"
               onClick={() => setTheme("dark")}
               className={cn(
-                "p-1 px-3 rounded-md theme-aware",
-                theme === "dark" && "bg-accent text-accent-foreground"
+                "flex-1 h-8 text-xs gap-1",
+                theme === "dark"
+                  ? "bg-white dark:bg-gray-700 shadow-sm text-black dark:text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
               )}
             >
-              <Moon className="h-4 w-4" />
+              <Moon className="h-3 w-3" />
               Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </Button>
+            <Button
+              variant={theme === "system" ? "default" : "ghost"}
+              size="sm"
               onClick={() => setTheme("system")}
               className={cn(
-                "p-1 px-3 rounded-md theme-aware",
-                theme === "system" && "bg-accent text-accent-foreground"
+                "flex-1 h-8 text-xs gap-1",
+                theme === "system"
+                  ? "bg-white dark:bg-gray-700 shadow-sm text-black dark:text-white"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
               )}
             >
-              <Monitor className="h-4 w-4" />
-              System
-            </DropdownMenuItem>
+              <Monitor className="h-3 w-3" />
+              Auto
+            </Button>
           </div>
         </div>
+
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          onClick={() => router.push("/settings")}
-          className="rounded-lg theme-aware"
-        >
-          <Settings className="mr-2 h-4 w-4" />
-          Settings
-        </DropdownMenuItem>
-        <DropdownMenuItem className="rounded-lg text-red-600 theme-aware">
-          <LogOut className="mr-2 h-4 w-4" />
-          Log out
-        </DropdownMenuItem>
+
+        {/* Logout */}
+        <div className="p-2">
+          <DropdownMenuItem className="flex items-center gap-2 p-2 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer">
+            <LogOut className="h-4 w-4" />
+            <span className="text-sm">Sign out</span>
+          </DropdownMenuItem>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

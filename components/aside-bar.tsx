@@ -63,10 +63,10 @@ export function AsideBar() {
           </div>
           <div className="relative overflow-hidden bg-[#8A2BE2] text-white flex flex-col justify-between h-52 w-full p-5 font-mono rounded-3xl theme-aware">
             <p className="text-xl uppercase font-bold">
-              Get premium Now!
+              Get Spark!
             </p>
             <p className="text-base font-semibold">
-              Access our premium features, Courses, Ai and more.
+              Access our Spark features, Courses, Ai and more.
             </p>
             <Link href="/premium" className="bg-white rounded-2xl flex items-center justify-center text-[#8A2BE2] hover:underline mt-2 py-3 px-5 font-semibold">
               Upgrade Now <ArrowUpFromDot className="inline-block w-4 h-4 ml-1" />

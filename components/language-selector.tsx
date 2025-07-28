@@ -8,11 +8,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search, ChevronDown } from "lucide-react";
 
 interface Language {
   id: number;
   label: string;
   flag: string;
+  code: string;
 }
 
 interface LanguageSelectorProps {
@@ -22,21 +25,27 @@ interface LanguageSelectorProps {
 export function LanguageSelector({ className }: LanguageSelectorProps) {
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("us");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const languages: Language[] = [
-    { id: 0, label: "Local", flag: "ea" },
-    { id: 1, label: "English", flag: "us" },
-    { id: 2, label: "Swahili", flag: "tz" },
-    { id: 3, label: "Yoruba", flag: "ng" },
-    { id: 4, label: "Amharic", flag: "et" },
-    { id: 5, label: "Hausa", flag: "ng" },
-    { id: 6, label: "Igbo", flag: "ng" },
-    { id: 7, label: "Zulu", flag: "za" },
-    { id: 8, label: "French", flag: "fr" },
+    { id: 1, label: "English", flag: "us", code: "en" },
+    { id: 2, label: "Spanish", flag: "es", code: "es" },
+    { id: 3, label: "French", flag: "fr", code: "fr" },
+    { id: 4, label: "German", flag: "de", code: "de" },
+    { id: 5, label: "Italian", flag: "it", code: "it" },
+    { id: 6, label: "Portuguese", flag: "pt", code: "pt" },
   ];
 
+  const getCurrentLanguageData = () => {
+    return languages.find(lang => lang.flag === currentLanguage) || languages[0];
+  };
+
+  const filteredLanguages = languages.filter(language =>
+    language.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className={`flex items-center space-x-6 ${className || ""}`}>
+    <div className={`flex items-center ${className || ""}`}>
       <DropdownMenu
         open={isLanguageOpen}
         onOpenChange={setIsLanguageOpen}
@@ -44,32 +53,58 @@ export function LanguageSelector({ className }: LanguageSelectorProps) {
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="relative h-10 w-10 rounded-full p-1 text-gray-600 dark:text-[#fafafa] backdrop-blur-md bg-white/30 dark:bg-[#0d1117]/30 overflow-hidden border theme-aware"
+            className="flex items-center gap-2 px-3 py-2 h-10 rounded-lg border-gray-300 bg-white hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-600 dark:hover:bg-gray-700"
           >
             <img
-              src={`/flag/${currentLanguage}.png`}
-              alt={`${currentLanguage} flag`}
-              className="w-full h-full object-cover rounded-full"
+              src={`/flag/${getCurrentLanguageData().flag}.png`}
+              alt={`${getCurrentLanguageData().label} flag`}
+              className="w-5 h-5 rounded-sm object-cover"
             />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+              {getCurrentLanguageData().label} (U.S.)
+            </span>
+            <ChevronDown className="w-4 h-4 text-gray-500" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-48 rounded-xl theme-aware cursor-pointer-custom">
-          {languages.map((language) => (
-            <DropdownMenuItem
-              key={language.id}
-              onClick={() => setCurrentLanguage(language.flag)}
-              className="rounded-lg theme-aware"
-            >
-              <div className="w-8 h-8 rounded-full mr-2 overflow-hidden bg-[#072ac8] hover:bg-[#1e96fc] dark:bg-[#7037e4] dark:hover:bg-[#8ddeed] dark:hover:text-[#030318] text-white group-hover:bg-[#1e96fc] dark:group-hover:bg-[#8ddeed] dark:group-hover:text-[#030318] flex items-center justify-center">
+        <DropdownMenuContent className="w-64 p-0 rounded-xl border-gray-200 dark:border-gray-700 shadow-lg">
+          <div className="p-3 border-b border-gray-100 dark:border-gray-700">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Input
+                placeholder="Search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-9 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-600 rounded-lg"
+              />
+            </div>
+          </div>
+          <div className="max-h-60 overflow-y-auto py-1">
+            {filteredLanguages.map((language) => (
+              <DropdownMenuItem
+                key={language.id}
+                onClick={() => {
+                  setCurrentLanguage(language.flag);
+                  setSearchQuery("");
+                  setIsLanguageOpen(false);
+                }}
+                className="flex items-center gap-3 px-3 py-2.5 mx-1 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+              >
                 <img
                   src={`/flag/${language.flag}.png`}
                   alt={`${language.label} flag`}
-                  className="w-full h-full object-cover"
+                  className="w-6 h-6 rounded-sm object-cover flex-shrink-0"
                 />
+                <span className="text-sm font-medium text-gray-700 dark:text-gray-200">
+                  {language.label}
+                </span>
+              </DropdownMenuItem>
+            ))}
+            {filteredLanguages.length === 0 && (
+              <div className="px-3 py-2.5 text-sm text-gray-500 dark:text-gray-400">
+                No languages found
               </div>
-              {language.label}
-            </DropdownMenuItem>
-          ))}
+            )}
+          </div>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

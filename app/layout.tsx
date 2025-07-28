@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar";
+import { BottomNav } from "@/components/bottom-nav";
 import { TopNavigation } from "@/components/top-navigation";
 import { AsideBar } from "@/components/aside-bar";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -45,15 +45,15 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="flex h-screen bg-background text-foreground theme-aware overflow-hidden relative">
             <TopNavigation />
-            <Sidebar />
-            <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto lg:w-full">
+            <div className="flex-1 flex h-screen overflow-hidden overflow-y-auto w-full">
               <main className="flex-1 p-2 shrink-0">
                 <div className="h-16 w-full shrink-0 bg-transparent border-0 flex"></div>
                 {children}
                 <div className="h-16 w-full shrink-0 bg-transparent border-0 md:hidden flex"></div>
               </main>
-              <AsideBar />
+              {/* <AsideBar /> */}
             </div>
+            {/* <BottomNav /> */}
           </div>
         </ThemeProvider>
       </body>
