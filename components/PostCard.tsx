@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal, Clock, Users, Star, Trophy, ThumbsUp, Smile, Gift, Zap } from "lucide-react"
+import { Heart, Timer, SmilePlus, MessageCircle, Share2, Bookmark, MoreHorizontal, Clock, Users, Star, Trophy, ThumbsUp, Smile, Gift, Zap, CalendarDays } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
 import { SocialPost } from "@/types/social-learning"
+import { Dot } from "@/components/ui/dot"
 
 interface PostCardProps {
     post: SocialPost
@@ -36,47 +37,20 @@ interface PostCardProps {
 const PostTypeIcon = ({ type }: { type: string }) => {
     switch (type) {
         case "achievement":
-            return <Trophy className="h-4 w-4 text-amber-600" />
+            return <Trophy className="size-4 mr-1" />
         case "tip":
-            return <Star className="h-4 w-4 text-blue-600" />
+            return <Star className="size-4 mr-1" />
         case "question":
-            return <MessageCircle className="h-4 w-4 text-purple-600" />
+            return <MessageCircle className="size-4 mr-1" />
         case "project":
-            return <Zap className="h-4 w-4 text-green-600" />
+            return <Zap className="size-4 mr-1" />
         case "collaboration":
-            return <Users className="h-4 w-4 text-orange-600" />
+            return <Users className="size-4 mr-1" />
         case "milestone":
-            return <Trophy className="h-4 w-4 text-purple-600" />
+            return <Trophy className="size-4 mr-1" />
         default:
-            return <MessageCircle className="h-4 w-4 text-gray-600" />
+            return <MessageCircle className="size-4 mr-1" />
     }
-}
-
-const SubjectBadge = ({ subject, color }: { subject: string; color?: string }) => {
-    const getSubjectColor = (subject: string) => {
-        switch (subject) {
-            case "language":
-                return "bg-blue-100 text-blue-800 border-blue-200"
-            case "mathematics":
-                return "bg-green-100 text-green-800 border-green-200"
-            case "technology":
-                return "bg-purple-100 text-purple-800 border-purple-200"
-            case "arts":
-                return "bg-pink-100 text-pink-800 border-pink-200"
-            case "science":
-                return "bg-cyan-100 text-cyan-800 border-cyan-200"
-            case "business":
-                return "bg-orange-100 text-orange-800 border-orange-200"
-            default:
-                return "bg-gray-100 text-gray-800 border-gray-200"
-        }
-    }
-
-    return (
-        <Badge variant="outline" className={color ? "" : getSubjectColor(subject)} style={color ? { backgroundColor: color + '20', color: color, borderColor: color + '40' } : {}}>
-            {subject}
-        </Badge>
-    )
 }
 
 const ReactionButton = ({
@@ -176,17 +150,23 @@ const ReactionClick = ({
                         {reactions.map((reaction) => {
                             const IconComponent = reaction.icon
                             return (
-                                <button
-                                    key={reaction.name}
-                                    onClick={() => {
-                                        onReactionSelect(reaction.name)
-                                        setShowTooltip(false)
-                                    }}
-                                    className={`p-2 rounded-full transition-all duration-200 hover:scale-110 ${reaction.bgColor}`}
-                                    title={reaction.name}
-                                >
-                                    <IconComponent className={`h-5 w-5 ${reaction.color}`} />
-                                </button>
+                                <div key={reaction.name} className="relative group">
+                                    <button
+                                        onClick={() => {
+                                            onReactionSelect(reaction.name)
+                                            setShowTooltip(false)
+                                        }}
+                                        className={`p-2 rounded-full transition-all duration-200 hover:scale-150 hover:-translate-y-4 ${reaction.bgColor}`}
+                                    >
+                                        <IconComponent className={`size-5 ${reaction.color}`} />
+                                    </button>
+                                    {/* Tooltip */}
+                                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full mt-1 px-2 py-1 bg-gray-800 dark:bg-[#222222] text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+                                        {reaction.name}
+                                        {/* Arrow pointing up */}
+                                        {/* <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-b-2 border-transparent border-b-gray-800"></div> */}
+                                    </div>
+                                </div>
                             )
                         })}
                     </div>
@@ -232,15 +212,8 @@ export default function PostCard({ post }: PostCardProps) {
     const getReactionSummary = () => {
         const total = getTotalReactions()
         if (total === 0) return null
-
-        const firstReactor = "Okoro Wisdom"
-
-        if (total === 1) {
-            return firstReactor
-        } else if (total === 2) {
-            return `${firstReactor} and 1 other`
-        } else {
-            return `${firstReactor} and ${(total - 1).toLocaleString()} others`
+        else {
+            return `${(total).toLocaleString()}`
         }
     }
 
@@ -254,19 +227,19 @@ export default function PostCard({ post }: PostCardProps) {
                     <TabsList className="grid w-full grid-cols-4">
                         <TabsTrigger value="all" className="flex items-center gap-1 transition-all duration-200">
                             All
-                            <span className="text-xs">({getTotalReactions()})</span>
+                            <span className="text-sm">({getTotalReactions()})</span>
                         </TabsTrigger>
                         <TabsTrigger value="like" className="flex items-center gap-1 transition-all duration-200">
                             <ThumbsUp className="h-3 w-3" />
-                            <span className="text-xs">({post.engagement.reactions?.like || 0})</span>
+                            <span className="text-sm">({post.engagement.reactions?.like || 0})</span>
                         </TabsTrigger>
                         <TabsTrigger value="love" className="flex items-center gap-1 transition-all duration-200">
                             <Heart className="h-3 w-3" />
-                            <span className="text-xs">({post.engagement.reactions?.love || 0})</span>
+                            <span className="text-sm">({post.engagement.reactions?.love || 0})</span>
                         </TabsTrigger>
                         <TabsTrigger value="celebrate" className="flex items-center gap-1 transition-all duration-200">
                             <Zap className="h-3 w-3" />
-                            <span className="text-xs">({post.engagement.reactions?.celebrate || 0})</span>
+                            <span className="text-sm">({post.engagement.reactions?.celebrate || 0})</span>
                         </TabsTrigger>
                     </TabsList>
 
@@ -278,7 +251,7 @@ export default function PostCard({ post }: PostCardProps) {
                                         <AvatarImage src={user.avatar} alt={user.name} />
                                         <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-sm font-medium">{user.name}</span>
+                                    <span className="text-base font-medium">{user.name}</span>
                                 </div>
                             ))}
                         </div>
@@ -292,7 +265,7 @@ export default function PostCard({ post }: PostCardProps) {
                                         <AvatarImage src={user.avatar} alt={user.name} />
                                         <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-sm font-medium">{user.name}</span>
+                                    <span className="text-base font-medium">{user.name}</span>
                                     <ThumbsUp className="h-3 w-3 text-blue-500 ml-auto" />
                                 </div>
                             ))}
@@ -307,7 +280,7 @@ export default function PostCard({ post }: PostCardProps) {
                                         <AvatarImage src={user.avatar} alt={user.name} />
                                         <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-sm font-medium">{user.name}</span>
+                                    <span className="text-base font-medium">{user.name}</span>
                                     <Heart className="h-3 w-3 text-red-500 ml-auto" />
                                 </div>
                             ))}
@@ -322,7 +295,7 @@ export default function PostCard({ post }: PostCardProps) {
                                         <AvatarImage src={user.avatar} alt={user.name} />
                                         <AvatarFallback>{user.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-sm font-medium">{user.name}</span>
+                                    <span className="text-base font-medium">{user.name}</span>
                                     <Zap className="h-3 w-3 text-yellow-500 ml-auto" />
                                 </div>
                             ))}
@@ -370,29 +343,27 @@ export default function PostCard({ post }: PostCardProps) {
         : post.content
 
     return (
-        <Card className="w-full bg-background rounded-none border-0 text-foreground transition-shadow">
+        <Card className="w-full bg-background rounded-none border-0 border-b-2 text-foreground">
             <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                        <Avatar className="h-10 w-10">
+                        <Avatar className="h-10 w-10 border shrink-0">
                             <AvatarImage src={post.author.avatar} alt={post.author.displayName} />
                             <AvatarFallback>{post.author.displayName.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                         </Avatar>
                         <div className="flex flex-col">
                             <div className="flex items-center gap-1.5">
-                                <h3 className="font-medium text-sm">{post.author.displayName}</h3>
+                                <h3 className="font-medium text-base">{post.author.displayName}</h3>
                                 {post.author.verified && <VerifiedBadge />}
-                                <span className="text-xs text-muted-foreground">@{post.author.username}</span>
-                            </div>
-                            <div className="flex items-center gap-2 mt-0.5">
+                                <span className="text-base text-muted-foreground">@{post.author.username}</span>
+                                <span className="text-sm text-muted-foreground">•</span>
                                 <div className="flex items-center gap-1">
-                                    <PostTypeIcon type={post.type} />
-                                    <span className="text-xs text-muted-foreground capitalize">{post.type}</span>
+                                    <span className="text-base text-muted-foreground">{post.timestamp}</span>
                                 </div>
-                                <span className="text-xs text-muted-foreground">•</span>
+                            </div>
+                            <div className="flex items-center gap-2">
                                 <div className="flex items-center gap-1">
-                                    <Clock className="h-3 w-3 text-muted-foreground" />
-                                    <span className="text-xs text-muted-foreground">{post.timestamp}</span>
+                                    <span className="text-sm text-muted-foreground capitalize">{post.author.type}</span>
                                 </div>
                             </div>
                         </div>
@@ -412,23 +383,28 @@ export default function PostCard({ post }: PostCardProps) {
                 </div>
 
                 <div className="flex items-center gap-2 mt-3">
-                    <SubjectBadge subject={post.subject} color={post.community.color} />
+                    <Badge variant="cool" className="text-sm py-0.5 px-2">
+                        <PostTypeIcon type={post.type} />
+                        <span className="text-sm capitalize">{post.type}</span>
+                    </Badge>
+                    <Badge variant="sky" className="text-sm capitalize">
+                        {post.subject}
+                    </Badge>
                     {post.language && (
-                        <Badge variant="outline" className="text-xs">
-                            <span className="mr-1">🌐</span>
+                        <Badge variant="cool" className="text-sm capitalize">
                             {post.language.name}
                         </Badge>
                     )}
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="amethyst" className="text-sm capitalize">
                         <span className="mr-1">👥</span>
-                        {post.community.name}
+                        <span className="line-clamp-1">{post.community.name}</span>
                     </Badge>
                 </div>
             </CardHeader>
 
             <CardContent className="pt-0">
                 <div className="space-y-3">
-                    <div className="text-sm text-foreground leading-relaxed">
+                    <div className="text-base text-foreground leading-relaxed">
                         {showFullContent ? post.content : contentPreview}
                         {post.content.length > 280 && (
                             <button
@@ -443,12 +419,12 @@ export default function PostCard({ post }: PostCardProps) {
                     {post.tags && post.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1">
                             {post.tags.slice(0, 4).map((tag, index) => (
-                                <span key={index} className="text-sm text-blue-600 hover:text-blue-700 cursor-pointer">
+                                <span key={index} className="text-base text-blue-600 hover:text-blue-700 cursor-pointer">
                                     #{tag}
                                 </span>
                             ))}
                             {post.tags.length > 4 && (
-                                <span className="text-sm text-muted-foreground">
+                                <span className="text-base text-muted-foreground">
                                     +{post.tags.length - 4} more
                                 </span>
                             )}
@@ -479,36 +455,41 @@ export default function PostCard({ post }: PostCardProps) {
                     )}
 
                     {post.studyData && (
-                        <div className="bg-gray-50 dark:bg-gray-700 text-foreground rounded-lg p-3 border">
-                            <h4 className="text-xs font-medium mb-2">Study Details</h4>
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                                {post.studyData.timeSpent && (
-                                    <div className="flex items-center gap-1">
-                                        <Clock className="h-3 w-3" />
+                        <div className="bg-gray-50 dark:bg-gray-700/30 text-foreground rounded-2xl p-3 border flex items-center gap-2">
+                            {post.studyData.timeSpent && (
+                            <div className="flex flex-col items-center justify-center p-4 gap-2 border rounded-2xl">
+                                {/* <CalendarDays className="h-3 w-3" /> */}
+                                <div className="flex text-sm">
+                                    <div className="flex flex-col gap-2 items-center">
+                                        <Timer className="size-4" />
                                         <span>{Math.floor(post.studyData.timeSpent / 60)}h {post.studyData.timeSpent % 60}m</span>
                                     </div>
-                                )}
-                                {post.studyData.difficulty && (
-                                    <div className="flex items-center gap-1">
-                                        <Star className="h-3 w-3" />
-                                        <span className="capitalize">{post.studyData.difficulty}</span>
-                                    </div>
-                                )}
+                                </div>
                             </div>
-                            {post.studyData.skills && (
+                            )}
+                            <div className="flex flex-col gap-2 rounded-2xl">
+                                {post.studyData.difficulty && (
+                                    <Badge variant="cool" className="flex items-center gap-1 p-1 px-2 text-sm w-fit">
+                                        <Star className="size-3" />
+                                        <span className="capitalize">{post.studyData.difficulty}</span>
+                                    </Badge>
+                                )}
+                               {post.studyData.skills && (
                                 <div className="flex flex-wrap gap-1 mt-2">
                                     {post.studyData.skills.slice(0, 3).map((skill, index) => (
-                                        <Badge key={index} variant="secondary" className="text-xs text-black">
+                                        <Badge key={index} variant="sky" className="text-sm">
                                             {skill}
                                         </Badge>
                                     ))}
                                     {post.studyData.skills.length > 3 && (
-                                        <Badge variant="secondary" className="text-xs text-black">
+                                        <Badge variant="sky" className="text-sm">
                                             +{post.studyData.skills.length - 3} more
                                         </Badge>
                                     )}
                                 </div>
-                            )}
+                                )} 
+                            </div>
+                            
                         </div>
                     )}
 
@@ -516,7 +497,7 @@ export default function PostCard({ post }: PostCardProps) {
 
                     {/* New reactions, comments, and shares summary */}
                     {(getTotalReactions() > 0 || post.engagement.comments > 0 || post.engagement.shares > 0) && (
-                        <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <div className="flex items-center justify-between text-base text-muted-foreground">
                             <div className="flex items-center gap-2">
                                 {/* Reaction icons and count */}
                                 {getTotalReactions() > 0 && (
@@ -526,17 +507,17 @@ export default function PostCard({ post }: PostCardProps) {
                                     >
                                         <div className="flex -space-x-1">
                                             {(post.engagement.reactions?.like || 0) > 0 && (
-                                                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center border border-white">
+                                                <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
                                                     <ThumbsUp className="h-3 w-3 text-white" />
                                                 </div>
                                             )}
                                             {(post.engagement.reactions?.love || 0) > 0 && (
-                                                <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center border border-white">
+                                                <div className="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                                                     <Heart className="h-3 w-3 text-white" />
                                                 </div>
                                             )}
                                             {(post.engagement.reactions?.celebrate || 0) > 0 && (
-                                                <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center border border-white">
+                                                <div className="w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center">
                                                     <Trophy className="h-3 w-3 text-white" />
                                                 </div>
                                             )}
@@ -546,7 +527,7 @@ export default function PostCard({ post }: PostCardProps) {
                                 )}
                             </div>
 
-                            <div className="flex items-center gap-4 text-xs">
+                            <div className="flex items-center gap-4 text-sm">
                                 {post.engagement.comments > 0 && (
                                     <span>{post.engagement.comments.toLocaleString()} comments</span>
                                 )}
@@ -566,7 +547,7 @@ export default function PostCard({ post }: PostCardProps) {
                                 size="post_fit"
                                 className="flex-1 px-3 gap-1.5 text-muted-foreground hover:text-foreground transition-colors"
                             >
-                                <Heart className="size-6" />
+                                <SmilePlus className="size-6" />
                                 <span className="text-base font-medium">React</span>
                             </Button>
                         </ReactionClick>

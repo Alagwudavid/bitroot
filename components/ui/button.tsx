@@ -20,6 +20,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         post_action:
           "bg-transparent hover:text-foreground",
+        cool:
+          "bg-transparent hover:text-foreground",
       },
       size: {
         default: "h-10 px-4 py-2",

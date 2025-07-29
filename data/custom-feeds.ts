@@ -2,7 +2,7 @@
 export interface CustomFeed {
     id: string;
     name: string;
-    icon: string;
+    icon?: string;
     color: string;
     description?: string;
     filters: {
@@ -28,7 +28,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "all-posts",
         name: "All Posts",
-        icon: "🌍",
         color: "#6B73FF",
         description: "See all posts from the community",
         filters: {
@@ -42,7 +41,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "language-learning",
         name: "Language Learning",
-        icon: "🗣️",
         color: "#FF6B35",
         description: "Posts focused on language learning and practice",
         filters: {
@@ -55,7 +53,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "stem-focus",
         name: "STEM Focus",
-        icon: "🔬",
         color: "#4A90E2",
         description: "Science, Technology, Engineering, and Mathematics content",
         filters: {
@@ -68,7 +65,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "creative-arts",
         name: "Creative Arts",
-        icon: "🎨",
         color: "#E74C3C",
         description: "Creative and artistic learning content",
         filters: {
@@ -81,7 +77,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "study-groups",
         name: "Study Groups",
-        icon: "👥",
         color: "#27AE60",
         description: "Collaborative learning and study group activities",
         filters: {
@@ -94,7 +89,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "achievements",
         name: "Achievements",
-        icon: "🏆",
         color: "#F39C12",
         description: "Celebrate learning achievements and milestones",
         filters: {
@@ -107,7 +101,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "instructor-posts",
         name: "From Instructors",
-        icon: "👨‍🏫",
         color: "#8E44AD",
         description: "Posts from verified educators and instructors",
         filters: {
@@ -120,7 +113,6 @@ export const defaultCustomFeeds: CustomFeed[] = [
     {
         id: "beginner-friendly",
         name: "Beginner Friendly",
-        icon: "🌱",
         color: "#2ECC71",
         description: "Content perfect for learning beginners",
         filters: {
