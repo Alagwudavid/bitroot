@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Tooltip } from "@/components/ui/tooltip";
 import {
     Trophy,
     Lightbulb,
-    MessageCircle,
+    AlignLeft,
     BookOpen,
     Target,
     Brain,
@@ -21,27 +23,41 @@ import {
     Clock,
     Tag,
     Globe,
+    Images,
     X,
     User,
-    Building
+    Building,
+    Link,
+    SquarePlay,
+    ChevronDown,
+    Check,
+    Sparkles,
+    Code,
 } from "lucide-react";
 import { PostType, SubjectArea } from "@/types/social-learning";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-interface CreateSocialPostModalProps {
+interface CreatePostModalProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }
 
 const postTypes: { type: PostType; label: string; icon: any; description: string; color: string }[] = [
     {
-        type: "achievement",
-        label: "Achievement",
-        icon: Trophy,
-        description: "Share a learning milestone or accomplishment",
-        color: "bg-yellow-500"
+        type: "resource",
+        label: "Study resources",
+        icon: Link,
+        description: "Share educational resources",
+        color: "bg-indigo-500"
+    },
+    {
+        type: "code",
+        label: "Code",
+        icon: Code,
+        description: "Share code snippets",
+        color: "bg-teal-500"
     },
     {
         type: "tip",
@@ -51,25 +67,11 @@ const postTypes: { type: PostType; label: string; icon: any; description: string
         color: "bg-blue-500"
     },
     {
-        type: "question",
-        label: "Question",
-        icon: MessageCircle,
-        description: "Ask for help or clarification on a topic",
+        type: "poll",
+        label: "Poll",
+        icon: AlignLeft,
+        description: "24hr poll",
         color: "bg-purple-500"
-    },
-    {
-        type: "resource",
-        label: "Resource",
-        icon: BookOpen,
-        description: "Share useful learning materials or tools",
-        color: "bg-green-500"
-    },
-    {
-        type: "milestone",
-        label: "Milestone",
-        icon: Target,
-        description: "Celebrate reaching a significant goal",
-        color: "bg-orange-500"
     },
     {
         type: "project",
@@ -79,19 +81,12 @@ const postTypes: { type: PostType; label: string; icon: any; description: string
         color: "bg-pink-500"
     },
     {
-        type: "study-note",
-        label: "Study Notes",
-        icon: FileText,
-        description: "Share detailed notes or summaries",
-        color: "bg-indigo-500"
-    },
-    {
         type: "collaboration",
-        label: "Collaboration",
+        label: "collaboration",
         icon: Users,
         description: "Find study partners or group members",
         color: "bg-teal-500"
-    }
+    },
 ];
 
 const subjects: { value: SubjectArea; label: string }[] = [
@@ -108,12 +103,12 @@ const subjects: { value: SubjectArea; label: string }[] = [
 
 // Sample communities for selection
 const availableCommunities = [
-    { id: "none", name: "Personal Post", avatar: "", flag: "", color: "#6B73FF" },
-    { id: "spanish-learners", name: "Spanish Learners Hub", avatar: "", flag: "es", color: "#FF6B35" },
-    { id: "math-community", name: "Math Enthusiasts", avatar: "", flag: "", color: "#4A90E2" },
-    { id: "tech-hub", name: "Tech Learning Hub", avatar: "", flag: "", color: "#27AE60" },
-    { id: "art-culture", name: "Art & Culture Exchange", avatar: "", flag: "", color: "#E74C3C" },
-    { id: "language-support", name: "Language Learning Support", avatar: "", flag: "", color: "#8E44AD" },
+    { id: "personal", name: "Your Name", avatar: "/placeholder-user1.png", flag: "", color: "#6B73FF", type: "user" as const },
+    { id: "spanish-learners", name: "Spanish Learners Hub", avatar: "/flag/es.png", flag: "es", color: "#FF6B35", type: "community" as const },
+    { id: "math-community", name: "Math Enthusiasts", avatar: "/svgs/math-icon.svg", flag: "", color: "#4A90E2", type: "community" as const },
+    { id: "tech-hub", name: "Tech Learning Hub", avatar: "/svgs/tech-icon.svg", flag: "", color: "#27AE60", type: "community" as const },
+    { id: "art-culture", name: "Art & Culture Exchange", avatar: "/svgs/art-icon.svg", flag: "", color: "#E74C3C", type: "community" as const },
+    { id: "language-support", name: "Language Learning Support", avatar: "/svgs/language-icon.svg", flag: "", color: "#8E44AD", type: "community" as const },
 ];
 
 const difficulties = [
@@ -122,11 +117,14 @@ const difficulties = [
     { value: "advanced", label: "Advanced" }
 ];
 
-export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostModalProps) {
-    const [postingAs, setPostingAs] = useState<"personal" | "community">("personal");
+export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
+    const [selectedProfile, setSelectedProfile] = useState("personal");
     const [selectedType, setSelectedType] = useState<PostType>("achievement");
     const [content, setContent] = useState("");
-    const [selectedSubject, setSelectedSubject] = useState<SubjectArea>("language");
+    const [selectedSubjects, setSelectedSubjects] = useState<SubjectArea[]>([]);
+    const [subjectSearchTerm, setSubjectSearchTerm] = useState("");
+    const [showSubjectDropdown, setShowSubjectDropdown] = useState(false);
+    const [filteredSubjects, setFilteredSubjects] = useState(subjects);
     const [selectedCommunity, setSelectedCommunity] = useState("none");
     const [tags, setTags] = useState<string[]>([]);
     const [newTag, setNewTag] = useState("");
@@ -136,8 +134,57 @@ export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostMo
     const [isCollaborative, setIsCollaborative] = useState(false);
     const [maxParticipants, setMaxParticipants] = useState("");
 
+    const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+
     const selectedPostType = postTypes.find(pt => pt.type === selectedType);
+    const selectedProfileData = availableCommunities.find(c => c.id === selectedProfile);
     const selectedCommunityData = availableCommunities.find(c => c.id === selectedCommunity);
+
+    // Debounced search effect
+    useEffect(() => {
+        if (debounceTimeoutRef.current) {
+            clearTimeout(debounceTimeoutRef.current);
+        }
+
+        debounceTimeoutRef.current = setTimeout(() => {
+            const filtered = subjects.filter(subject =>
+                subject.label.toLowerCase().includes(subjectSearchTerm.toLowerCase())
+            );
+            setFilteredSubjects(filtered);
+        }, 300);
+
+        return () => {
+            if (debounceTimeoutRef.current) {
+                clearTimeout(debounceTimeoutRef.current);
+            }
+        };
+    }, [subjectSearchTerm]);
+
+    const handleSubjectInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setSubjectSearchTerm(value);
+        setShowSubjectDropdown(true);
+    };
+
+    const handleSubjectSelect = (subject: { value: SubjectArea; label: string }) => {
+        if (!selectedSubjects.includes(subject.value)) {
+            setSelectedSubjects([...selectedSubjects, subject.value]);
+        }
+        setSubjectSearchTerm("");
+        setShowSubjectDropdown(false);
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    };
+
+    const handleSubjectRemove = (subjectToRemove: SubjectArea) => {
+        setSelectedSubjects(selectedSubjects.filter(subject => subject !== subjectToRemove));
+    };
+
+    const getSubjectLabel = (value: SubjectArea) => {
+        return subjects.find(s => s.value === value)?.label || value;
+    };
 
     const handleAddTag = () => {
         if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -155,7 +202,7 @@ export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostMo
         console.log({
             type: selectedType,
             content,
-            subject: selectedSubject,
+            subjects: selectedSubjects,
             tags,
             studyData: {
                 timeSpent: studyTime ? parseInt(studyTime) : undefined,
@@ -169,8 +216,11 @@ export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostMo
         });
 
         // Reset form
-        setPostingAs("personal");
+        setSelectedProfile("personal");
         setContent("");
+        setSelectedSubjects([]);
+        setSubjectSearchTerm("");
+        setShowSubjectDropdown(false);
         setSelectedCommunity("none");
         setTags([]);
         setStudyTime("");
@@ -183,138 +233,161 @@ export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostMo
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                    <DialogTitle>Share Your Learning Journey</DialogTitle>
-                </DialogHeader>
-
-                <div className="space-y-6">
-                    {/* User Info */}
-                    <div className="flex items-center space-x-3">
-                        <Avatar className="h-10 w-10">
-                            <AvatarImage src="/placeholder-user1.png" alt="You" />
-                            <AvatarFallback>You</AvatarFallback>
-                        </Avatar>
-                        <div>
-                            <p className="font-semibold">Your Name</p>
-                            <p className="text-sm text-muted-foreground">Level 15 • 12,450 XP</p>
-                        </div>
-                    </div>
-
-                    {/* Posting As Tabs */}
-                    <Tabs value={postingAs} onValueChange={(value) => setPostingAs(value as "personal" | "community")}>
-                        <TabsList className="grid w-full grid-cols-2">
-                            <TabsTrigger value="personal" className="flex items-center space-x-2">
-                                <User className="h-4 w-4" />
-                                <span>Personal</span>
-                            </TabsTrigger>
-                            <TabsTrigger value="community" className="flex items-center space-x-2">
-                                <Building className="h-4 w-4" />
-                                <span>Community</span>
-                            </TabsTrigger>
-                        </TabsList>
-
-                        <TabsContent value="personal" className="space-y-4 mt-4">
-                            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                                <p className="text-sm text-blue-800 dark:text-blue-200">
-                                    Posting as yourself. This will appear on your personal profile and in the main feed.
-                                </p>
-                            </div>
-                        </TabsContent>
-
-                        <TabsContent value="community" className="space-y-4 mt-4">
-                            <div>
-                                <label className="text-sm font-medium mb-2 flex items-center">
-                                    <Building className="h-4 w-4 mr-2" />
-                                    Select Community
-                                </label>
-                                <Select value={selectedCommunity} onValueChange={setSelectedCommunity}>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {availableCommunities.slice(1).map((community) => (
-                                            <SelectItem key={community.id} value={community.id}>
-                                                <div className="flex items-center space-x-2">
-                                                    {community.flag && (
-                                                        <div className="w-5 h-5 rounded-sm overflow-hidden">
-                                                            <img
-                                                                src={`/flag/${community.flag}.png`}
-                                                                alt={`${community.name} flag`}
-                                                                className="w-full h-full object-cover"
-                                                            />
-                                                        </div>
-                                                    )}
-                                                    <span>{community.name}</span>
-                                                </div>
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {selectedCommunityData && selectedCommunityData.id !== "none" && (
-                                    <div className="mt-2 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                                        <p className="text-sm text-green-800 dark:text-green-200">
-                                            Posting to <strong>{selectedCommunityData.name}</strong>. This will appear in the community feed and be visible to all community members.
+            <DialogContent className="rounded-2xl max-w-3xl h-full max-h-[90vh] p-0 gap-0 flex flex-col">
+                <DialogHeader className="p-6 py-3">
+                    <DialogTitle className="hidden">Create post</DialogTitle>
+                    {/* Profile/Community Switcher */}
+                    <div className="flex items-center gap-4">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button className="flex items-center space-x-3 p-2 h-auto bg-muted hover:bg-muted/80 text-foreground border rounded-xl">
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage
+                                            src={selectedProfileData?.avatar}
+                                            alt={selectedProfileData?.name}
+                                        />
+                                        <AvatarFallback>
+                                            {selectedProfileData?.name?.slice(0, 2).toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex flex-col items-start">
+                                        <p className="font-semibold text-sm line-clamp-1">
+                                            {selectedProfileData?.name}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground">
+                                            {selectedProfileData?.type === "user" ? "Personal" : "Community"}
                                         </p>
                                     </div>
-                                )}
-                            </div>
-                        </TabsContent>
-                    </Tabs>
-
-                    {/* Post Type Selection */}
-                    <div>
-                        <label className="text-sm font-medium mb-3 block">What are you sharing?</label>
-                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                            {postTypes.map((postType) => {
-                                const Icon = postType.icon;
-                                return (
-                                    <button
-                                        key={postType.type}
-                                        onClick={() => setSelectedType(postType.type)}
-                                        className={cn(
-                                            "p-3 rounded-lg border text-center transition-all",
-                                            selectedType === postType.type
-                                                ? "border-threads-primary bg-threads-primary/10 text-threads-primary"
-                                                : "border-border hover:border-threads-primary/50"
-                                        )}
-                                    >
-                                        <Icon className="h-5 w-5 mx-auto mb-1" />
-                                        <p className="text-xs font-medium">{postType.label}</p>
-                                    </button>
-                                );
-                            })}
-                        </div>
-                        {selectedPostType && (
-                            <p className="text-sm text-muted-foreground mt-2">{selectedPostType.description}</p>
-                        )}
+                                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent className="w-64 bg-background border shadow-lg rounded-xl p-2" align="start" sideOffset={8}>
+                                <div className="space-y-1">
+                                    {availableCommunities.map((profile) => (
+                                        <DropdownMenuItem
+                                            key={profile.id}
+                                            onClick={() => setSelectedProfile(profile.id)}
+                                            className={`px-3 py-2 rounded-lg cursor-pointer transition-colors ${selectedProfile === profile.id
+                                                ? "bg-accent text-accent-foreground"
+                                                : "hover:bg-accent/50"
+                                                }`}
+                                        >
+                                            <div className="flex items-center space-x-3 w-full">
+                                                <Avatar className="h-8 w-8">
+                                                    <AvatarImage
+                                                        src={profile.avatar}
+                                                        alt={profile.name}
+                                                    />
+                                                    <AvatarFallback style={{ backgroundColor: profile.color }}>
+                                                        {profile.name.slice(0, 2).toUpperCase()}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex flex-col flex-1 min-w-0">
+                                                    <span className="font-medium text-sm truncate">
+                                                        {profile.name}
+                                                    </span>
+                                                    <span className="text-xs text-muted-foreground">
+                                                        {profile.type === "user" ? "Personal" : "Community"}
+                                                    </span>
+                                                </div>
+                                                {selectedProfile === profile.id && (
+                                                    <Check className="h-4 w-4 text-primary" />
+                                                )}
+                                            </div>
+                                        </DropdownMenuItem>
+                                    ))}
+                                </div>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
                     </div>
+                    {selectedProfileData?.type === "community" && (
+                        <div className="flex-1 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                            <p className="text-sm text-green-800 dark:text-green-200">
+                                Posting to <strong>{selectedProfileData.name}</strong>. This will appear in the community feed.
+                            </p>
+                        </div>
+                    )}
+                </DialogHeader>
 
+                <div className="space-y-6 px-6 py-3 h-full overflow-y-auto">
                     {/* Content */}
                     <div>
                         <Textarea
                             placeholder={`What's your ${selectedPostType?.label.toLowerCase()} about?`}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
-                            className="min-h-[120px] resize-none"
+                            className="min-h-[120px] resize-none border-0 border-l-2 rounded-none"
                         />
                     </div>
 
-                    {/* Subject Selection */}
-                    <div>
-                        <label className="text-sm font-medium mb-2 block">Subject Area</label>
-                        <Select value={selectedSubject} onValueChange={(value) => setSelectedSubject(value as SubjectArea)}>
-                            <SelectTrigger>
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {subjects.map((subject) => (
-                                    <SelectItem key={subject.value} value={subject.value}>
-                                        {subject.label}
-                                    </SelectItem>
+                    {/* Subject Areas - Multiple Selection with Search */}
+                    <div className="relative">
+                        <label className="text-sm font-medium mb-2 block">Subject Areas</label>
+
+                        {/* Selected subjects display */}
+                        {selectedSubjects.length > 0 && (
+                            <div className="flex flex-wrap gap-2 mb-2">
+                                {selectedSubjects.map((subject) => (
+                                    <Badge
+                                        key={subject}
+                                        variant="cool"
+                                        className="pr-1 p-2 flex items-center gap-1"
+                                    >
+                                        {getSubjectLabel(subject)}
+                                        <button
+                                            onClick={() => handleSubjectRemove(subject)}
+                                            className="ml-1 hover:text-red-500 transition-colors"
+                                            type="button"
+                                        >
+                                            <X className="h-3 w-3" />
+                                        </button>
+                                    </Badge>
                                 ))}
-                            </SelectContent>
-                        </Select>
+                            </div>
+                        )}
+
+                        {/* Search input */}
+                        <div className="relative">
+                            <Input
+                                ref={inputRef}
+                                type="text"
+                                placeholder="Search and add subject areas..."
+                                value={subjectSearchTerm}
+                                onChange={handleSubjectInputChange}
+                                onFocus={() => setShowSubjectDropdown(true)}
+                                onBlur={() => {
+                                    // Delay hiding to allow clicking on dropdown items
+                                    setTimeout(() => setShowSubjectDropdown(false), 200);
+                                }}
+                                className="w-full"
+                            />
+
+                            {/* Dropdown with filtered subjects */}
+                            {showSubjectDropdown && filteredSubjects.length > 0 && (
+                                <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-background border border-border rounded-lg shadow-lg max-h-48 overflow-y-auto">
+                                    {filteredSubjects
+                                        .filter(subject => !selectedSubjects.includes(subject.value))
+                                        .map((subject) => (
+                                            <button
+                                                key={subject.value}
+                                                type="button"
+                                                onClick={() => handleSubjectSelect(subject)}
+                                                className="w-full text-left px-3 py-2 hover:bg-accent hover:text-accent-foreground transition-colors first:rounded-t-lg last:rounded-b-lg"
+                                            >
+                                                {subject.label}
+                                            </button>
+                                        ))
+                                    }
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Show message when no subjects match search */}
+                        {showSubjectDropdown && subjectSearchTerm && filteredSubjects.length === 0 && (
+                            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-background border border-border rounded-lg shadow-lg p-3 text-sm text-muted-foreground">
+                                No subjects found matching "{subjectSearchTerm}"
+                            </div>
+                        )}
                     </div>
 
                     {/* Study Data (for relevant post types) */}
@@ -398,79 +471,59 @@ export function CreateSocialPostModal({ open, onOpenChange }: CreateSocialPostMo
                             )}
                         </div>
                     )}
+                </div>
 
-                    {/* Tags */}
-                    <div>
-                        <label className="text-sm font-medium mb-2 flex items-center">
-                            <Tag className="h-4 w-4 mr-2" />
-                            Tags
-                        </label>
-                        <div className="flex flex-wrap gap-2 mb-2">
-                            {tags.map((tag) => (
-                                <Badge key={tag} variant="secondary" className="pr-1">
-                                    #{tag}
-                                    <button
-                                        onClick={() => handleRemoveTag(tag)}
-                                        className="ml-1 hover:text-red-500"
-                                    >
-                                        <X className="h-3 w-3" />
-                                    </button>
-                                </Badge>
-                            ))}
-                        </div>
-                        <div className="flex space-x-2">
-                            <Input
-                                placeholder="Add a tag"
-                                value={newTag}
-                                onChange={(e) => setNewTag(e.target.value)}
-                                onKeyPress={(e) => e.key === "Enter" && handleAddTag()}
-                            />
-                            <Button type="button" variant="outline" onClick={handleAddTag}>
-                                Add
-                            </Button>
+                {/* Media Upload and Post Type Selection */}
+                <div className="flex flex-col gap-4 p-6 py-3 border-t">
+                    <div className="flex items-center">
+                        {/* Media Upload Buttons */}
+                        <div className="flex flex-row flex-wrap">
+                            <Tooltip text="Add Photo">
+                                <Button variant="cool" size="sm">
+                                    <Images className="!size-6 shrink-0" />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip text="Add Video">
+                                <Button variant="cool" size="sm">
+                                    <SquarePlay className="!size-6 shrink-0" />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip text="Add Document">
+                                <Button variant="cool" size="sm">
+                                    <FileText className="!size-6 shrink-0" />
+                                </Button>
+                            </Tooltip>
+                            {postTypes.map((postType) => {
+                                const Icon = postType.icon;
+                                return (
+                                    <Tooltip key={postType.type} text={`${postType.label}`}>
+                                        <Button onClick={() => setSelectedType(postType.type)} variant="cool" size="sm">
+                                            <Icon className="!size-6 shrink-0" />
+                                        </Button>
+                                    </Tooltip>
+                                );
+                            })}
                         </div>
                     </div>
-
-                    {/* Media Upload */}
-                    <div>
-                        <label className="text-sm font-medium mb-2 block">Add Media (Optional)</label>
-                        <div className="flex space-x-2">
-                            <Button variant="outline" size="sm">
-                                <Camera className="h-4 w-4 mr-2" />
-                                Photo
-                            </Button>
-                            <Button variant="outline" size="sm">
-                                <Video className="h-4 w-4 mr-2" />
-                                Video
-                            </Button>
-                            <Button variant="outline" size="sm">
-                                <FileText className="h-4 w-4 mr-2" />
-                                Document
-                            </Button>
-                        </div>
+                </div>
+                <div className="flex justify-between items-center p-6 py-3 border-t">
+                    <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <Globe className="h-4 w-4" />
+                        <span>
+                            {selectedProfileData?.type === "user" ? "Public post" : `Posting to ${selectedProfileData?.name}`}
+                        </span>
                     </div>
-
-                    {/* Actions */}
-                    <div className="flex justify-between items-center pt-4 border-t">
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                            <Globe className="h-4 w-4" />
-                            <span>
-                                {postingAs === "personal" ? "Public post" :
-                                    selectedCommunityData?.id !== "none" ? `Posting to ${selectedCommunityData?.name}` : "Select community"}
-                            </span>
-                        </div>
-                        <div className="flex space-x-2">
-                            <Button variant="outline" onClick={() => onOpenChange(false)}>
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={handleSubmit}
-                                disabled={!content.trim() || (postingAs === "community" && selectedCommunity === "none")}
-                                className="bg-threads-primary hover:bg-threads-primary/90"
-                            >
-                                Share Post
-                            </Button>
-                        </div>
+                    <div className="flex space-x-2">
+                        <Button variant="outline" onClick={() => onOpenChange(false)}>
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleSubmit}
+                            disabled={!content.trim()}
+                            className="bg-threads-primary hover:bg-threads-primary/90"
+                        >
+                            Share Post
+                        </Button>
                     </div>
                 </div>
             </DialogContent>

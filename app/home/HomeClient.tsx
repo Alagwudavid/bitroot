@@ -19,7 +19,7 @@ import {
     DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import PostCard from "@/components/PostCard";
-import { CreateSocialPostModal } from "@/components/CreatePostModal";
+import { CreatePostModal } from "@/components/CreatePostModal";
 import { socialLearningPosts } from "@/data/social-learning";
 import { defaultCustomFeeds, getFeedByName, filterPostsByFeed } from "@/data/custom-feeds";
 import { cn } from "@/lib/utils";
@@ -49,7 +49,7 @@ const HomeClient = () => {
                 <main className={cn("flex-1 relative", !isTablet && "ml-0")}>
                     <div className="max-w-xl mx-auto">
                         {/* Custom Feed Selector */}
-                        <div className="mb-6 max-w-2xl flex items-center justify-center mx-auto">
+                        <div className="max-w-2xl flex items-center justify-center mx-auto">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button
@@ -78,8 +78,8 @@ const HomeClient = () => {
                                                 key={feed.name}
                                                 onClick={() => setSelectedFeed(feed.name)}
                                                 className={`px-3 py-2 rounded-lg cursor-pointer transition-colors ${selectedFeed === feed.name
-                                                        ? "bg-accent text-accent-foreground"
-                                                        : "hover:bg-accent/50"
+                                                    ? "bg-accent text-accent-foreground"
+                                                    : "hover:bg-accent/50"
                                                     }`}
                                             >
                                                 <div className="flex flex-col gap-1">
@@ -91,32 +91,32 @@ const HomeClient = () => {
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </div>
-
-                        <Card className="p-3 mb-4 rounded-3xl max-w-xl mx-auto">
-                            <div className="flex items-center justify-between space-x-3">
-                                <Avatar className="h-10 w-10">
-                                    <AvatarImage src="/placeholder-user1.png" alt="You" />
-                                    <AvatarFallback className="bg-threads-primary text-primary-foreground">
-                                        You
-                                    </AvatarFallback>
-                                </Avatar>
-                                <Button
-                                    variant="ghost"
-                                    onClick={() => setIsCreateModalOpen(true)}
-                                    className="flex-1 justify-start text-left text-muted-foreground hover:text-foreground hover:bg-threads-hover h-12 px-4"
-                                >
-                                    Share your learning progress...
-                                </Button>
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setIsCreateModalOpen(true)}
-                                    className="px-4 w-14"
-                                >
-                                    Post
-                                </Button>
-                            </div>
-                        </Card>
-
+                        <div className="p-4 mb-4 max-w-2xl flex items-center justify-center mx-auto">
+                            <Card className="w-full p-3 rounded-3xl mx-auto">
+                                <div className="flex items-center justify-between space-x-3">
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage src="/placeholder-user1.png" alt="You" />
+                                        <AvatarFallback className="bg-threads-primary text-primary-foreground">
+                                            You
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <Button
+                                        variant="ghost"
+                                        onClick={() => setIsCreateModalOpen(true)}
+                                        className="flex-1 justify-start text-left text-muted-foreground hover:text-foreground hover:bg-threads-hover h-12 px-4"
+                                    >
+                                        Share your learning progress...
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setIsCreateModalOpen(true)}
+                                        className="px-4 w-14"
+                                    >
+                                        Post
+                                    </Button>
+                                </div>
+                            </Card>
+                        </div>
                         {/* Filter Header */}
                         {selectedFeed !== "All Posts" && (
                             <div className={cn(
@@ -165,7 +165,7 @@ const HomeClient = () => {
                         </div>
                     </div>
                     <div className="fixed bottom-20 md:bottom-8 right-8 flex justify-center">
-                        <Button variant="outline" className="text-muted-foreground hover:text-foreground p-6 font-bold border-2">
+                        <Button variant="outline" onClick={() => setIsCreateModalOpen(true)} className="text-muted-foreground hover:text-foreground p-6 font-bold border-2">
                             <Plus className="!size-8 shrink-0" />
                         </Button>
                     </div>
@@ -173,7 +173,7 @@ const HomeClient = () => {
             </div>
 
             {/* Create Post Modal */}
-            <CreateSocialPostModal
+            <CreatePostModal
                 open={isCreateModalOpen}
                 onOpenChange={setIsCreateModalOpen}
             />
