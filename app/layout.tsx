@@ -53,7 +53,7 @@ export default function RootLayout({
               </main>
               {/* <AsideBar /> */}
             </div>
-            {/* <BottomNav /> */}
+            <BottomNav />
           </div>
         </ThemeProvider>
       </body>
