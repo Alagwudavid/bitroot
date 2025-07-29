@@ -112,7 +112,7 @@ export function MainMenu({ className }: MainMenuProps) {
         </div>
 
         {/* Quick Actions */}
-        <div className="p-2">
+        {/* <div className="p-2">
           <div className="grid grid-cols-2 gap-1">
             <DropdownMenuItem
               onClick={() => router.push("/profile")}
@@ -143,11 +143,11 @@ export function MainMenu({ className }: MainMenuProps) {
               <span className="text-sm">Support</span>
             </DropdownMenuItem>
           </div>
-        </div>
+        </div> */}
 
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator /> */}
         {/* For Business */}
-        <div className="p-2">
+        {/* <div className="p-2">
           <div className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2 px-2">
             For Business
           </div>
@@ -167,7 +167,7 @@ export function MainMenu({ className }: MainMenuProps) {
               <span className="text-sm">Inbox</span>
             </DropdownMenuItem>
           </div>
-        </div>
+        </div> */}
         {!isMobile && (
           <>
             <DropdownMenuSeparator />
