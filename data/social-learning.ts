@@ -509,8 +509,152 @@ export const socialLearningPosts: SocialPost[] = [
         },
         isLiked: true,
         isSaved: true
-    }
-];
+    },
+    {
+        id: "post9",
+        author: sampleUsers[3], // Alex Rivera - codemaster_alex
+        type: "poll",
+        content: "",
+        subject: "technology",
+        community: {
+            id: "javascript-devs",
+            name: "JavaScript Developers",
+            color: "#F7DF1E"
+        },
+        tags: ["javascript", "framework", "poll"],
+        timestamp: "3h",
+        engagement: {
+            likes: 89,
+            comments: 34,
+            shares: 12,
+            saves: 23,
+            views: 1234,
+            reactions: {
+                like: 56,
+                love: 18,
+                celebrate: 15
+            }
+        },
+        poll: {
+            question: "Which JavaScript framework do you prefer for building modern web applications?",
+            options: ["React", "Vue.js", "Angular", "Svelte"],
+            votes: {
+                "React": 145,
+                "Vue.js": 67,
+                "Angular": 34,
+                "Svelte": 23
+            },
+            endTime: "2024-01-28T15:30:00Z"
+        },
+        isLiked: false,
+        isSaved: false
+    },
+    {
+        id: "post10",
+        author: sampleUsers[1], // Dr. Marcus Chen
+        type: "study-session",
+        content: "Just wrapped up an intense 2-hour calculus review session covering limits and continuity. We worked through challenging problems and had some great 'aha!' moments. Group study really makes complex topics more digestible! 📚",
+        subject: "mathematics",
+        community: {
+            id: "math-study-group",
+            name: "Mathematics Study Circle",
+            color: "#4A90E2"
+        },
+        tags: ["calculus", "limits", "group-study", "session"],
+        timestamp: "1h",
+        engagement: {
+            likes: 156,
+            comments: 28,
+            shares: 15,
+            saves: 67,
+            views: 1890,
+            reactions: {
+                like: 98,
+                love: 34,
+                celebrate: 24
+            }
+        },
+        studyData: {
+            timeSpent: 120,
+            difficulty: "advanced",
+            skills: ["calculus", "limits", "continuity"]
+        },
+        isLiked: true,
+        isSaved: false
+    },
+    {
+        id: "post11",
+        author: sampleUsers[4], // Emma Thompson - linguist_emma
+        type: "resource",
+        content: "Discovered an amazing podcast series for intermediate French learners! The hosts speak at a perfect pace and cover everyday topics with cultural insights. Highly recommend for anyone looking to improve listening skills.",
+        subject: "language",
+        language: {
+            name: "French",
+            flag: "fr",
+            color: "#4A90E2"
+        },
+        community: {
+            id: "french-learners",
+            name: "French Learning Community",
+            color: "#4A90E2"
+        },
+        tags: ["french", "podcast", "listening", "resource"],
+        timestamp: "5h",
+        engagement: {
+            likes: 234,
+            comments: 45,
+            shares: 78,
+            saves: 189,
+            views: 2456,
+            reactions: {
+                like: 167,
+                love: 43,
+                celebrate: 24
+            }
+        },
+        linkData: {
+            url: "https://example.com/french-podcast",
+            title: "Café Français - Intermediate French Podcast",
+            description: "Daily conversations about French culture, current events, and everyday life",
+            image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300"
+        },
+        isLiked: false,
+        isSaved: true
+    },
+    {
+        id: "post12",
+        author: sampleUsers[2], // Sarah Kim
+        type: "collaboration",
+        content: "Looking for creative partners to work on a digital art exhibition about cultural diversity! We'll create a virtual gallery showcasing art from different cultures around the world. Perfect opportunity to learn about art techniques while exploring global perspectives.",
+        subject: "arts",
+        community: {
+            id: "creative-arts",
+            name: "Creative Arts Workshop",
+            color: "#E74C3C"
+        },
+        tags: ["collaboration", "digital-art", "culture", "exhibition"],
+        timestamp: "2d",
+        engagement: {
+            likes: 178,
+            comments: 56,
+            shares: 23,
+            saves: 89,
+            views: 1678,
+            reactions: {
+                like: 123,
+                love: 34,
+                celebrate: 21
+            }
+        },
+        collaboration: {
+            isCollaborative: true,
+            maxParticipants: 8,
+            currentParticipants: [sampleUsers[2]],
+            title: "Global Perspectives Digital Art Exhibition"
+        },
+        isLiked: true,
+        isSaved: true
+    }];
 
 // Sample study communities for social learning
 export const socialStudyCommunities: StudyCommunity[] = [

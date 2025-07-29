@@ -32,6 +32,7 @@ import {
     ChevronDown,
     Check,
     Sparkles,
+    Rocket,
     Code,
 } from "lucide-react";
 import { PostType, SubjectArea } from "@/types/social-learning";
@@ -44,7 +45,7 @@ interface CreatePostModalProps {
     onOpenChange: (open: boolean) => void;
 }
 
-const postTypes: { type: PostType; label: string; icon: any; description: string; color: string }[] = [
+const postTypes: { type: PostType; label: string; icon: any; description: string; color: string; disabled?: boolean }[] = [
     {
         type: "resource",
         label: "Study resources",
@@ -57,7 +58,8 @@ const postTypes: { type: PostType; label: string; icon: any; description: string
         label: "Code",
         icon: Code,
         description: "Share code snippets",
-        color: "bg-teal-500"
+        color: "bg-teal-500",
+        disabled: true
     },
     {
         type: "tip",
@@ -74,10 +76,17 @@ const postTypes: { type: PostType; label: string; icon: any; description: string
         color: "bg-purple-500"
     },
     {
-        type: "project",
-        label: "Project",
+        type: "study-session",
+        label: "Study session",
         icon: Brain,
-        description: "Show off a completed project or work in progress",
+        description: "We had a session",
+        color: "bg-pink-500"
+    },
+    {
+        type: "achievement",
+        label: "Achievement",
+        icon: Rocket,
+        description: "Share your achievement",
         color: "bg-pink-500"
     },
     {
@@ -134,10 +143,18 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
     const [isCollaborative, setIsCollaborative] = useState(false);
     const [maxParticipants, setMaxParticipants] = useState("");
 
-    const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
+    // New state for additional features
+    const [linkUrl, setLinkUrl] = useState("");
+    const [linkTitle, setLinkTitle] = useState("");
+    const [linkDescription, setLinkDescription] = useState("");
+    const [showLinkModal, setShowLinkModal] = useState(false);
+    const [collaborationTitle, setCollaborationTitle] = useState("");
+    const [pollQuestion, setPollQuestion] = useState("");
+    const [pollOptions, setPollOptions] = useState<string[]>(["", ""]);
+    const [mediaFiles, setMediaFiles] = useState<File[]>([]);
 
-    const selectedPostType = postTypes.find(pt => pt.type === selectedType);
+    const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null); const selectedPostType = postTypes.find(pt => pt.type === selectedType);
     const selectedProfileData = availableCommunities.find(c => c.id === selectedProfile);
     const selectedCommunityData = availableCommunities.find(c => c.id === selectedCommunity);
 
@@ -186,6 +203,45 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
         return subjects.find(s => s.value === value)?.label || value;
     };
 
+    const handlePollOptionChange = (index: number, value: string) => {
+        const newOptions = [...pollOptions];
+        newOptions[index] = value;
+        setPollOptions(newOptions);
+    };
+
+    const addPollOption = () => {
+        if (pollOptions.length < 4) {
+            setPollOptions([...pollOptions, ""]);
+        }
+    };
+
+    const removePollOption = (index: number) => {
+        if (pollOptions.length > 2) {
+            const newOptions = pollOptions.filter((_, i) => i !== index);
+            setPollOptions(newOptions);
+        }
+    };
+
+    const handleMediaUpload = (files: FileList) => {
+        const fileArray = Array.from(files);
+        setMediaFiles(prev => [...prev, ...fileArray]);
+    };
+
+    const removeMediaFile = (index: number) => {
+        setMediaFiles(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const handleTypeSelection = (type: PostType) => {
+        setSelectedType(type);
+
+        // Handle special behaviors for different types
+        if (type === "resource") {
+            setShowLinkModal(true);
+        } else if (type === "poll") {
+            setContent(""); // Clear content for polls
+        }
+    };
+
     const handleAddTag = () => {
         if (newTag.trim() && !tags.includes(newTag.trim())) {
             setTags([...tags, newTag.trim()]);
@@ -199,21 +255,39 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
 
     const handleSubmit = () => {
         // Handle post submission
-        console.log({
+        const postData: any = {
             type: selectedType,
-            content,
+            content: selectedType === "poll" ? pollQuestion : content,
             subjects: selectedSubjects,
             tags,
             studyData: {
                 timeSpent: studyTime ? parseInt(studyTime) : undefined,
                 difficulty: difficulty as any,
                 skills: skills ? skills.split(",").map(s => s.trim()) : []
-            },
-            collaboration: isCollaborative ? {
+            }
+        };
+
+        // Add type-specific data
+        if (selectedType === "collaboration") {
+            postData.collaboration = {
                 isCollaborative: true,
-                maxParticipants: maxParticipants ? parseInt(maxParticipants) : undefined
-            } : { isCollaborative: false }
-        });
+                maxParticipants: maxParticipants ? Math.min(parseInt(maxParticipants), 200) : undefined,
+                title: collaborationTitle
+            };
+        } else if (selectedType === "poll") {
+            postData.poll = {
+                question: pollQuestion,
+                options: pollOptions.filter(option => option.trim() !== "")
+            };
+        } else if (selectedType === "resource" && linkUrl) {
+            postData.linkData = {
+                url: linkUrl,
+                title: linkTitle,
+                description: linkDescription
+            };
+        }
+
+        console.log(postData);
 
         // Reset form
         setSelectedProfile("personal");
@@ -228,6 +302,14 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
         setSkills("");
         setIsCollaborative(false);
         setMaxParticipants("");
+        setLinkUrl("");
+        setLinkTitle("");
+        setLinkDescription("");
+        setShowLinkModal(false);
+        setCollaborationTitle("");
+        setPollQuestion("");
+        setPollOptions(["", ""]);
+        setMediaFiles([]);
         onOpenChange(false);
     };
 
@@ -309,16 +391,105 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                     )}
                 </DialogHeader>
 
-                <div className="space-y-6 px-6 py-3 h-full overflow-y-auto">
-                    {/* Content */}
-                    <div>
-                        <Textarea
-                            placeholder={`What's your ${selectedPostType?.label.toLowerCase()} about?`}
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            className="min-h-[120px] resize-none border-0 border-l-2 rounded-none"
-                        />
-                    </div>
+                <div className="flex flex-col space-y-6 px-6 py-3 h-full overflow-y-auto">
+                    {/* Content - Hidden for polls */}
+                    {selectedType !== "poll" && (
+                        <div className="flex-1">
+                            <Textarea
+                                placeholder={`What's your ${selectedPostType?.label.toLowerCase()} about?`}
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                className="h-full min-h-[120px] resize-none border-0 border-l-2 rounded-none"
+                            />
+                        </div>
+                    )}
+
+                    {/* Poll Content */}
+                    {selectedType === "poll" && (
+                        <div className="space-y-4 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                            <h4 className="font-medium flex items-center">
+                                <AlignLeft className="h-4 w-4 mr-2" />
+                                Create Poll
+                            </h4>
+
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Poll Question</label>
+                                <Input
+                                    placeholder="What's your question?"
+                                    value={pollQuestion}
+                                    onChange={(e) => setPollQuestion(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <label className="text-sm font-medium block">Options</label>
+                                {pollOptions.map((option, index) => (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <Input
+                                            placeholder={`Option ${index + 1}`}
+                                            value={option}
+                                            onChange={(e) => handlePollOptionChange(index, e.target.value)}
+                                        />
+                                        {pollOptions.length > 2 && (
+                                            <Button
+                                                type="button"
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => removePollOption(index)}
+                                            >
+                                                <X className="h-4 w-4" />
+                                            </Button>
+                                        )}
+                                    </div>
+                                ))}
+                                {pollOptions.length < 4 && (
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={addPollOption}
+                                        className="w-full"
+                                    >
+                                        Add Option
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Media Preview */}
+                    {mediaFiles.length > 0 && (
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium block">Media Preview</label>
+                            <div className="grid grid-cols-2 gap-2">
+                                {mediaFiles.map((file, index) => (
+                                    <div key={index} className="relative">
+                                        {file.type.startsWith('image/') ? (
+                                            <img
+                                                src={URL.createObjectURL(file)}
+                                                alt={`Upload ${index + 1}`}
+                                                className="w-full h-32 object-cover rounded-lg"
+                                            />
+                                        ) : (
+                                            <div className="w-full h-32 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                                                <FileText className="h-8 w-8 text-gray-500" />
+                                                <span className="ml-2 text-sm text-gray-500">{file.name}</span>
+                                            </div>
+                                        )}
+                                        <Button
+                                            type="button"
+                                            variant="outline"
+                                            size="sm"
+                                            onClick={() => removeMediaFile(index)}
+                                            className="absolute top-1 right-1"
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Subject Areas - Multiple Selection with Search */}
                     <div className="relative">
@@ -390,15 +561,15 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                         )}
                     </div>
 
-                    {/* Study Data (for relevant post types) */}
-                    {(selectedType === "achievement" || selectedType === "milestone" || selectedType === "study-note") && (
+                    {/* Study Data - Only time and difficulty for study-session */}
+                    {selectedType === "study-session" && (
                         <div className="space-y-4 p-4 bg-muted/30 rounded-lg">
                             <h4 className="font-medium flex items-center">
                                 <Clock className="h-4 w-4 mr-2" />
-                                Study Session Details (Optional)
+                                Study Session Details
                             </h4>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="text-sm font-medium mb-1 block">Time Spent (minutes)</label>
                                     <Input
@@ -424,15 +595,6 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                                         </SelectContent>
                                     </Select>
                                 </div>
-
-                                <div>
-                                    <label className="text-sm font-medium mb-1 block">Skills (comma-separated)</label>
-                                    <Input
-                                        placeholder="grammar, vocabulary"
-                                        value={skills}
-                                        onChange={(e) => setSkills(e.target.value)}
-                                    />
-                                </div>
                             </div>
                         </div>
                     )}
@@ -445,30 +607,26 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                                 Collaboration Details
                             </h4>
 
-                            <div className="flex items-center space-x-2">
-                                <input
-                                    type="checkbox"
-                                    id="collaborative"
-                                    checked={isCollaborative}
-                                    onChange={(e) => setIsCollaborative(e.target.checked)}
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Collaboration Title</label>
+                                <Input
+                                    placeholder="What are you collaborating on?"
+                                    value={collaborationTitle}
+                                    onChange={(e) => setCollaborationTitle(e.target.value)}
                                 />
-                                <label htmlFor="collaborative" className="text-sm">
-                                    Looking for study partners or collaborators
-                                </label>
                             </div>
 
-                            {isCollaborative && (
-                                <div>
-                                    <label className="text-sm font-medium mb-1 block">Max Participants</label>
-                                    <Input
-                                        type="number"
-                                        placeholder="5"
-                                        value={maxParticipants}
-                                        onChange={(e) => setMaxParticipants(e.target.value)}
-                                        className="w-32"
-                                    />
-                                </div>
-                            )}
+                            <div>
+                                <label className="text-sm font-medium mb-1 block">Max Participants (max 200)</label>
+                                <Input
+                                    type="number"
+                                    placeholder="5"
+                                    max="200"
+                                    value={maxParticipants}
+                                    onChange={(e) => setMaxParticipants(e.target.value)}
+                                    className="w-32"
+                                />
+                            </div>
                         </div>
                     )}
                 </div>
@@ -479,25 +637,38 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                         {/* Media Upload Buttons */}
                         <div className="flex flex-row flex-wrap">
                             <Tooltip text="Add Photo">
-                                <Button variant="cool" size="sm">
-                                    <Images className="!size-6 shrink-0" />
-                                </Button>
+                                <label className="cursor-pointer">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        className="hidden"
+                                        onChange={(e) => e.target.files && handleMediaUpload(e.target.files)}
+                                    />
+                                    <Button variant="cool" size="sm" type="button">
+                                        <Images className="!size-6 shrink-0" />
+                                    </Button>
+                                </label>
                             </Tooltip>
-                            <Tooltip text="Add Video">
-                                <Button variant="cool" size="sm">
+                            <Tooltip text="Add Video (Coming Soon)">
+                                <Button variant="cool" size="sm" disabled>
                                     <SquarePlay className="!size-6 shrink-0" />
-                                </Button>
-                            </Tooltip>
-                            <Tooltip text="Add Document">
-                                <Button variant="cool" size="sm">
-                                    <FileText className="!size-6 shrink-0" />
                                 </Button>
                             </Tooltip>
                             {postTypes.map((postType) => {
                                 const Icon = postType.icon;
                                 return (
-                                    <Tooltip key={postType.type} text={`${postType.label}`}>
-                                        <Button onClick={() => setSelectedType(postType.type)} variant="cool" size="sm">
+                                    <Tooltip
+                                        key={postType.type}
+                                        text={postType.disabled ? `${postType.label} (Coming Soon)` : postType.label}
+                                    >
+                                        <Button
+                                            onClick={() => !postType.disabled && handleTypeSelection(postType.type)}
+                                            variant="cool"
+                                            size="sm"
+                                            disabled={postType.disabled}
+                                            className={selectedType === postType.type ? "bg-primary text-primary-foreground" : ""}
+                                        >
                                             <Icon className="!size-6 shrink-0" />
                                         </Button>
                                     </Tooltip>
@@ -519,7 +690,11 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                         </Button>
                         <Button
                             onClick={handleSubmit}
-                            disabled={!content.trim()}
+                            disabled={
+                                (selectedType === "poll" && (!pollQuestion.trim() || pollOptions.filter(o => o.trim()).length < 2)) ||
+                                (selectedType !== "poll" && !content.trim()) ||
+                                (selectedType === "collaboration" && !collaborationTitle.trim())
+                            }
                             className="bg-threads-primary hover:bg-threads-primary/90"
                         >
                             Share Post
@@ -527,6 +702,53 @@ export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
                     </div>
                 </div>
             </DialogContent>
+
+            {/* Link Input Modal */}
+            <Dialog open={showLinkModal} onOpenChange={setShowLinkModal}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Add Resource Link</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                        <div>
+                            <label className="text-sm font-medium mb-1 block">URL</label>
+                            <Input
+                                placeholder="https://example.com"
+                                value={linkUrl}
+                                onChange={(e) => setLinkUrl(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium mb-1 block">Title (Optional)</label>
+                            <Input
+                                placeholder="Resource title"
+                                value={linkTitle}
+                                onChange={(e) => setLinkTitle(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <label className="text-sm font-medium mb-1 block">Description (Optional)</label>
+                            <Textarea
+                                placeholder="Brief description"
+                                value={linkDescription}
+                                onChange={(e) => setLinkDescription(e.target.value)}
+                                className="min-h-[80px]"
+                            />
+                        </div>
+                        <div className="flex justify-end space-x-2">
+                            <Button variant="outline" onClick={() => setShowLinkModal(false)}>
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={() => setShowLinkModal(false)}
+                                disabled={!linkUrl.trim()}
+                            >
+                                Add Link
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </Dialog>
     );
 }

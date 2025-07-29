@@ -26,10 +26,10 @@ export interface FeedFilter {
 
 export const defaultCustomFeeds: CustomFeed[] = [
     {
-        id: "all-posts",
-        name: "All Posts",
+        id: "for-you",
+        name: "For you",
         color: "#6B73FF",
-        description: "See all posts from the community",
+        description: "See whats trending",
         filters: {
             categories: [],
             postTypes: [],

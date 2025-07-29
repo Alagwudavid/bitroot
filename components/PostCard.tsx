@@ -1,12 +1,15 @@
 "use client"
 
 import React, { useState } from "react"
-import { Heart, Timer, SmilePlus, MessageCircle, Share2, Bookmark, MoreHorizontal, Clock, Users, Star, Trophy, ThumbsUp, Smile, Gift, Zap, CalendarDays } from "lucide-react"
+import { Heart, Timer, SmilePlus, MessageCircle, Share2, Bookmark, MoreHorizontal, Clock, Users, Star, Trophy, ThumbsUp, Smile, Gift, Zap, CalendarDays, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { VerifiedBadge } from "@/components/verified-badge"
+// import { Separator } from "@/components/ui/separator"
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+// import { SocialPost } from "@/types/social-learning"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -48,6 +51,12 @@ const PostTypeIcon = ({ type }: { type: string }) => {
             return <Users className="size-4 mr-1" />
         case "milestone":
             return <Trophy className="size-4 mr-1" />
+        case "resource":
+            return <ExternalLink className="size-4 mr-1" />
+        case "study-session":
+            return <Clock className="size-4 mr-1" />
+        case "poll":
+            return <MessageCircle className="size-4 mr-1" />
         default:
             return <MessageCircle className="size-4 mr-1" />
     }
@@ -381,25 +390,6 @@ export default function PostCard({ post }: PostCardProps) {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-
-                <div className="flex items-center gap-2 mt-3">
-                    <Badge variant="cool" className="text-sm py-0.5 px-2">
-                        <PostTypeIcon type={post.type} />
-                        <span className="text-sm capitalize">{post.type}</span>
-                    </Badge>
-                    <Badge variant="sky" className="text-sm capitalize">
-                        {post.subject}
-                    </Badge>
-                    {post.language && (
-                        <Badge variant="cool" className="text-sm capitalize">
-                            {post.language.name}
-                        </Badge>
-                    )}
-                    <Badge variant="amethyst" className="text-sm capitalize">
-                        <span className="mr-1">👥</span>
-                        <span className="line-clamp-1">{post.community.name}</span>
-                    </Badge>
-                </div>
             </CardHeader>
 
             <CardContent className="pt-0">
@@ -455,41 +445,148 @@ export default function PostCard({ post }: PostCardProps) {
                     )}
 
                     {post.studyData && (
-                        <div className="bg-gray-50 dark:bg-gray-700/30 text-foreground rounded-2xl p-3 border flex items-center gap-2">
-                            {post.studyData.timeSpent && (
-                            <div className="flex flex-col items-center justify-center p-4 gap-2 border rounded-2xl">
-                                {/* <CalendarDays className="h-3 w-3" /> */}
-                                <div className="flex text-sm">
-                                    <div className="flex flex-col gap-2 items-center">
-                                        <Timer className="size-4" />
-                                        <span>{Math.floor(post.studyData.timeSpent / 60)}h {post.studyData.timeSpent % 60}m</span>
+                        <div className="bg-gray-50 dark:bg-gray-700/30 text-foreground rounded-2xl p-3 border flex flex-col gap-2">
+                            <div className="flex items-center gap-2">
+                                {post.studyData.timeSpent && (
+                                    <div className="flex flex-col items-center justify-center p-2 gap-2 border rounded-2xl">
+                                        {/* <CalendarDays className="h-3 w-3" /> */}
+                                        <div className="flex text-sm">
+                                            <div className="flex flex-col gap-2 items-center">
+                                                <Timer className="size-4" />
+                                                <span>{Math.floor(post.studyData.timeSpent / 60)}h {post.studyData.timeSpent % 60}m</span>
+                                                {post.studyData.difficulty && (
+                                                    <Badge variant="cool" className="flex items-center text-xs w-fit">
+                                                        <span className="capitalize">{post.studyData.difficulty}</span>
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            )}
-                            <div className="flex flex-col gap-2 rounded-2xl">
-                                {post.studyData.difficulty && (
-                                    <Badge variant="cool" className="flex items-center gap-1 p-1 px-2 text-sm w-fit">
-                                        <Star className="size-3" />
-                                        <span className="capitalize">{post.studyData.difficulty}</span>
-                                    </Badge>
                                 )}
-                               {post.studyData.skills && (
-                                <div className="flex flex-wrap gap-1 mt-2">
-                                    {post.studyData.skills.slice(0, 3).map((skill, index) => (
-                                        <Badge key={index} variant="sky" className="text-sm">
-                                            {skill}
-                                        </Badge>
-                                    ))}
-                                    {post.studyData.skills.length > 3 && (
-                                        <Badge variant="sky" className="text-sm">
-                                            +{post.studyData.skills.length - 3} more
-                                        </Badge>
+                                <div className="flex flex-col gap-2">
+                                    <Badge variant="cool" className="text-sm py-0.5 px-2">
+                                        <PostTypeIcon type={post.type} />
+                                        <span className="text-sm capitalize">{post.type}</span>
+                                    </Badge>
+                                    {post.studyData.skills && (
+                                        <div className="flex flex-wrap gap-1 mt-2">
+                                            <Badge variant="sky" className="text-sm capitalize">
+                                                {post.subject}
+                                            </Badge>
+                                            {post.language && (
+                                                <Badge variant="cool" className="text-sm capitalize">
+                                                    {post.language.name}
+                                                </Badge>
+                                            )}
+                                            <Badge variant="amethyst" className="text-sm capitalize">
+                                                <span className="mr-1">👥</span>
+                                                <span className="line-clamp-1">{post.community.name}</span>
+                                            </Badge>
+                                        </div>
                                     )}
                                 </div>
-                                )} 
                             </div>
-                            
+                            {/* Resource Links */}
+                            {post.linkData && (
+                                <div className="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                                    <a
+                                        href={post.linkData.url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex items-start gap-3 hover:bg-blue-100 dark:hover:bg-blue-900/30 rounded-lg p-2 transition-colors"
+                                    >
+                                        {post.linkData.image && (
+                                            <img
+                                                src={post.linkData.image}
+                                                alt={post.linkData.title || "Resource"}
+                                                className="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+                                            />
+                                        )}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <ExternalLink className="h-4 w-4 text-blue-600" />
+                                                <span className="text-sm font-medium text-blue-600 line-clamp-1">
+                                                    {post.linkData.title || "Resource Link"}
+                                                </span>
+                                            </div>
+                                            {post.linkData.description && (
+                                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                                    {post.linkData.description}
+                                                </p>
+                                            )}
+                                            <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+                                                {new URL(post.linkData.url).hostname}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            )}
+
+                            {/* Study Resources from studyData */}
+                            {post.studyData?.resources && post.studyData.resources.length > 0 && (
+                                <div className="mt-2">
+                                    <p className="text-sm font-medium text-muted-foreground mb-2">Resources used:</p>
+                                    <div className="flex flex-wrap gap-1">
+                                        {post.studyData.resources.map((resource, index) => (
+                                            <Badge key={index} variant="outline" className="text-xs">
+                                                {resource}
+                                            </Badge>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Poll Display */}
+                    {post.poll && (
+                        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                            <h4 className="font-medium text-lg mb-3">{post.poll.question}</h4>
+                            <div className="space-y-2">
+                                {post.poll.options.map((option, index) => {
+                                    const votes = post.poll?.votes?.[option] || 0;
+                                    const totalVotes = post.poll?.votes ? Object.values(post.poll.votes).reduce((a, b) => a + b, 0) : 0;
+                                    const percentage = totalVotes > 0 ? Math.round((votes / totalVotes) * 100) : 0;
+
+                                    return (
+                                        <div key={index} className="relative">
+                                            <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                                <span className="font-medium">{option}</span>
+                                                <span className="text-sm text-muted-foreground">{percentage}% ({votes})</span>
+                                            </div>
+                                            <div
+                                                className="absolute left-0 top-0 h-full bg-purple-200 dark:bg-purple-700 rounded-lg transition-all duration-300"
+                                                style={{ width: `${percentage}%`, opacity: 0.3 }}
+                                            />
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                            {post.poll.endTime && (
+                                <p className="text-sm text-muted-foreground mt-3">
+                                    Poll ends: {new Date(post.poll.endTime).toLocaleDateString()}
+                                </p>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Collaboration Details */}
+                    {post.collaboration && post.collaboration.isCollaborative && (
+                        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                            <div className="flex items-center gap-2 mb-2">
+                                <Users className="h-4 w-4 text-green-600" />
+                                <span className="font-medium text-green-800 dark:text-green-200">
+                                    {post.collaboration.title || "Looking for Collaborators"}
+                                </span>
+                            </div>
+                            <div className="flex items-center justify-between text-sm text-green-700 dark:text-green-300">
+                                <span>
+                                    {post.collaboration.currentParticipants?.length || 0} / {post.collaboration.maxParticipants || "∞"} participants
+                                </span>
+                                <Button size="sm" variant="outline" className="text-green-600 border-green-600 hover:bg-green-100">
+                                    Join Collaboration
+                                </Button>
+                            </div>
                         </div>
                     )}
 

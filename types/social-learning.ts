@@ -1,7 +1,7 @@
 // Enhanced data models for social learning platform
 
 export type UserType = "student" | "educator" | "mentor" | "expert" | "institution";
-export type PostType = "achievement" | "tip" | "question" | "resource" | "milestone" | "project" | "study-note" | "collaboration";
+export type PostType = "achievement" | "tip" | "question" | "resource" | "milestone" | "project" | "study-note" | "study-session" | "collaboration" | "poll" | "code";
 export type SubjectArea = "language" | "mathematics" | "science" | "technology" | "arts" | "business" | "philosophy" | "history" | "other";
 
 export interface User {
@@ -82,6 +82,24 @@ export interface SocialPost {
         isCollaborative: boolean;
         maxParticipants?: number;
         currentParticipants?: User[];
+        title?: string;
+    };
+    poll?: {
+        question: string;
+        options: string[];
+        votes?: { [option: string]: number };
+        endTime?: string;
+    };
+    linkData?: {
+        url: string;
+        title?: string;
+        description?: string;
+        image?: string;
+    };
+    codeSnippet?: {
+        language: string;
+        code: string;
+        title?: string;
     };
     isLiked?: boolean;
     isSaved?: boolean;
