@@ -4,6 +4,7 @@ import { BottomNav } from "@/components/bottom-nav";
 import { TopNavigation } from "@/components/top-navigation";
 import { AsideBar } from "@/components/aside-bar";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Bitroot App",
@@ -55,6 +56,7 @@ export default function RootLayout({
             </div>
             <BottomNav />
           </div>
+          <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>

@@ -540,7 +540,7 @@ export default function PostCard({ post }: PostCardProps) {
 
                     {/* Poll Display */}
                     {post.poll && (
-                        <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-4 border border-purple-200 dark:border-purple-800">
+                        <div className="bg-[#8a2be2]/20 rounded-3xl p-4 border border-[#8a2be2]">
                             <h4 className="font-medium text-lg mb-3">{post.poll.question}</h4>
                             <div className="space-y-2">
                                 {post.poll.options.map((option, index) => {
@@ -550,13 +550,13 @@ export default function PostCard({ post }: PostCardProps) {
 
                                     return (
                                         <div key={index} className="relative">
-                                            <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                            <div className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-xl border cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                                                 <span className="font-medium">{option}</span>
                                                 <span className="text-sm text-muted-foreground">{percentage}% ({votes})</span>
                                             </div>
                                             <div
-                                                className="absolute left-0 top-0 h-full bg-purple-200 dark:bg-purple-700 rounded-lg transition-all duration-300"
-                                                style={{ width: `${percentage}%`, opacity: 0.3 }}
+                                                className="absolute left-0 top-0 h-full bg-[#8a2be2] rounded-xl transition-all duration-300"
+                                                style={{ width: `${percentage}%`, opacity: 0.5 }}
                                             />
                                         </div>
                                     );
@@ -572,18 +572,18 @@ export default function PostCard({ post }: PostCardProps) {
 
                     {/* Collaboration Details */}
                     {post.collaboration && post.collaboration.isCollaborative && (
-                        <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 border border-green-200 dark:border-green-800">
+                        <div className="bg-gray-50 dark:bg-gray-900/20 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
                             <div className="flex items-center gap-2 mb-2">
-                                <Users className="h-4 w-4 text-green-600" />
-                                <span className="font-medium text-green-800 dark:text-green-200">
+                                <Users className="h-4 w-4 text-gray-600" />
+                                <span className="font-medium text-gray-800 dark:text-gray-200">
                                     {post.collaboration.title || "Looking for Collaborators"}
                                 </span>
                             </div>
-                            <div className="flex items-center justify-between text-sm text-green-700 dark:text-green-300">
+                            <div className="flex items-center justify-between text-sm text-gray-700 dark:text-gray-300">
                                 <span>
                                     {post.collaboration.currentParticipants?.length || 0} / {post.collaboration.maxParticipants || "∞"} participants
                                 </span>
-                                <Button size="sm" variant="outline" className="text-green-600 border-green-600 hover:bg-green-100">
+                                <Button size="sm" variant="outline" className="text-gray-600 border-gray-600 hover:bg-gray-100">
                                     Join Collaboration
                                 </Button>
                             </div>
