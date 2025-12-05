@@ -5,6 +5,7 @@ import type React from "react"
 import { useState } from "react"
 import { Shield, Wallet, Globe, ArrowRight, CheckCircle2, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function BitrootLanding() {
   const [email, setEmail] = useState("")
@@ -93,13 +94,13 @@ export default function BitrootLanding() {
       </section>
 
       {/* Features Grid */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-5xl mx-auto">
+      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-gray-50">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Everything you need to run a Live Academy.</h2>
           <p className="text-muted-foreground text-lg">The platform handles logistics so you can focus on teaching</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Feature 1: Escrow Payments */}
           <FeatureCard
             icon={<Shield className="w-8 h-8 text-primary" />}
@@ -120,6 +121,10 @@ export default function BitrootLanding() {
             title="Timezone Sync"
             description="Smart scheduling that automatically converts Lagos time to London/New York time."
           />
+        </div>
+
+        <div className="w-full mt-12 flex justify-center">
+          <button className="px-4 py-2.5 bg-primary text-primary-foreground rounded-xl mx-auto">see all features</button>
         </div>
       </section>
 
@@ -286,10 +291,11 @@ function FeatureCard({
   description: string
 }) {
   return (
-    <div className="flex flex-col gap-4 p-6 rounded-lg border border-border hover:border-primary/50 hover:bg-primary/5 transition-all">
+    <div className="flex flex-col gap-4 p-6 rounded-lg cursor-pointer bg-white hover:bg-primary/5 transition-all">
       <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-primary/10">{icon}</div>
       <h3 className="text-xl font-semibold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
+      <Link href={"/#"} className="text-primary font-semibold">learn more</Link>
     </div>
   )
 }
