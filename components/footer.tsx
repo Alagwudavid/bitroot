@@ -60,13 +60,18 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/affiliate" className="text-gray-300 hover:text-white transition-colors">
-                                    Affiliate
+                                <Link href="/accessibility" className="text-gray-300 hover:text-white transition-colors">
+                                    Documentation
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/support" className="text-gray-300 hover:text-white transition-colors">
-                                    Help and Support
+                                <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">
+                                    Privacy policy
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/terms" className="text-gray-300 hover:text-white transition-colors">
+                                    Terms
                                 </Link>
                             </li>
                         </ul>
@@ -131,11 +136,12 @@ export function Footer() {
                         </ul>
                         {/* For Business Section */}
                         <div className="mt-6">
-                            <h3 className="font-semibold text-lg mb-4">{process.env.NEXT_PUBLIC_APP_NAME} for Business</h3>
+                            <h3 className="font-semibold text-lg mb-4">{process.env.NEXT_PUBLIC_APP_NAME} for Enterprise</h3>
                             <ul className="space-y-2">
-                                <li>
-                                    <Link href="/business" className="text-gray-300 hover:text-white transition-colors">
-                                        {process.env.NEXT_PUBLIC_APP_NAME} Business
+                                <li className='flex flex-col gap-1'>
+                                    <span>Need a custom software to educate your team?</span>
+                                    <Link href="/business" className="text-sky-600 hover:text-sky-400 transition-colors">
+                                        Learn more
                                     </Link>
                                 </li>
                             </ul>
