@@ -8,81 +8,13 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
+import { HeroSection } from "@/components/hero-section"
 
 export default function BitrootLanding() {
-  const [email, setEmail] = useState("")
-  const [submitted, setSubmitted] = useState(false)
-
-  const handleEmailSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (email) {
-      console.log("[v0] Email submitted:", email)
-      setSubmitted(true)
-      setEmail("")
-      setTimeout(() => setSubmitted(false), 3000)
-    }
-  }
-
   return (
     <div className="w-full min-h-screen bg-background text-foreground">
       <Navbar />
-
-      {/* Hero Section */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 max-w-5xl mx-auto">
-        <div className="flex flex-col items-center text-center gap-6 sm:gap-8">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 border border-secondary/20">
-            <div className="w-2 h-2 bg-primary rounded-full"></div>
-            <span className="text-sm font-medium text-secondary">Now accepting Instructors for Q1 2026</span>
-          </div>
-
-          {/* Headline */}
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-balance">
-              Turn Your Expertise into a Global Business.
-            </h1>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto text-balance">
-              The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments,
-              scheduling, and student logistics—you just teach.
-            </p>
-          </div>
-
-          {/* Email Form */}
-          <form onSubmit={handleEmailSubmit} className="w-full max-w-md flex gap-2 sm:gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email address"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 px-4 py-3 rounded-lg border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              required
-            />
-            <Button
-              type="submit"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 whitespace-nowrap"
-            >
-              {submitted ? "Joined!" : "Join Waiting List"}
-            </Button>
-          </form>
-
-          {/* Social Proof */}
-          <div className="flex flex-col items-center gap-3">
-            <div className="flex -space-x-3">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-10 h-10 rounded-full border-2 border-background bg-gradient-to-br from-primary to-secondary/50 flex items-center justify-center text-white text-sm font-bold"
-                >
-                  {String.fromCharCode(65 + i)}
-                </div>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground">
-              <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
-            </p>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Features Grid */}
       <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-gray-50">

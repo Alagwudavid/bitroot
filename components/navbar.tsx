@@ -10,7 +10,7 @@ export function Navbar() {
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
                     <span className="font-bold text-2xl italic text-primary">Bitroot</span>
@@ -39,7 +39,7 @@ export function Navbar() {
                     <Button className="hidden sm:flex bg-primary hover:bg-primary/90 text-primary-foreground">
                         Join now!
                     </Button>
-                    
+
                     {/* Mobile Menu Button */}
                     <button
                         className="lg:hidden p-2 hover:bg-accent rounded-md transition"
@@ -59,22 +59,22 @@ export function Navbar() {
             {mobileMenuOpen && (
                 <div className="lg:hidden border-t border-border bg-background">
                     <div className="px-4 py-6 space-y-4">
-                        <Link 
-                            href="/how-it-works" 
+                        <Link
+                            href="/how-it-works"
                             className="block text-base font-medium hover:text-primary transition py-2"
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             How it Works
                         </Link>
-                        <Link 
-                            href="/pricing" 
+                        <Link
+                            href="/pricing"
                             className="block text-base font-medium hover:text-primary transition py-2"
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             Pricing
                         </Link>
-                        <Link 
-                            href="/features" 
+                        <Link
+                            href="/features"
                             className="flex items-center gap-2 text-base font-medium hover:text-primary transition py-2"
                             onClick={() => setMobileMenuOpen(false)}
                         >
@@ -85,7 +85,7 @@ export function Navbar() {
                             Tools
                             <ChevronDownCircle className="w-4 h-4" />
                         </button>
-                        
+
                         <div className="pt-4 border-t border-border">
                             <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                                 Join now!

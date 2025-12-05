@@ -5,7 +5,7 @@ export function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-[#242526] text-white">
+        <footer className="bg-foreground text-white">
             <div className="max-w-7xl mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
                     {/* About Section */}
@@ -13,27 +13,27 @@ export function Footer() {
                         <h3 className="font-semibold text-lg mb-4">About</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/about" className="text-gray-200 hover:text-white transition-colors">
                                     About us
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/careers" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/careers" className="text-gray-200 hover:text-white transition-colors">
                                     Careers
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/contact-us" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/contact-us" className="text-gray-200 hover:text-white transition-colors">
                                     Contact us
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/blog" className="text-gray-200 hover:text-white transition-colors">
                                     Blog
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/investors" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/investors" className="text-gray-200 hover:text-white transition-colors">
                                     Investors
                                 </Link>
                             </li>
@@ -45,32 +45,32 @@ export function Footer() {
                         <h3 className="font-semibold text-lg mb-4">Discover {process.env.NEXT_PUBLIC_APP_NAME}</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/app" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/app" className="text-gray-200 hover:text-white transition-colors">
                                     Get the app
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/teach" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/teach" className="text-gray-200 hover:text-white transition-colors">
                                     Teach on {process.env.NEXT_PUBLIC_APP_NAME}
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/pricing" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/pricing" className="text-gray-200 hover:text-white transition-colors">
                                     Plans and Pricing
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/accessibility" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/accessibility" className="text-gray-200 hover:text-white transition-colors">
                                     Documentation
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/privacy" className="text-gray-200 hover:text-white transition-colors">
                                     Privacy policy
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/terms" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/terms" className="text-gray-200 hover:text-white transition-colors">
                                     Terms
                                 </Link>
                             </li>
@@ -82,32 +82,32 @@ export function Footer() {
                         <h3 className="font-semibold text-lg mb-4">Tools</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/ai" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/ai" className="text-gray-200 hover:text-white transition-colors">
                                     Beet Ai
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/learn" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/learn" className="text-gray-200 hover:text-white transition-colors">
                                     Localingo
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/turn-it-in" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/turn-it-in" className="text-gray-200 hover:text-white transition-colors">
                                     Turn-it-in
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#bit-forms" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/#bit-forms" className="text-gray-200 hover:text-white transition-colors">
                                     BitForms
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#bit-share" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/#bit-share" className="text-gray-200 hover:text-white transition-colors">
                                     BitShare
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#jamboard" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/#jamboard" className="text-gray-200 hover:text-white transition-colors">
                                     Jamboard
                                 </Link>
                             </li>
@@ -119,17 +119,17 @@ export function Footer() {
                         <h3 className="font-semibold text-lg mb-4">Legal & Accessibility</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link href="/accessibility" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/accessibility" className="text-gray-200 hover:text-white transition-colors">
                                     Documentation
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/privacy" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/privacy" className="text-gray-200 hover:text-white transition-colors">
                                     Privacy policy
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/terms" className="text-gray-300 hover:text-white transition-colors">
+                                <Link href="/terms" className="text-gray-200 hover:text-white transition-colors">
                                     Terms
                                 </Link>
                             </li>
@@ -140,7 +140,7 @@ export function Footer() {
                             <ul className="space-y-2">
                                 <li className='flex flex-col gap-1'>
                                     <span>Need a custom software to educate your team?</span>
-                                    <Link href="/business" className="text-sky-600 hover:text-sky-400 transition-colors">
+                                    <Link href="/enterprise" className="text-sky-600 hover:text-sky-400 transition-colors">
                                         Learn more
                                     </Link>
                                 </li>
@@ -163,7 +163,7 @@ export function Footer() {
                             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
                             </svg>
-                            <button className="text-gray-300 hover:text-white transition-colors">
+                            <button className="text-gray-200 hover:text-white transition-colors">
                                 English
                             </button>
                         </div>
