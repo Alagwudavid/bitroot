@@ -3,9 +3,11 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Shield, Wallet, Globe, ArrowRight, CheckCircle2, Twitter } from "lucide-react"
+import { Shield, Wallet, Globe, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
 
 export default function BitrootLanding() {
   const [email, setEmail] = useState("")
@@ -23,18 +25,7 @@ export default function BitrootLanding() {
 
   return (
     <div className="w-full min-h-screen bg-background text-foreground">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">B</span>
-            </div>
-            <span className="font-bold text-lg hidden sm:inline">Bitroot</span>
-          </div>
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Get Early Access</Button>
-        </div>
-      </nav>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 max-w-5xl mx-auto">
@@ -124,7 +115,7 @@ export default function BitrootLanding() {
         </div>
 
         <div className="w-full mt-12 flex justify-center">
-          <button className="px-4 py-2.5 bg-primary text-primary-foreground rounded-xl mx-auto">see all features</button>
+          <Link href={"/features"} className="px-4 py-2.5 bg-primary text-primary-foreground rounded-xl mx-auto">see all features</Link>
         </div>
       </section>
 
@@ -230,53 +221,7 @@ export default function BitrootLanding() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="w-full border-t border-border bg-muted/30">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid sm:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                  <span className="text-primary-foreground font-bold text-sm">B</span>
-                </div>
-                <span className="font-bold">Bitroot</span>
-              </div>
-              <p className="text-sm text-muted-foreground">Empowering African experts globally.</p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>
-                  <a href="#" className="hover:text-foreground transition">
-                    Privacy Policy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-foreground transition">
-                    Terms of Service
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Connect</h4>
-              <a
-                href="#"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition"
-              >
-                <Twitter className="w-4 h-4" />
-                Twitter/X
-              </a>
-            </div>
-          </div>
-
-          <div className="pt-8 border-t border-border">
-            <p className="text-sm text-muted-foreground text-center">© 2025 Bitroot. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
