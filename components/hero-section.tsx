@@ -1,8 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, DollarSign } from "lucide-react";
+import Image from "next/image";
+
+// import { motion } from "framer-motion";
+
 
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,10 +27,10 @@ export function HeroSection() {
           {/* Left Side - Content */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold leading-tight">
-                Turn Your Expertise into a Global Business.
+              <h1 className="text-primary text-4xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                The future of online learning.
               </h1>
-              <p className="text-lg sm:text-xl text-muted-foreground">
+              <p className="text-lg sm:text-xl text-foreground">
                 The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
             </div>
@@ -49,10 +53,7 @@ export function HeroSection() {
                 Community
               </button>
               <button className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-muted/80 transition">
-                {/* <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg> */}
-                <DollarSign className="w-5 h-5"/>
+                <DollarSign className="w-5 h-5" />
                 Marketplace
               </button>
             </div>
@@ -76,17 +77,17 @@ export function HeroSection() {
 
             {/* Popular Searches */}
             <div className="flex items-center">
-                <p className="text-sm text-muted-foreground">
-                  <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
-                </p>
+              <p className="text-sm text-muted-foreground">
+                <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
+              </p>
             </div>
           </div>
 
           {/* Right Side - Illustration */}
           <div className="relative">
-            <div className="bg-gradient-to-br from-green-700 to-green-800 rounded-3xl p-8 sm:p-12 relative overflow-hidden min-h-[400px] lg:min-h-[500px]">
+            <div className="bg-muted rounded-3xl relative overflow-hidden min-h-[400px] lg:min-h-[500px]">
               {/* Decorative circles */}
-              <div className="absolute inset-0 opacity-10">
+              <div className="absolute inset-0 opacity-10 z-10">
                 <div className="absolute top-10 left-10 w-32 h-32 rounded-full border-2 border-green-300"></div>
                 <div className="absolute bottom-10 right-10 w-24 h-24 rounded-full border-2 border-green-300"></div>
               </div>
@@ -94,43 +95,13 @@ export function HeroSection() {
               {/* Main illustration elements */}
               <div className="relative z-10 h-full flex items-center justify-center">
                 <div className="relative">
-                  {/* Central document/card */}
-                  <div className="bg-white rounded-2xl p-6 shadow-2xl transform rotate-2 w-64 h-80">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="text-4xl font-bold text-gray-800">+</div>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="h-3 bg-gray-200 rounded"></div>
-                      <div className="h-3 bg-gray-200 rounded w-3/4"></div>
-                      <div className="h-3 bg-gray-200 rounded w-1/2"></div>
-                    </div>
-                  </div>
-
-                  {/* Dollar signs */}
-                  <div className="absolute -top-8 -right-8 bg-green-200 rounded-full w-20 h-20 flex items-center justify-center shadow-lg">
-                    <span className="text-3xl font-bold text-green-800">$</span>
-                  </div>
-                  <div className="absolute -bottom-6 -left-6 bg-green-200 rounded-full w-16 h-16 flex items-center justify-center shadow-lg">
-                    <span className="text-2xl font-bold text-green-800">$</span>
-                  </div>
-
-                  {/* Designer character */}
-                  <div className="absolute -right-20 bottom-0">
-                    <div className="relative">
-                      <div className="w-32 h-40 bg-white rounded-t-full"></div>
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-12 h-12 bg-green-100 rounded-full"></div>
-                    </div>
-                  </div>
-
-                  {/* Design tools */}
-                  <div className="absolute -bottom-10 left-0 flex gap-2">
-                    <div className="w-8 h-8 bg-yellow-300 transform rotate-45"></div>
-                    <div className="w-8 h-8 bg-green-300 rounded-full"></div>
+                  <div className="">
+                    <Image src="/modern-dashboard-interface-for-schedule-planning-w.jpg" width={800} height={800} alt="Dashboard interface" />
                   </div>
                 </div>
               </div>
 
-              {/* Wegrow badge */}
+              {/* control panel */}
               <div className="absolute bottom-6 right-6 bg-green-900/80 backdrop-blur px-4 py-2 rounded-full flex items-center gap-2">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                   <div className="w-3 h-3 bg-green-800 rounded-full"></div>
@@ -144,3 +115,80 @@ export function HeroSection() {
     </section>
   );
 }
+
+
+// const LETTER_DELAY = 0.025;
+// const BOX_FADE_DURATION = 0.125;
+
+// const FADE_DELAY = 5;
+// const MAIN_FADE_DURATION = 0.25;
+
+// const SWAP_DELAY_IN_MS = 5500;
+
+// const Typewrite = ({ examples }) => {
+//   const [exampleIndex, setExampleIndex] = useState(0);
+
+//   useEffect(() => {
+//     const intervalId = setInterval(() => {
+//       setExampleIndex((pv) => (pv + 1) % examples.length);
+//     }, SWAP_DELAY_IN_MS);
+
+//     return () => clearInterval(intervalId);
+//   }, []);
+
+//   return (
+//     <p className="mb-2.5 text-sm font-light uppercase">
+//       <span className="inline-block size-2 bg-neutral-950" />
+//       <span className="ml-3">
+//         EXAMPLE:{" "}
+//         {examples[exampleIndex].split("").map((l, i) => (
+//           <motion.span
+//             initial={{
+//               opacity: 1,
+//             }}
+//             animate={{
+//               opacity: 0,
+//             }}
+//             transition={{
+//               delay: FADE_DELAY,
+//               duration: MAIN_FADE_DURATION,
+//               ease: "easeInOut",
+//             }}
+//             key={`${exampleIndex}-${i}`}
+//             className="relative"
+//           >
+//             <motion.span
+//               initial={{
+//                 opacity: 0,
+//               }}
+//               animate={{
+//                 opacity: 1,
+//               }}
+//               transition={{
+//                 delay: i * LETTER_DELAY,
+//                 duration: 0,
+//               }}
+//             >
+//               {l}
+//             </motion.span>
+//             <motion.span
+//               initial={{
+//                 opacity: 0,
+//               }}
+//               animate={{
+//                 opacity: [0, 1, 0],
+//               }}
+//               transition={{
+//                 delay: i * LETTER_DELAY,
+//                 times: [0, 0.1, 1],
+//                 duration: BOX_FADE_DURATION,
+//                 ease: "easeInOut",
+//               }}
+//               className="absolute bottom-[3px] left-[1px] right-0 top-[3px] bg-neutral-950"
+//             />
+//           </motion.span>
+//         ))}
+//       </span>
+//     </p>
+//   );
+// };

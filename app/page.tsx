@@ -17,7 +17,7 @@ export default function BitrootLanding() {
       <HeroSection />
 
       {/* Features Grid */}
-      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-gray-50">
+      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-muted">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Everything you need to run a Live Academy.</h2>
           <p className="text-muted-foreground text-lg">The platform handles logistics so you can focus on teaching</p>
@@ -35,7 +35,7 @@ export default function BitrootLanding() {
           <FeatureCard
             icon={<Wallet className="w-8 h-8 text-primary" />}
             title="Global Payouts"
-            description="Earn in USD/GBP from diaspora students and withdraw instantly to Naira/Mpesa."
+            description="Bitroot supports multiple payment methods including PayPal, Stripe, and local currency payment methods from all countries allowing payments from anyone, anywhere in the world."
           />
 
           {/* Feature 3: Timezone Sync */}
@@ -46,8 +46,9 @@ export default function BitrootLanding() {
           />
         </div>
 
-        <div className="w-full mt-12 flex justify-center">
-          <Link href={"/features"} className="px-4 py-2.5 bg-primary text-primary-foreground rounded-xl mx-auto">see all features</Link>
+        <div className="w-full mt-12 flex justify-center flex-row gap-4 flex-wrap">
+          <Link href={"/features"} className="px-4 py-2.5 bg-primary text-primary-foreground rounded-lg">See all features</Link>
+          <Link href={"/features"} className="px-4 py-2.5 bg-muted border-2 border-foreground text-foreground rounded-lg">Request a feature</Link>
         </div>
       </section>
 
