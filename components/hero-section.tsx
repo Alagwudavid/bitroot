@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Circle, DollarSign } from "lucide-react";
 import Image from "next/image";
 
-// import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 
 export function HeroSection() {
@@ -23,8 +23,7 @@ export function HeroSection() {
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
       <div className="max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Side - Content */}
+        <div className="flex items-center">
           <div className="space-y-8">
             <div className="space-y-6">
               <h1 className="text-primary text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
@@ -70,13 +69,6 @@ export function HeroSection() {
               <p className="text-base text-muted-foreground">
                 <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
               </p>
-            </div>
-          </div>
-
-          {/* Right Side - Illustration */}
-          <div className="relative">
-            <div className="bg-muted rounded-3xl relative overflow-hidden border min-h-[400px] lg:min-h-[500px] m-auto">
-              <Image src="/team-collaboration-interface-with-shared-workspace.jpg" width={1200} height={800} alt="Dashboard interface" className="object-contain" />
             </div>
           </div>
         </div>
