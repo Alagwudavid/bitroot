@@ -143,14 +143,12 @@ export default function BitrootLanding() {
 
       {/* CTA Section */}
       <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-5xl mx-auto text-center">
-        <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-lg p-8 sm:p-12">
+        <div className="bg-muted border rounded-lg p-8 sm:p-12">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to launch your academy?</h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-            Join the growing community of African experts teaching the world.
+            we would be launching Q2 of 2026
           </p>
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg inline-flex items-center gap-2">
-            Get Early Access <ArrowRight className="w-5 h-5" />
-          </Button>
+          {"show countdown timer here"}
         </div>
       </section>
 
