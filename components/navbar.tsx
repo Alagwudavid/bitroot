@@ -243,8 +243,8 @@ export function Navbar() {
                                     );
                                 })}
                                 <div className='px-2 py-1 w-full flex items-center justify-start'>
-                                    <Link 
-                                        href={"/features"} 
+                                    <Link
+                                        href={"/features"}
                                         className="flex items-center gap-1 text-sm hover:underline text-primary"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
