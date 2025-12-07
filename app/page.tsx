@@ -35,14 +35,14 @@ export default function BitrootLanding() {
           <FeatureCard
             icon={<Wallet className="w-8 h-8 text-primary" />}
             title="Global Payouts"
-            description="Bitroot supports multiple payment methods including PayPal, Stripe, and local currency payment methods from all countries allowing payments from anyone, anywhere in the world."
+            description="Never lose an international student again. Get paid in your local currency seamlessly."
           />
 
           {/* Feature 3: Timezone Sync */}
           <FeatureCard
             icon={<Globe className="w-8 h-8 text-primary" />}
             title="Timezone Sync"
-            description="Smart scheduling that automatically converts Lagos time to London/New York time."
+            description="Smart scheduling that automatically converts local time to international time seamlessly."
           />
         </div>
 

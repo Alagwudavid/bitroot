@@ -3,13 +3,96 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, ChevronDownCircle, Menu, X, ShoppingBag, GraduationCap, MessagesSquare, FileText, WalletCards, Vault, Puzzle, Brain, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ChevronDownCircle, Menu, X, ShoppingBag, GraduationCap, MessagesSquare, FileText, WalletCards, Vault, Puzzle, Brain, ArrowRight, LucideIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface DropdownItem {
+    href: string;
+    icon: LucideIcon;
+    title: string;
+    description: string;
+}
+
+const featuresDropdownItems: DropdownItem[] = [
+    {
+        href: '/marketplace',
+        icon: ShoppingBag,
+        title: 'Marketplace',
+        description: 'courses and masterclass'
+    },
+    {
+        href: '/academy',
+        icon: GraduationCap,
+        title: 'Classroom',
+        description: 'Learn from the best'
+    },
+    {
+        href: '/updates',
+        icon: MessagesSquare,
+        title: 'Community',
+        description: 'Network with peers'
+    },
+    {
+        href: '/blog',
+        icon: WalletCards,
+        title: 'Escrow',
+        description: 'Build trust with our escrow vault'
+    }
+];
+
+const toolsDropdownItems: DropdownItem[] = [
+    {
+        href: '/marketplace',
+        icon: Brain,
+        title: 'Beet Ai',
+        description: 'Personal ai assistant and chatbot'
+    },
+    {
+        href: '/bitquiz',
+        icon: Puzzle,
+        title: 'BitQuiz',
+        description: 'Create quiz and gradable questionaires for your students'
+    },
+    {
+        href: '/vault',
+        icon: Vault,
+        title: 'Escrow vault',
+        description: 'Lock items for sell with trust'
+    },
+    {
+        href: '/whiteboard',
+        icon: FileText,
+        title: 'Whiteboard',
+        description: 'Your whiteboard for limitless illustrations'
+    }
+];
 
 export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
     const [featuresDropdownOpen, setFeaturesDropdownOpen] = useState(false);
+
+    const renderDropdownItems = (items: DropdownItem[], onClose: () => void) => {
+        return items.map((item) => {
+            const Icon = item.icon;
+            return (
+                <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-start gap-3 px-4 py-3 transition group"
+                    onClick={onClose}
+                >
+                    <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
+                        <Icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                        <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">{item.title}</div>
+                        <div className="text-xs text-muted-foreground">{item.description}</div>
+                    </div>
+                </Link>
+            );
+        });
+    };
 
     return (
         <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -50,61 +133,7 @@ export function Navbar() {
                                     className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-background border border-border rounded-lg shadow-lg overflow-hidden"
                                 >
                                     <div className="py-2">
-                                        <Link
-                                            href="/marketplace"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setFeaturesDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <ShoppingBag className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Marketplace</div>
-                                                <div className="text-xs text-muted-foreground">courses and masterclass</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/academy"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setFeaturesDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <GraduationCap className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Classroom</div>
-                                                <div className="text-xs text-muted-foreground">Learn from the best</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/updates"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setFeaturesDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <MessagesSquare className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Community</div>
-                                                <div className="text-xs text-muted-foreground">Network with peers</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/blog"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setFeaturesDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <WalletCards className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Escrow</div>
-                                                <div className="text-xs text-muted-foreground">Build trust with our escrow  vault</div>
-                                            </div>
-                                        </Link>
+                                        {renderDropdownItems(featuresDropdownItems, () => setFeaturesDropdownOpen(false))}
                                         <div className='p-2 w-full flex items-center justify-center'>
                                             <Link href={"/features"} className="flex items-center text-center hover:underline text-primary">
                                                 View all
@@ -138,61 +167,7 @@ export function Navbar() {
                                     className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-background border border-border rounded-lg shadow-lg overflow-hidden"
                                 >
                                     <div className="py-2">
-                                        <Link
-                                            href="/marketplace"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setToolsDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <Brain className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Beet Ai</div>
-                                                <div className="text-xs text-muted-foreground">Personal ai assistant and chatbot</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/bitquiz"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setToolsDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <Puzzle className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">BitQuiz</div>
-                                                <div className="text-xs text-muted-foreground">Create quiz and gradable questionaires for your students</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/vault"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setToolsDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <Vault className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Escrow vault</div>
-                                                <div className="text-xs text-muted-foreground">Lock items for sell with trust</div>
-                                            </div>
-                                        </Link>
-
-                                        <Link
-                                            href="/whiteboard"
-                                            className="flex items-start gap-3 px-4 py-3 transition group"
-                                            onClick={() => setToolsDropdownOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md group-hover:bg-primary/20 transition">
-                                                <FileText className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Whiteboard</div>
-                                                <div className="text-xs text-muted-foreground">Your whiteboard for limitless illustrations</div>
-                                            </div>
-                                        </Link>
+                                        {renderDropdownItems(toolsDropdownItems, () => setToolsDropdownOpen(false))}
                                     </div>
                                 </motion.div>
                             )}
@@ -246,73 +221,59 @@ export function Navbar() {
                             >
                                 Pricing
                             </Link>
-                            <Link
-                                href="/features"
-                                className="flex items-center gap-2 text-base font-medium hover:text-primary transition py-2"
-                                onClick={() => setMobileMenuOpen(false)}
-                            >
-                                Features
-                                <ArrowUpRight className="w-4 h-4" />
-                            </Link>
+                            <div className="space-y-2">
+                                <div className="text-sm font-semibold text-muted-foreground px-2 py-1">Features</div>
+                                {featuresDropdownItems.map((item) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="flex items-start gap-3 px-2 py-2 rounded-md transition"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            <div className="p-2 bg-primary/10 rounded-md">
+                                                <Icon className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="font-semibold text-sm mb-0.5">{item.title}</div>
+                                                <div className="text-xs text-muted-foreground">{item.description}</div>
+                                            </div>
+                                        </Link>
+                                    );
+                                })}
+                                <div className='px-2 py-1 w-full flex items-center justify-start'>
+                                    <Link 
+                                        href={"/features"} 
+                                        className="flex items-center gap-1 text-sm hover:underline text-primary"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                    >
+                                        View all <ArrowRight className="w-3 h-3" />
+                                    </Link>
+                                </div>
+                            </div>
 
                             <div className="space-y-2">
                                 <div className="text-sm font-semibold text-muted-foreground px-2 py-1">Tools</div>
-
-                                <Link
-                                    href="/marketplace"
-                                    className="flex items-start gap-3 px-2 py-2 rounded-md transition"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    <div className="p-2 bg-primary/10 rounded-md">
-                                        <ShoppingBag className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Marketplace</div>
-                                        <div className="text-xs text-muted-foreground">Templates and plugins</div>
-                                    </div>
-                                </Link>
-
-                                <Link
-                                    href="/academy"
-                                    className="flex items-start gap-3 px-2 py-2 rounded-md transition"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    <div className="p-2 bg-primary/10 rounded-md">
-                                        <GraduationCap className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Academy</div>
-                                        <div className="text-xs text-muted-foreground">Learn the basics</div>
-                                    </div>
-                                </Link>
-
-                                <Link
-                                    href="/updates"
-                                    className="flex items-start gap-3 px-2 py-2 rounded-md transition"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    <div className="p-2 bg-primary/10 rounded-md">
-                                        <MessagesSquare className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Updates</div>
-                                        <div className="text-xs text-muted-foreground">See what's new</div>
-                                    </div>
-                                </Link>
-
-                                <Link
-                                    href="/blog"
-                                    className="flex items-start gap-3 px-2 py-2 rounded-md transition"
-                                    onClick={() => setMobileMenuOpen(false)}
-                                >
-                                    <div className="p-2 bg-primary/10 rounded-md">
-                                        <FileText className="w-5 h-5 text-primary" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-semibold text-sm mb-0.5 group-hover:text-primary">Blog</div>
-                                        <div className="text-xs text-muted-foreground">Tips and tutorials</div>
-                                    </div>
-                                </Link>
+                                {toolsDropdownItems.map((item) => {
+                                    const Icon = item.icon;
+                                    return (
+                                        <Link
+                                            key={item.href}
+                                            href={item.href}
+                                            className="flex items-start gap-3 px-2 py-2 rounded-md transition"
+                                            onClick={() => setMobileMenuOpen(false)}
+                                        >
+                                            <div className="p-2 bg-primary/10 rounded-md">
+                                                <Icon className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <div className="font-semibold text-sm mb-0.5">{item.title}</div>
+                                                <div className="text-xs text-muted-foreground">{item.description}</div>
+                                            </div>
+                                        </Link>
+                                    );
+                                })}
                             </div>
 
                             <div className="pt-4 border-t border-border">
