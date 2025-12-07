@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from "react"
-import { Compass, GraduationCap, Play, Pencil, Hash, ChevronLeft, ChevronRight } from "lucide-react"
+import { Compass, GraduationCap, MessagesSquare, Pencil, Hash, ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 
 const features = [
@@ -20,8 +20,8 @@ const features = [
         hoverColor: "hover:bg-yellow-700"
     },
     {
-        icon: Play,
-        title: "Present",
+        icon: MessagesSquare,
+        title: "Community",
         description: "Engage your audience",
         bgColor: "bg-blue-600",
         hoverColor: "hover:bg-blue-700"
@@ -36,7 +36,7 @@ const features = [
     {
         icon: Hash,
         title: "Classroom",
-        description: "Enter Class code to join active sessions",
+        description: "Enter code to join active sessions",
         bgColor: "bg-purple-600",
         hoverColor: "hover:bg-purple-700"
     }
