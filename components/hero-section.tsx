@@ -27,7 +27,7 @@ export function HeroSection() {
           {/* Left Side - Content */}
           <div className="space-y-8">
             <div className="space-y-6">
-              <h1 className="text-primary text-4xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+              <h1 className="text-primary text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
                 The future of online learning.
               </h1>
               <p className="text-lg sm:text-xl text-foreground">
@@ -76,16 +76,7 @@ export function HeroSection() {
           {/* Right Side - Illustration */}
           <div className="relative">
             <div className="bg-muted rounded-3xl relative overflow-hidden border min-h-[400px] lg:min-h-[500px] m-auto">
-              {/* <div className="relative z-10 h-full flex items-center justify-center">
-              </div> */}
-                  <Image src="/hero-bg.jpg" width={1200} height={800} alt="Dashboard interface" className="object-contain" />
-              {/* control panel */}
-              {/* <div className="absolute bottom-6 right-6 bg-green-900/80 backdrop-blur px-4 py-2 rounded-full flex items-center gap-2">
-                <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                  <div className="w-3 h-3 bg-green-800 rounded-full"></div>
-                </div>
-                <span className="text-white text-sm font-medium">Wegrow</span>
-              </div> */}
+              <Image src="/team-collaboration-interface-with-shared-workspace.jpg" width={1200} height={800} alt="Dashboard interface" className="object-contain" />
             </div>
           </div>
         </div>

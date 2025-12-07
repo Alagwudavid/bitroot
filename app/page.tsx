@@ -2,13 +2,14 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Shield, Wallet, Globe, ArrowRight, CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/hero-section"
+import Image from "next/image"
 
 export default function BitrootLanding() {
   return (
@@ -52,9 +53,9 @@ export default function BitrootLanding() {
         </div>
       </section>
 
-      {/* Product Overview */}
+      {/* How it works */}
       <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-5xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center">Your Business in a Box.</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold mb-12 sm:mb-16 text-center">How it works.</h2>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Side: Steps */}
@@ -103,41 +104,9 @@ export default function BitrootLanding() {
           </div>
 
           {/* Right Side: Dashboard Mockup */}
-          <div className="bg-gradient-to-br from-secondary/5 to-primary/5 rounded-lg border border-border p-8 sm:p-12">
-            <div className="space-y-6">
-              {/* Dashboard Header */}
-              <div className="border-b border-border pb-4">
-                <h3 className="text-sm font-semibold text-secondary uppercase tracking-wide mb-4">Dashboard</h3>
-                <div className="space-y-1">
-                  <p className="text-sm text-muted-foreground">My Cohorts</p>
-                  <p className="text-sm text-muted-foreground">Wallet</p>
-                  <p className="text-sm text-muted-foreground">Students</p>
-                </div>
-              </div>
-
-              {/* Main Content */}
-              <div className="space-y-4">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide mb-2">Total Earnings</p>
-                    <p className="text-3xl font-bold">$450.00</p>
-                  </div>
-                  <CheckCircle2 className="w-6 h-6 text-primary" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 pt-4">
-                  <div className="bg-white/50 dark:bg-white/5 rounded p-3">
-                    <p className="text-xs text-muted-foreground mb-1">Active Cohorts</p>
-                    <p className="text-2xl font-bold">3</p>
-                  </div>
-                  <div className="bg-white/50 dark:bg-white/5 rounded p-3">
-                    <p className="text-xs text-muted-foreground mb-1">Enrolled Students</p>
-                    <p className="text-2xl font-bold">47</p>
-                  </div>
-                </div>
-              </div>
+            <div className="bg-muted rounded-3xl relative overflow-hidden border min-h-[400px] lg:min-h-[500px] m-auto">
+              <Image src="/team-collaboration-interface-with-shared-workspace.jpg" width={1200} height={800} alt="Dashboard interface" className="object-contain" />
             </div>
-          </div>
         </div>
       </section>
 
@@ -146,9 +115,54 @@ export default function BitrootLanding() {
         <div className="bg-muted border rounded-lg p-8 sm:p-12">
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to launch your academy?</h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-xl mx-auto">
-            we would be launching Q2 of 2026
+            Launching Q2 of 2026
           </p>
-          {"show countdown timer here"}
+          <CountdownTimer />
+        </div>
+      </section>
+
+      {/* Event Types Section */}
+      <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-gradient-to-b from-background to-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-center">
+            Effortlessly Host & Manage Any Event or Masterclass
+          </h2>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mt-12">
+            <EventTypeCard
+              icon={<Globe className="w-8 h-8 text-purple-600" />}
+              title="Online Events"
+              bgColor="bg-purple-50 dark:bg-purple-950/20"
+            />
+            <EventTypeCard
+              icon={<CheckCircle2 className="w-8 h-8 text-purple-600" />}
+              title="Physical Events"
+              bgColor="bg-purple-50 dark:bg-purple-950/20"
+            />
+            <EventTypeCard
+              icon={<ArrowRight className="w-8 h-8 text-purple-600" />}
+              title="Hybrid Events"
+              bgColor="bg-purple-50 dark:bg-purple-950/20"
+            />
+            <EventTypeCard
+              icon={<Shield className="w-8 h-8 text-purple-600" />}
+              title="Masterclass"
+              bgColor="bg-purple-50 dark:bg-purple-950/20"
+            />
+          </div>
+
+          <div className="mt-12 text-center">
+            <div className="flex flex-wrap justify-center gap-3 text-sm text-muted-foreground">
+              {["Concerts", "Hybrid", "Webinars", "Virtual Conferences", "Webinars", "Concerts", "Hybrid",
+                "Masterclass", "Trade shows", "Festivals", "Webinars", "Concerts", "Hybrid", "Webinars",
+                "Virtual Conferences", "Webinars"].map((item, idx) => (
+                  <span key={idx} className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground"></span>
+                    {item}
+                  </span>
+                ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -172,6 +186,71 @@ function FeatureCard({
       <h3 className="text-xl font-semibold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
       <Link href={"/#"} className="text-primary font-semibold">learn more</Link>
+    </div>
+  )
+}
+
+function CountdownTimer() {
+  const [timeLeft, setTimeLeft] = useState({
+    months: 0,
+    days: 0,
+    hours: 0,
+  })
+
+  useEffect(() => {
+    const targetDate = new Date("2026-04-01T00:00:00")
+
+    const updateCountdown = () => {
+      const now = new Date()
+      const difference = targetDate.getTime() - now.getTime()
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const months = Math.floor(days / 30)
+        const remainingDays = days % 30
+
+        setTimeLeft({
+          months,
+          days: remainingDays,
+          hours,
+        })
+      }
+    }
+
+    updateCountdown()
+    const interval = setInterval(updateCountdown, 1000 * 60 * 60) // Update every hour
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="flex justify-center gap-4 sm:gap-8">
+      <TimeUnit value={timeLeft.months} label="MONTHS" />
+      <TimeUnit value={timeLeft.days} label="DAYS" />
+      <TimeUnit value={timeLeft.hours} label="HOURS" />
+    </div>
+  )
+}
+
+function TimeUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="flex flex-col items-center">
+      <div className="bg-background border-2 border-border rounded-lg px-6 py-4 sm:px-8 sm:py-6 min-w-[80px] sm:min-w-[100px]">
+        <span className="text-3xl sm:text-5xl font-bold">{String(value).padStart(2, "0")}</span>
+      </div>
+      <span className="text-xs sm:text-sm text-muted-foreground mt-2 font-semibold tracking-wide">{label}</span>
+    </div>
+  )
+}
+
+function EventTypeCard({ icon, title, bgColor }: { icon: React.ReactNode; title: string; bgColor: string }) {
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <div className={`flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full ${bgColor}`}>
+        {icon}
+      </div>
+      <h3 className="text-base sm:text-lg font-semibold text-purple-900 dark:text-purple-100">{title}</h3>
     </div>
   )
 }
