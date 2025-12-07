@@ -2,6 +2,7 @@ import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/hero-section"
 import { WhyChooseUsSection } from "@/components/why-choose-us-section"
+import PricingSection from "@/components/pricing-section"
 import { FeaturesGridSection } from "@/components/features-grid-section"
 import { HowItWorksSection } from "@/components/how-it-works-section"
 import { CountdownSection } from "@/components/countdown-section"
@@ -12,6 +13,7 @@ export default function BitrootLanding() {
       <Navbar />
       <HeroSection />
       <WhyChooseUsSection />
+      <PricingSection />
       <FeaturesGridSection />
       <HowItWorksSection />
       <CountdownSection />
