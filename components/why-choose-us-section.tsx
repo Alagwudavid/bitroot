@@ -6,7 +6,7 @@ export function WhyChooseUsSection() {
         <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-background">
             <div className="max-w-6xl mx-auto">
                 <h2 className="text-3xl sm:text-4xl font-bold text-center mb-16">
-                    Why millions choose Bitroot for engagement
+                    Why choose Bitroot for engagement?
                 </h2>
 
                 <div className="grid md:grid-cols-3 gap-12">
