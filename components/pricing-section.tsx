@@ -194,8 +194,8 @@ export default function PricingSection() {
               <form className="self-stretch flex flex-col gap-4" onSubmit={(e) => { e.preventDefault(); alert('Form submitted!'); }}>
                 <div className="flex flex-col gap-2">
                   <label className="text-[rgba(55,50,47,0.90)] text-xs font-medium font-sans">Name</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     className="px-3 py-2 border border-[#E0DEDB] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#37322F]"
                     placeholder="Your name"
@@ -204,8 +204,8 @@ export default function PricingSection() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[rgba(55,50,47,0.90)] text-xs font-medium font-sans">Email</label>
-                  <input 
-                    type="email" 
+                  <input
+                    type="email"
                     required
                     className="px-3 py-2 border border-[#E0DEDB] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#37322F]"
                     placeholder="your@email.com"
@@ -214,8 +214,8 @@ export default function PricingSection() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[rgba(55,50,47,0.90)] text-xs font-medium font-sans">Company</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     required
                     className="px-3 py-2 border border-[#E0DEDB] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#37322F]"
                     placeholder="Company name"
@@ -224,7 +224,7 @@ export default function PricingSection() {
 
                 <div className="flex flex-col gap-2">
                   <label className="text-[rgba(55,50,47,0.90)] text-xs font-medium font-sans">Message</label>
-                  <textarea 
+                  <textarea
                     rows={3}
                     required
                     className="px-3 py-2 border border-[#E0DEDB] rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#37322F] resize-none"
@@ -232,7 +232,7 @@ export default function PricingSection() {
                   />
                 </div>
 
-                <button 
+                <button
                   type="submit"
                   className="self-stretch px-4 py-[10px] relative bg-[#37322F] shadow-[0px_2px_4px_rgba(55,50,47,0.12)] overflow-hidden rounded-[99px] flex justify-center items-center hover:bg-[#49423D] transition-colors"
                 >
