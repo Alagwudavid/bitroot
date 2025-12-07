@@ -87,28 +87,18 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/learn" className="text-gray-200 hover:text-white transition-colors">
-                                    Localingo
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/turn-it-in" className="text-gray-200 hover:text-white transition-colors">
-                                    Turn-it-in
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="/#bit-forms" className="text-gray-200 hover:text-white transition-colors">
                                     BitForms
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/#bit-share" className="text-gray-200 hover:text-white transition-colors">
-                                    BitShare
+                                    Escrow vault
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/#jamboard" className="text-gray-200 hover:text-white transition-colors">
-                                    Jamboard
+                                <Link href="/#whiteboard" className="text-gray-200 hover:text-white transition-colors">
+                                    Whiteboard
                                 </Link>
                             </li>
                         </ul>

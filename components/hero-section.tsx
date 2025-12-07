@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, DollarSign } from "lucide-react";
+import { ArrowRight, Circle, DollarSign } from "lucide-react";
 import Image from "next/image";
 
 // import { motion } from "framer-motion";
@@ -38,23 +38,12 @@ export function HeroSection() {
             {/* Tab Navigation */}
             <div className="flex gap-3 flex-wrap">
               <button className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <rect x="3" y="3" width="7" height="7" rx="1" />
-                  <rect x="14" y="3" width="7" height="7" rx="1" />
-                  <rect x="3" y="14" width="7" height="7" rx="1" />
-                  <rect x="14" y="14" width="7" height="7" rx="1" />
-                </svg>
-                Dashboard
+                <Circle className="w-4 h-4" />
+                Learner
               </button>
               <button className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-muted/80 transition">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Community
-              </button>
-              <button className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-muted/80 transition">
-                <DollarSign className="w-5 h-5" />
-                Marketplace
+                <Circle className="w-4 h-4" />
+                Instructor/Creator
               </button>
             </div>
 
@@ -69,15 +58,16 @@ export function HeroSection() {
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-primary hover:bg-primary/50 text-white flex items-center justify-center transition"
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 w-fit h-10 rounded-full bg-primary hover:bg-primary/50 text-white flex items-center justify-center transition"
               >
+                Join
                 <ArrowRight className="w-5 h-5" />
               </button>
             </form>
 
             {/* Popular Searches */}
             <div className="flex items-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
               </p>
             </div>
@@ -85,29 +75,17 @@ export function HeroSection() {
 
           {/* Right Side - Illustration */}
           <div className="relative">
-            <div className="bg-muted rounded-3xl relative overflow-hidden min-h-[400px] lg:min-h-[500px]">
-              {/* Decorative circles */}
-              <div className="absolute inset-0 opacity-10 z-10">
-                <div className="absolute top-10 left-10 w-32 h-32 rounded-full border-2 border-green-300"></div>
-                <div className="absolute bottom-10 right-10 w-24 h-24 rounded-full border-2 border-green-300"></div>
-              </div>
-
-              {/* Main illustration elements */}
-              <div className="relative z-10 h-full flex items-center justify-center">
-                <div className="relative">
-                  <div className="">
-                    <Image src="/modern-dashboard-interface-for-schedule-planning-w.jpg" width={800} height={800} alt="Dashboard interface" />
-                  </div>
-                </div>
-              </div>
-
+            <div className="bg-muted rounded-3xl relative overflow-hidden border min-h-[400px] lg:min-h-[500px] m-auto">
+              {/* <div className="relative z-10 h-full flex items-center justify-center">
+              </div> */}
+                  <Image src="/hero-bg.jpg" width={1200} height={800} alt="Dashboard interface" className="object-contain" />
               {/* control panel */}
-              <div className="absolute bottom-6 right-6 bg-green-900/80 backdrop-blur px-4 py-2 rounded-full flex items-center gap-2">
+              {/* <div className="absolute bottom-6 right-6 bg-green-900/80 backdrop-blur px-4 py-2 rounded-full flex items-center gap-2">
                 <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
                   <div className="w-3 h-3 bg-green-800 rounded-full"></div>
                 </div>
                 <span className="text-white text-sm font-medium">Wegrow</span>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
