@@ -2,14 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Circle, DollarSign } from "lucide-react";
+import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText } from "lucide-react";
 import Image from "next/image";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 
 export function HeroSection() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentText, setCurrentText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const words = ["learning", "teaching", "exams", "quizzes", "memberships"];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,36 +23,62 @@ export function HeroSection() {
     }
   };
 
+  // Typewriter effect
+  useEffect(() => {
+    const typingSpeed = isDeleting ? 50 : 20;
+    const word = words[currentWordIndex];
+
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        if (currentText.length < word.length) {
+          setCurrentText(word.substring(0, currentText.length + 1));
+        } else {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        if (currentText.length > 0) {
+          setCurrentText(word.substring(0, currentText.length - 1));
+        } else {
+          setIsDeleting(false);
+          setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [currentText, isDeleting, currentWordIndex]);
+
   const popularSearches = ["dashboard", "landing page", "e-commerce", "logo", "card", "icons"];
+
+  const integrationIcons = [
+    { Icon: Calendar, name: "Calendar", color: "#4285F4" },
+    { Icon: Video, name: "Zoom", color: "#2D8CFF" },
+    { Icon: Video, name: "Meet", color: "#00897B" },
+    { Icon: CreditCard, name: "PayPal", color: "#00457C" },
+    { Icon: Mail, name: "Email", color: "#EA4335" },
+    { Icon: Users, name: "Teams", color: "#6264A7" },
+    { Icon: FileText, name: "Docs", color: "#0B8043" },
+  ];
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center">
-          <div className="space-y-8">
-            <div className="space-y-6">
+        <div className="flex items-center justify-center">
+          <div className="space-y-8 w-full mx-auto text-center">
+            <div className="space-y-6 max-w-4xl mx-auto">
               <h1 className="text-primary text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                The future of online learning.
+                The future of online{" "}
+                <span className="inline-block min-w-[200px] text-left">
+                  {currentText}
+                  <span className="animate-pulse">|</span>
+                </span>
               </h1>
               <p className="text-lg sm:text-xl text-foreground">
                 The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
             </div>
-
-            {/* Tab Navigation */}
-            <div className="flex gap-3 flex-wrap">
-              <button className="flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-full font-medium hover:bg-foreground/90 transition">
-                <Circle className="w-4 h-4" />
-                Learner
-              </button>
-              <button className="flex items-center gap-2 px-6 py-3 bg-muted text-foreground rounded-full font-medium hover:bg-muted/80 transition">
-                <Circle className="w-4 h-4" />
-                Instructor/Creator
-              </button>
-            </div>
-
             {/* Search Form */}
-            <form onSubmit={handleSearch} className="relative">
+            <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
               <input
                 type="text"
                 placeholder="Input your email address"
@@ -65,10 +96,44 @@ export function HeroSection() {
             </form>
 
             {/* Popular Searches */}
-            <div className="flex items-center">
+            <div className="flex items-center justify-center">
               <p className="text-base text-muted-foreground">
                 <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
               </p>
+            </div>
+
+            {/* Integration Icons Slideshow */}
+            <div className="mt-12 pt-8 border-t border-border">
+              <p className="text-sm text-muted-foreground mb-6">Integrates seamlessly with</p>
+              <div className="relative overflow-hidden h-24">
+                <motion.div
+                  className="flex gap-8 absolute"
+                  animate={{
+                    x: [0, -100 * integrationIcons.length],
+                  }}
+                  transition={{
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: 20,
+                      ease: "linear",
+                    },
+                  }}
+                >
+                  {[...integrationIcons, ...integrationIcons, ...integrationIcons].map((item, index) => (
+                    <motion.div
+                      key={index}
+                      className="flex flex-col items-center justify-center min-w-[100px] group"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      <div className="w-14 h-14 rounded-xl bg-background border border-border flex items-center justify-center group-hover:border-muted group-hover:bg-muted group-hover:cursor-pointer transition-colors shadow-sm">
+                        <item.Icon className="w-7 h-7" style={{ color: item.color }} />
+                      </div>
+                      <span className="text-xs text-muted-foreground mt-2">{item.name}</span>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
           </div>
         </div>
