@@ -25,7 +25,7 @@ export function HeroSection() {
 
   // Typewriter effect
   useEffect(() => {
-    const typingSpeed = isDeleting ? 50 : 20;
+    const typingSpeed = isDeleting ? 50 : 30;
     const word = words[currentWordIndex];
 
     const timer = setTimeout(() => {
