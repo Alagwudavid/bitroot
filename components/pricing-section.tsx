@@ -82,10 +82,10 @@ export default function PricingSection() {
         {/* Free Plan Section */}
         <div className="relative rounded-2xl p-8 md:p-12 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950/20 dark:to-slate-900/20">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-5 gap-8 items-center">
+            <div className="grid md:grid-cols-4 gap-8 items-center">
               <div className="flex-1">
                 <h3 className="text-2xl font-bold text-foreground mb-2">
-                  The actually useful<br />free plan
+                  Our<br />free plan
                 </h3>
               </div>
 
@@ -127,7 +127,7 @@ export default function PricingSection() {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center gap-3">
+              <div className="flex flex-col items-center gap-3 w-fit">
                 <button className="px-8 py-4 bg-primary text-primary-foreground font-bold rounded-lg hover:bg-primary/90 transition-all shadow-lg whitespace-nowrap">
                   Start for free
                 </button>

@@ -106,36 +106,16 @@ export function Footer() {
 
                     {/* Legal & Accessibility Section */}
                     <div>
-                        <h3 className="font-semibold text-lg mb-4">Legal & Accessibility</h3>
+                        {/* For Business Section */}
+                        <h3 className="font-semibold text-lg mb-4">{process.env.NEXT_PUBLIC_APP_NAME} for Enterprise</h3>
                         <ul className="space-y-2">
-                            <li>
-                                <Link href="/accessibility" className="text-gray-200 hover:text-white transition-colors">
-                                    Documentation
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/privacy" className="text-gray-200 hover:text-white transition-colors">
-                                    Privacy policy
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/terms" className="text-gray-200 hover:text-white transition-colors">
-                                    Terms
+                            <li className='flex flex-col gap-1'>
+                                <span>Need a custom software to educate your team?</span>
+                                <Link href="/enterprise" className="text-sky-600 hover:text-sky-400 transition-colors">
+                                    Learn more
                                 </Link>
                             </li>
                         </ul>
-                        {/* For Business Section */}
-                        <div className="mt-6">
-                            <h3 className="font-semibold text-lg mb-4">{process.env.NEXT_PUBLIC_APP_NAME} for Enterprise</h3>
-                            <ul className="space-y-2">
-                                <li className='flex flex-col gap-1'>
-                                    <span>Need a custom software to educate your team?</span>
-                                    <Link href="/enterprise" className="text-sky-600 hover:text-sky-400 transition-colors">
-                                        Learn more
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 
