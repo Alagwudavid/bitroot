@@ -2,24 +2,77 @@
 
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText } from "lucide-react";
+import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText, Loader2 } from "lucide-react";
 import Image from "next/image";
-
+import { SuccessModal } from "@/components/success-modal";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 export function HeroSection() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [email, setEmail] = useState("");
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modalData, setModalData] = useState({
+    position: 0,
+    referralLink: "",
+    statusLink: "",
+  });
 
   const words = ["learning", "teaching", "exams", "quizzes", "memberships"];
 
-  const handleSearch = (e: React.FormEvent) => {
+  const integrationIcons = [
+    { Icon: DollarSign, name: "Stripe", color: "#635BFF" },
+    { Icon: Calendar, name: "Calendar", color: "#4285F4" },
+    { Icon: Video, name: "Zoom", color: "#2D8CFF" },
+    { Icon: CreditCard, name: "Payments", color: "#00457C" },
+    { Icon: Mail, name: "Email", color: "#EA4335" },
+    { Icon: Users, name: "Teams", color: "#6264A7" },
+    { Icon: FileText, name: "Docs", color: "#0B8043" },
+  ];
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery) {
-      console.log("Search query:", searchQuery);
+
+    if (!email || !email.includes('@')) {
+      alert('Please enter a valid email address');
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.success || data.alreadyExists) {
+        const appUrl = typeof window !== 'undefined' ? window.location.origin : '';
+        const referralLink = `${appUrl}?ref=${data.referralId}`;
+        const statusLink = `${appUrl}/waitlist/${data.id}`;
+
+        setModalData({
+          position: data.position,
+          referralLink,
+          statusLink,
+        });
+        setShowSuccessModal(true);
+        setEmail('');
+      } else {
+        alert(data.error || 'Failed to join waitlist. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -40,25 +93,13 @@ export function HeroSection() {
           setCurrentText(word.substring(0, currentText.length - 1));
         } else {
           setIsDeleting(false);
-          setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+          setCurrentWordIndex((prev) => (prev + 1) % words.length);
         }
       }
     }, typingSpeed);
 
     return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentWordIndex]);
-
-  const popularSearches = ["dashboard", "landing page", "e-commerce", "logo", "card", "icons"];
-
-  const integrationIcons = [
-    { Icon: Calendar, name: "Calendar", color: "#4285F4" },
-    { Icon: Video, name: "Zoom", color: "#2D8CFF" },
-    { Icon: Video, name: "Meet", color: "#00897B" },
-    { Icon: CreditCard, name: "PayPal", color: "#00457C" },
-    { Icon: Mail, name: "Email", color: "#EA4335" },
-    { Icon: Users, name: "Teams", color: "#6264A7" },
-    { Icon: FileText, name: "Docs", color: "#0B8043" },
-  ];
+  }, [currentText, isDeleting, currentWordIndex, words]);
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
@@ -77,30 +118,52 @@ export function HeroSection() {
                 The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
             </div>
-            {/* Search Form */}
-            <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
+
+            {/* Email Form */}
+            <form onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
               <input
-                type="text"
-                placeholder="Input your email address"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pr-14 rounded-full border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                type="email"
+                placeholder="Enter your email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isSubmitting}
+                required
+                className="w-full px-6 py-4 pr-32 rounded-full border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 w-fit h-10 rounded-full bg-primary hover:bg-primary/50 text-white flex items-center justify-center transition"
+                disabled={isSubmitting}
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 w-fit h-10 rounded-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center transition disabled:opacity-50 disabled:cursor-not-allowed gap-2"
               >
-                Join
-                <ArrowRight className="w-5 h-5" />
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Joining...
+                  </>
+                ) : (
+                  <>
+                    Join Waitlist
+                    <ArrowRight className="w-5 h-5" />
+                  </>
+                )}
               </button>
             </form>
 
-            {/* Popular Searches */}
+            {/* Waitlist Count */}
             <div className="flex items-center justify-center">
               <p className="text-base text-muted-foreground">
                 <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
               </p>
             </div>
+
+            {/* Success Modal */}
+            <SuccessModal
+              isOpen={showSuccessModal}
+              onClose={() => setShowSuccessModal(false)}
+              position={modalData.position}
+              referralLink={modalData.referralLink}
+              statusLink={modalData.statusLink}
+            />
 
             {/* Integration Icons Slideshow */}
             <div className="mt-12 pt-8 border-t border-border">
