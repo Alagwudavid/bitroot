@@ -110,6 +110,9 @@ export function Navbar() {
                     <Link href="/pricing" className="text-sm font-medium hover:text-primary transition">
                         Pricing
                     </Link>
+                    <Link href="/contact-us" className="text-sm font-medium hover:text-primary transition">
+                        Contact
+                    </Link>
                     <div
                         className="relative"
                         onMouseEnter={() => setFeaturesDropdownOpen(true)}
@@ -220,6 +223,13 @@ export function Navbar() {
                                 onClick={() => setMobileMenuOpen(false)}
                             >
                                 Pricing
+                            </Link>
+                            <Link
+                                href="/contact-us"
+                                className="block text-base font-medium hover:text-primary transition py-2"
+                                onClick={() => setMobileMenuOpen(false)}
+                            >
+                                Contact
                             </Link>
                             <div className="space-y-2">
                                 <div className="text-sm font-semibold text-muted-foreground px-2 py-1">Features</div>
