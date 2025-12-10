@@ -53,7 +53,13 @@ export function HeroSection() {
 
       const data = await response.json();
 
-      if (data.success || data.alreadyExists) {
+      if (data.alreadyExists) {
+        // Redirect to existing waitlist status page
+        window.location.href = `/waitlist/${data.id}`;
+        return;
+      }
+
+      if (data.success) {
         const appUrl = typeof window !== 'undefined' ? window.location.origin : '';
         const referralLink = `${appUrl}?ref=${data.referralId}`;
         const statusLink = `${appUrl}/waitlist/${data.id}`;
