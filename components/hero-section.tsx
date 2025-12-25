@@ -14,6 +14,11 @@ export function HeroSection() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modalData, setModalData] = useState({
+    position: 0,
+    referralLink: "",
+    statusLink: "",
+  });
 
   // Sanitize email input
   const sanitizeEmail = (email: string): string => {
@@ -25,11 +30,6 @@ export function HeroSection() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  const [modalData, setModalData] = useState({
-    position: 0,
-    referralLink: "",
-    statusLink: "",
-  });
 
   const words = ["learning", "teaching", "exams", "quizzes", "memberships"];
 
@@ -85,11 +85,14 @@ export function HeroSection() {
         setShowSuccessModal(true);
         setEmail('');
       } else {
-        alert(data.error || 'Failed to join waitlist. Please try again.');
+        const errorMessage = data.details
+          ? `${data.error}: ${data.details}`
+          : data.error || 'Failed to join waitlist. Please try again.';
+        alert(errorMessage);
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Please try again.');
+      alert('An error occurred. Please check your internet connection and try again.');
     } finally {
       setIsSubmitting(false);
     }

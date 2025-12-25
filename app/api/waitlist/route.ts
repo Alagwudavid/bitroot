@@ -4,6 +4,14 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
+// Validate environment variables
+if (!supabaseUrl || !supabaseServiceKey) {
+    console.error('Missing Supabase configuration:', {
+        hasUrl: !!supabaseUrl,
+        hasServiceKey: !!supabaseServiceKey
+    });
+}
+
 // Use service role key for admin operations
 const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey);
 
@@ -41,6 +49,15 @@ function isValidEmail(email: string): boolean {
 
 export async function POST(request: NextRequest) {
     try {
+        // Validate Supabase configuration
+        if (!supabaseUrl || !supabaseServiceKey) {
+            console.error('Missing Supabase configuration');
+            return NextResponse.json(
+                { error: 'Server configuration error. Please contact support.' },
+                { status: 500 }
+            );
+        }
+
         const { email: rawEmail } = await request.json();
 
         if (!rawEmail || typeof rawEmail !== 'string') {
@@ -102,8 +119,12 @@ export async function POST(request: NextRequest) {
 
         if (error) {
             console.error('Supabase error:', error);
+            console.error('Error details:', JSON.stringify(error, null, 2));
             return NextResponse.json(
-                { error: 'Failed to add to waitlist' },
+                {
+                    error: 'Failed to add to waitlist',
+                    details: process.env.NODE_ENV === 'development' ? error.message : undefined
+                },
                 { status: 500 }
             );
         }
