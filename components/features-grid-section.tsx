@@ -127,7 +127,7 @@ export function FeaturesGridSection() {
     }
 
     return (
-        <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-muted">
+        <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-sky-300/10">
             <div className="text-center mb-12 sm:mb-16">
                 <h2 className="text-3xl sm:text-4xl font-bold mb-3">Bitroot for every occasion.</h2>
                 <p className="text-muted-foreground text-lg">Bitroot makes learning easy and interactive with peers and the community.</p>
