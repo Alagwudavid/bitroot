@@ -28,11 +28,31 @@ function extractNameFromEmail(email: string): string {
     return name.charAt(0).toUpperCase() + name.slice(1);
 }
 
+function sanitizeEmail(email: string): string {
+    // Trim whitespace and convert to lowercase
+    return email.trim().toLowerCase();
+}
+
+function isValidEmail(email: string): boolean {
+    // Basic email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && email.length <= 320; // Max email length per RFC 5321
+}
+
 export async function POST(request: NextRequest) {
     try {
-        const { email } = await request.json();
+        const { email: rawEmail } = await request.json();
 
-        if (!email || !email.includes('@')) {
+        if (!rawEmail || typeof rawEmail !== 'string') {
+            return NextResponse.json(
+                { error: 'Invalid email address' },
+                { status: 400 }
+            );
+        }
+
+        const email = sanitizeEmail(rawEmail);
+
+        if (!isValidEmail(email)) {
             return NextResponse.json(
                 { error: 'Invalid email address' },
                 { status: 400 }

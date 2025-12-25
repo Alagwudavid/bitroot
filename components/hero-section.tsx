@@ -14,6 +14,17 @@ export function HeroSection() {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  // Sanitize email input
+  const sanitizeEmail = (email: string): string => {
+    return email.trim().toLowerCase();
+  };
+
+  // Validate email format
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
   const [modalData, setModalData] = useState({
     position: 0,
     referralLink: "",
@@ -35,7 +46,9 @@ export function HeroSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !email.includes('@')) {
+    const sanitizedEmail = sanitizeEmail(email);
+
+    if (!sanitizedEmail || !isValidEmail(sanitizedEmail)) {
       alert('Please enter a valid email address');
       return;
     }
@@ -48,7 +61,7 @@ export function HeroSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email: sanitizedEmail }),
       });
 
       const data = await response.json();
