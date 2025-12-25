@@ -121,11 +121,11 @@ export function Footer() {
 
                 {/* Bottom Section */}
                 <div className="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div className="flex items-center gap-2">
-                        <Link href="/" className="text-xl font-bold hover:opacity-80 transition-opacity">
+                    <div className="flex items-baseline gap-2">
+                        <Link href="/" className="text-5xl font-bold hover:opacity-80 transition-opacity">
                             {process.env.NEXT_PUBLIC_APP_NAME}
                         </Link>
-                        <span className="text-gray-400">© {currentYear} {process.env.NEXT_PUBLIC_APP_NAME}, Inc.</span>
+                        <span className="text-gray-400">© {currentYear} {process.env.NEXT_PUBLIC_APP_NAME}, LLC.</span>
                     </div>
 
                     <div className="flex items-center gap-4">
