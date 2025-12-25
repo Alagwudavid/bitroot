@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Check, Copy, Loader2, AlertCircle, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 interface WaitlistData {
     position: number;
@@ -107,26 +108,12 @@ export default function WaitlistStatusPage() {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-center mb-12"
+                    className="text-center mb-10"
                 >
-                    <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="text-primary"
-                        >
-                            <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
-                            <path d="M13 13l6 6" />
-                        </svg>
+                    <div className="inline-flex items-center justify-center gap-2 mb-6">
+                        <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-8 h-8" />
+                        <h1 className="text-3xl font-bold text-foreground font-mono">Waitlist dashboard</h1>
                     </div>
-                    <h1 className="text-4xl font-bold text-foreground mb-2">Bitroot Waitlist</h1>
-                    <p className="text-lg text-muted-foreground">Track your position and move up the line</p>
                 </motion.div>
 
                 {/* Main Card */}
@@ -134,38 +121,48 @@ export default function WaitlistStatusPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="bg-background rounded-2xl shadow-xl border border-border overflow-hidden"
+                    className="bg-background rounded-2xl shadow-xl border border-border overflow-hidden grid grid-cols-1 md:grid-cols-2"
                 >
                     {/* Welcome Header */}
-                    <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-8 border-b border-border">
+                    <div className=" p-8 border-b border-border">
+                        <h2 className="text-2xl font-bold text-foreground mb-4">Welcome!</h2>
                         <div className="flex items-center gap-3 mb-2">
-                            <Check className="w-6 h-6 text-green-500" />
-                            <h2 className="text-2xl font-bold text-foreground">Welcome, {data.name}!</h2>
+                            <div className="w-10 h-10 text-primary border rounded-lg flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 448 512"><path fill="currentColor" d="M319.4 320.6L224 416l-95.4-95.4C57.1 323.7 0 382.2 0 454.4v9.6c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-9.6c0-72.2-57.1-130.7-128.6-133.8M13.6 79.8l6.4 1.5v58.4c-7 4.2-12 11.5-12 20.3c0 8.4 4.6 15.4 11.1 19.7L3.5 242c-1.7 6.9 2.1 14 7.6 14h41.8c5.5 0 9.3-7.1 7.6-14l-15.6-62.3C51.4 175.4 56 168.4 56 160c0-8.8-5-16.1-12-20.3V87.1l66 15.9c-8.6 17.2-14 36.4-14 57c0 70.7 57.3 128 128 128s128-57.3 128-128c0-20.6-5.3-39.8-14-57l96.3-23.2c18.2-4.4 18.2-27.1 0-31.5l-190.4-46c-13-3.1-26.7-3.1-39.7 0L13.6 48.2c-18.1 4.4-18.1 27.2 0 31.6"></path></svg>
+                            </div>
+                            <h2 className="text-2xl font-bold text-foreground">{data.name}</h2>
                         </div>
-                        <p className="text-muted-foreground">{data.email}</p>
-                    </div>
-
-                    {/* Position Display */}
-                    <div className="p-8">
-                        <div className="bg-primary/10 rounded-xl p-8 text-center mb-8 border border-primary/20">
+                        <div className="flex items-center gap-3 mb-2">
+                            <div className="w-10 h-10 text-primary border rounded-lg flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24"><g fill="none" stroke="currentColor" strokeWidth={1.5}><rect width={18.5} height={17} x={2.682} y={3.5} rx={4}></rect><path strokeLinecap="round" strokeLinejoin="round" d="m2.729 7.59l7.205 4.13a3.96 3.96 0 0 0 3.975 0l7.225-4.13"></path></g></svg>
+                            </div>
+                            <p className="text-muted-foreground">{data.email}</p>
+                        </div>
+                        <div className="bg-muted/50 rounded-xl p-8 text-center mt-8 border">
                             <p className="text-sm text-muted-foreground mb-2">Your position</p>
-                            <motion.p
+                            <div className="flex items-baseline justify-center gap-2 text-sm text-muted-foreground">
+                                <motion.p
                                 initial={{ scale: 0.5 }}
                                 animate={{ scale: 1 }}
                                 transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
                                 className="text-6xl font-bold text-primary mb-2"
-                            >
-                                #{data.position}
-                            </motion.p>
-                            <p className="text-muted-foreground">
-                                out of {data.total} on the waitlist
-                            </p>
-                            <div className="mt-4 pt-4 border-t border-primary/20">
+                                >
+                                    #{data.position}
+                                </motion.p>
+                                <p className="text-muted-foreground text-base">
+                                    /{data.total}
+                                </p>
+                            </div>
+                            {/* <div className="mt-4 pt-4 border-t border-primary/20">
                                 <p className="text-sm text-muted-foreground">
                                     You're ahead of <span className="font-semibold text-primary">{percentageAhead}%</span> of the waitlist
                                 </p>
-                            </div>
+                            </div> */}
                         </div>
+                    </div>
+
+                    {/* Position Display */}
+                    <div className="p-8">
 
                         {/* Stats Grid */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -189,14 +186,6 @@ export default function WaitlistStatusPage() {
 
                         {/* Referral Section */}
                         <div className="space-y-6">
-                            <div className="bg-gradient-to-br from-primary/5 to-transparent rounded-lg p-6 border border-primary/20">
-                                <h3 className="text-lg font-semibold text-foreground mb-2">
-                                    🚀 Move up the waitlist
-                                </h3>
-                                <p className="text-sm text-muted-foreground mb-4">
-                                    Share your unique referral link with friends. For every person who joins using your link, you'll move up in the queue!
-                                </p>
-                            </div>
 
                             {/* Referral Link */}
                             <div className="space-y-2">
@@ -291,7 +280,7 @@ export default function WaitlistStatusPage() {
                     transition={{ delay: 0.3 }}
                     className="text-center mt-8 text-sm text-muted-foreground"
                 >
-                    <p>We'll notify you via email when it's your turn!</p>
+                    <p>We'll notify you via email on updates and launch news!</p>
                 </motion.div>
             </div>
         </div>

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText, Loader2 } from "lucide-react";
+import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText, Loader2, Rss } from "lucide-react";
 import Image from "next/image";
 import { SuccessModal } from "@/components/success-modal";
 import { motion, AnimatePresence } from "framer-motion";
@@ -126,14 +126,21 @@ export function HeroSection() {
         <div className="flex items-center justify-center">
           <div className="space-y-8 w-full mx-auto text-center">
             <div className="space-y-6 max-w-4xl mx-auto">
-
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted/50">
+                <Rss className="w-5 h-5 text-primary animate-pulse" />
+                <span className="text-sm font-medium text-secondary">Join the waitlist for Q1 2026</span>
+              </div>
               <p className="text-lg sm:text-xl text-foreground">
                 The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
             </div>
-
             {/* Waitlist Form */}
             <form id="waitlist-form" onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+              <div className="space-y-6 max-w-4xl mx-auto">
+                <p className="text-base text-foreground mb-6 font-bold">
+                  Sign up to get notified when we launch.
+                </p>
+              </div>
               <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   type="text"
@@ -184,7 +191,7 @@ export function HeroSection() {
             />
 
             {/* Integration Icons Slideshow */}
-            <div className="mt-12 pt-8">
+            <div className="mt-12 pt-8 bg-sky-300/10 rounded-t-full border-t border-border px-6 py-4">
               <p className="text-sm text-muted-foreground mb-6">Integrates seamlessly with</p>
               <div className="relative overflow-hidden h-24">
                 <motion.div

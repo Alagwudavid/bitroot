@@ -123,9 +123,9 @@ export function Footer() {
                 <div className="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-baseline gap-2">
                         <Link href="/" className="text-5xl font-bold hover:opacity-80 transition-opacity">
-                            {process.env.NEXT_PUBLIC_APP_NAME}
+                            {process.env.NEXT_PUBLIC_APP_NAME}, LLC.
                         </Link>
-                        <span className="text-gray-400">© {currentYear} {process.env.NEXT_PUBLIC_APP_NAME}, LLC.</span>
+                        <span className="text-gray-400">© {currentYear}</span>
                     </div>
 
                     <div className="flex items-center gap-4">

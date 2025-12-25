@@ -13,7 +13,7 @@ export default function BitrootLanding() {
       <Navbar />
       <HeroSection />
       <WhyChooseUsSection />
-      <PricingSection />
+      {/* <PricingSection /> */}
       <FeaturesGridSection />
       <HowItWorksSection />
       <CountdownSection />
