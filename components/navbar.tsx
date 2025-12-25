@@ -180,8 +180,8 @@ export function Navbar() {
 
                 {/* Right Side Actions */}
                 <div className="flex items-center gap-4">
-                    <Button className="hidden sm:flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition">
-                        Join now!
+                    <Button asChild className="hidden sm:flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full font-medium hover:bg-primary/90 transition">
+                        <Link href="/#waitlist-form">Join now!</Link>
                     </Button>
 
                     {/* Mobile Menu Button */}
@@ -287,8 +287,8 @@ export function Navbar() {
                             </div>
 
                             <div className="pt-4 border-t border-border">
-                                <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                                    Join now!
+                                <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                                    <Link href="/#waitlist-form" onClick={() => setMobileMenuOpen(false)}>Join now!</Link>
                                 </Button>
                             </div>
                         </div>

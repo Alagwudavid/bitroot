@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Circle, DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText, Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -19,6 +19,7 @@ export function HeroSection() {
     referralLink: "",
     statusLink: "",
   });
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   // Sanitize email input
   const sanitizeEmail = (email: string): string => {
@@ -123,6 +124,24 @@ export function HeroSection() {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, currentWordIndex, words]);
 
+  // Focus input when hash is #waitlist-form
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#waitlist-form') {
+        setTimeout(() => {
+          emailInputRef.current?.focus();
+        }, 100);
+      }
+    };
+
+    // Check on mount
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
       <div className="max-w-7xl mx-auto">
@@ -142,8 +161,9 @@ export function HeroSection() {
             </div>
 
             {/* Email Form */}
-            <form onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
+            <form id="waitlist-form" onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
               <input
+                ref={emailInputRef}
                 type="email"
                 placeholder="Enter your email address"
                 value={email}

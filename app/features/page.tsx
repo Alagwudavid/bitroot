@@ -72,19 +72,11 @@ const features: Feature[] = [
         icon: <Calendar className="w-10 h-10" />,
         title: "Bookings",
         description: "Sell services like consultations and coaching sessions with automated scheduling, calendar integration, and reminders to keep appointments on track.",
-        isNew: true
-    },
-    {
-        icon: <Send className="w-10 h-10" />,
-        title: "Telegram",
-        description: "Easily create and manage Telegram groups, automate member access, and control subscriptions",
-        isNew: true
     },
     {
         icon: <Package className="w-10 h-10" />,
         title: "Bundles",
         description: "Sell digital products in bundles with different prices and files. Let learners choose the bundle that fits them best, helping you earn more per sale.",
-        isNew: true
     }
 ];
 
