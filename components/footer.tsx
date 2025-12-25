@@ -7,7 +7,7 @@ export function Footer() {
     return (
         <footer className="bg-foreground text-white">
             <div className="max-w-7xl mx-auto px-4 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8 hidden">
                     {/* About Section */}
                     <div>
                         <h3 className="font-semibold text-lg mb-4">About</h3>
@@ -120,7 +120,7 @@ export function Footer() {
                 </div>
 
                 {/* Bottom Section */}
-                <div className="pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <div className="flex items-baseline gap-2">
                         <Link href="/" className="text-5xl font-bold hover:opacity-80 transition-opacity">
                             {process.env.NEXT_PUBLIC_APP_NAME}, LLC.
