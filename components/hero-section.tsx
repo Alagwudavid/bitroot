@@ -8,10 +8,8 @@ import { SuccessModal } from "@/components/success-modal";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function HeroSection() {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [modalData, setModalData] = useState({
@@ -32,8 +30,6 @@ export function HeroSection() {
     return emailRegex.test(email);
   };
 
-  const words = ["learning", "teaching", "exams", "quizzes", "memberships"];
-
   const integrationIcons = [
     { Icon: DollarSign, name: "Stripe", color: "#635BFF" },
     { Icon: Calendar, name: "Calendar", color: "#4285F4" },
@@ -48,6 +44,12 @@ export function HeroSection() {
     e.preventDefault();
 
     const sanitizedEmail = sanitizeEmail(email);
+    const sanitizedName = fullName.trim();
+
+    if (!sanitizedName) {
+      alert('Please enter your full name');
+      return;
+    }
 
     if (!sanitizedEmail || !isValidEmail(sanitizedEmail)) {
       alert('Please enter a valid email address');
@@ -62,7 +64,7 @@ export function HeroSection() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: sanitizedEmail }),
+        body: JSON.stringify({ fullName: sanitizedName, email: sanitizedEmail }),
       });
 
       const data = await response.json();
@@ -84,6 +86,7 @@ export function HeroSection() {
           statusLink,
         });
         setShowSuccessModal(true);
+        setFullName('');
         setEmail('');
       } else {
         const errorMessage = data.details
@@ -98,31 +101,6 @@ export function HeroSection() {
       setIsSubmitting(false);
     }
   };
-
-  // Typewriter effect
-  useEffect(() => {
-    const typingSpeed = isDeleting ? 50 : 30;
-    const word = words[currentWordIndex];
-
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        if (currentText.length < word.length) {
-          setCurrentText(word.substring(0, currentText.length + 1));
-        } else {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        if (currentText.length > 0) {
-          setCurrentText(word.substring(0, currentText.length - 1));
-        } else {
-          setIsDeleting(false);
-          setCurrentWordIndex((prev) => (prev + 1) % words.length);
-        }
-      }
-    }, typingSpeed);
-
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, currentWordIndex, words]);
 
   // Focus input when hash is #waitlist-form
   useEffect(() => {
@@ -148,55 +126,53 @@ export function HeroSection() {
         <div className="flex items-center justify-center">
           <div className="space-y-8 w-full mx-auto text-center">
             <div className="space-y-6 max-w-4xl mx-auto">
-              <h1 className="text-primary text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                The future of online{" "}
-                <span className="inline-block min-w-[200px] text-left">
-                  {currentText}
-                  <span className="animate-pulse">|</span>
-                </span>
-              </h1>
+
               <p className="text-lg sm:text-xl text-foreground">
                 The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
             </div>
 
-            {/* Email Form */}
-            <form id="waitlist-form" onSubmit={handleSubmit} className="relative max-w-xl mx-auto">
-              <input
-                ref={emailInputRef}
-                type="email"
-                placeholder="Enter your email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                disabled={isSubmitting}
-                required
-                className="w-full px-6 py-4 pr-32 rounded-full border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
-              />
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 w-fit h-10 rounded-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center transition disabled:opacity-50 disabled:cursor-not-allowed gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="w-5 h-5 animate-spin" />
-                    Joining...
-                  </>
-                ) : (
-                  <>
-                    Join Waitlist
-                    <ArrowRight className="w-5 h-5" />
-                  </>
-                )}
-              </button>
+            {/* Waitlist Form */}
+            <form id="waitlist-form" onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="flex-1 px-4 py-3 rounded-lg border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <input
+                  ref={emailInputRef}
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting}
+                  required
+                  className="flex-1 px-4 py-3 rounded-lg border border-border bg-muted text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-4 py-3 rounded-lg bg-primary hover:bg-primary/90 text-white font-semibold flex items-center justify-center transition disabled:opacity-50 disabled:cursor-not-allowed gap-2 whitespace-nowrap"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Joining...
+                    </>
+                  ) : (
+                    <>
+                      Join Now
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
+                </button>
+              </div>
             </form>
-
-            {/* Waitlist Count */}
-            <div className="flex items-center justify-center">
-              <p className="text-base text-muted-foreground">
-                <span className="font-semibold text-foreground">Join 500+ Instructors</span> waiting to launch
-              </p>
-            </div>
 
             {/* Success Modal */}
             <SuccessModal
@@ -208,7 +184,7 @@ export function HeroSection() {
             />
 
             {/* Integration Icons Slideshow */}
-            <div className="mt-12 pt-8 border-t border-border">
+            <div className="mt-12 pt-8">
               <p className="text-sm text-muted-foreground mb-6">Integrates seamlessly with</p>
               <div className="relative overflow-hidden h-24">
                 <motion.div

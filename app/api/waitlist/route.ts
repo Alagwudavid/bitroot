@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { email: rawEmail } = await request.json();
+        const { email: rawEmail, fullName: rawFullName } = await request.json();
 
         if (!rawEmail || typeof rawEmail !== 'string') {
             return NextResponse.json(
@@ -67,7 +67,15 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        if (!rawFullName || typeof rawFullName !== 'string' || rawFullName.trim().length === 0) {
+            return NextResponse.json(
+                { error: 'Full name is required' },
+                { status: 400 }
+            );
+        }
+
         const email = sanitizeEmail(rawEmail);
+        const fullName = rawFullName.trim();
 
         if (!isValidEmail(email)) {
             return NextResponse.json(
@@ -102,7 +110,6 @@ export async function POST(request: NextRequest) {
         // Create new waitlist entry
         const uid = generateUID();
         const referralId = generateReferralId();
-        const name = extractNameFromEmail(email);
 
         const { data, error } = await supabaseAdmin
             .from('waitlist')
@@ -110,7 +117,7 @@ export async function POST(request: NextRequest) {
                 {
                     uid,
                     email,
-                    name,
+                    name: fullName,
                     referral_id: referralId,
                 },
             ])
@@ -144,7 +151,7 @@ export async function POST(request: NextRequest) {
                 },
                 body: JSON.stringify({
                     email,
-                    name,
+                    name: fullName,
                     position: count || 0,
                     referralId,
                     id: data.id,
