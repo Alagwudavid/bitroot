@@ -10,7 +10,7 @@ import { CountdownSection } from "@/components/countdown-section"
 
 export default function BitrootLanding() {
   return (
-    <div className="w-full min-h-screen bg-background text-foreground">
+    <div className="w-full min-h-screen bg-background text-foreground overflow-x-clip">
       <Navbar />
       <HeroSection />
       {/* <PricingSection /> */}

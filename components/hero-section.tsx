@@ -4,6 +4,7 @@ import React from "react";
 import { DollarSign, Calendar, Video, CreditCard, Mail, Users, FileText, Rss } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 export function HeroSection() {
   const integrationIcons = [
@@ -18,16 +19,20 @@ export function HeroSection() {
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto relative overflow-visible">
         <div className="flex items-center justify-center">
-          <div className="space-y-4 w-full mx-auto text-center">
-            <div className="max-w-4xl mx-auto">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted mb-6">
+          <div className="space-y-6 w-full mx-auto text-center">
+            <div className="max-w-4xl mx-auto space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted shadow-lg">
                 <Rss className="w-5 h-5 text-primary animate-pulse" />
                 <span className="text-sm font-medium text-secondary">Join the waitlist for Q1 2026</span>
               </div>
-              <p className="text-xl sm:text-3xl text-foreground mb-6">
-                The all-in-one platform for African experts to launch live cohorts. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
+              <div className="">
+                <h2 className="text-2xl sm:text-6xl font-normal text-foreground mb-1.5">Teach, engage, and learn</h2>
+                <h2 className="text-2xl sm:text-6xl font-normal text-secondary/50">all in one place</h2>
+              </div>
+              <p className="text-lg text-foreground">
+                The all-in-one platform for African experts to launch live classes. We handle the Escrow payments, scheduling, and student logistics - you just <span className="font-semibold italic">teach</span>.
               </p>
               <div className="flex justify-center">
                 <Button
@@ -37,9 +42,7 @@ export function HeroSection() {
                   Join the Wait!
                 </Button>
               </div>
-            </div>
-
-            {/* Integration Icons Slideshow */}
+            </div> {/* Integration Icons Slideshow */}
             <div className="py-8 px-6 hidden">
               <p className="text-sm text-muted-foreground mb-6">Integrates seamlessly with</p>
               <div className="relative overflow-hidden h-24">
@@ -74,6 +77,10 @@ export function HeroSection() {
             </div>
           </div>
         </div>
+          <Image src="/assets/puzzles.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 -translate-y-1/3 top-0 left-0 animate-bounce" />
+          <Image src="/assets/multilingual.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute translate-x-1/3 -translate-y-1/3 top-0 right-0 animate-bounce" />
+          <Image src="/assets/time-management.png" alt="Icon for time management" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 translate-y-1/3 bottom-0 left-0 animate-bounce" />
+          <Image src="/assets/multicurrency.png" alt="Image of multicurrency" width={32} height={32} className="w-32 h-32 absolute translate-x-1/3 translate-y-1/3 bottom-0 right-0 animate-bounce" />
       </div>
     </section>
   );

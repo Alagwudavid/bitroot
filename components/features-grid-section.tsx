@@ -161,7 +161,7 @@ export function FeaturesGridSection() {
                         {features.map((feature, idx) => (
                             <div key={idx} className="w-80 flex-shrink-0">
                                 <FeatureCard
-                                    icon={<feature.icon className="w-8 h-8 text-white" />}
+                                    icon={<feature.icon className="w-20 h-20" />}
                                     title={feature.title}
                                     description={feature.description}
                                     bgColor={feature.bgColor}
@@ -215,14 +215,17 @@ function FeatureCard({
     hoverColor: string
 }) {
     return (
-        <div className={`flex flex-col items-start gap-4 p-6 rounded-2xl cursor-pointer border shadow-lg hover:scale-90 bg-background transition-all text-foreground`}>
-            <div className={`flex items-center justify-center w-12 h-12 ${bgColor} rounded-2xl`}>
-                {icon}
-            </div>
+        <div className={`flex flex-col items-start gap-4 p-6 rounded-2xl cursor-pointer border shadow-lg hover:scale-90 bg-background transition-all text-foreground relative h-44`}>
             <div>
                 <h3 className="text-xl font-bold">{title}</h3>
                 <p className="text-foreground text-sm">{description}</p>
             </div>
+            <div className={`flex items-center justify-center w-20 h-20 text-foreground absolute bottom-5 right-5`}>
+                {icon}
+            </div>
+            {/* <div className={`flex items-center justify-center w-12 h-12 ${bgColor} rounded-2xl absolute bottom-5 right-5`}>
+                {icon}
+            </div> */}
         </div>
     )
 }
