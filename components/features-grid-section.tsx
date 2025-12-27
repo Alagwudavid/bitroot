@@ -56,16 +56,18 @@ const features = [
         // resizeImage: "scale-110"
     },
     {
-        image: "/assets/retention.png",
-        title: "Retention Tools",
-        description: "Grow your retention score, grow your community and engage with learners.",
-        textColor: "text-blue-600"
+        image: "/assets/ai.png",
+        title: "AI Co-Pilot",
+        description: "Generate course outlines, summarize sessions, and automate student queries with built-in AI.",
+        textColor: "text-indigo-600",
+        hoverColor: "hover:bg-indigo-700"
     },
     {
-        image: "/assets/toolkit.png",
-        title: "Masterclasses",
-        description: "Host and sell online, physical, or hybrid masterclasses, manage attendees, send reminders, offer replays, and more.",
-        textColor: "text-purple-600"
+        image: "/assets/multilingual.png",
+        title: "Global Reach",
+        description: "Break language barriers with real-time translation and multilingual support for a global audience.",
+        textColor: "text-teal-600",
+        hoverColor: "hover:bg-teal-700"
     },
     {
         image: "/assets/replays.png",
@@ -74,10 +76,11 @@ const features = [
         textColor: "text-green-600"
     },
     {
-        image: "/assets/ticket.png",
-        title: "Memberships",
-        description: "Sell members-only subscriptions on your community.",
-        textColor: "text-yellow-600"
+        image: "/assets/live.png",
+        title: "Live Interactive",
+        description: "Host high-definition live sessions with real-time engagement tools and instant playback.",
+        textColor: "text-rose-600",
+        hoverColor: "hover:bg-rose-700"
     },
     {
         image: "/assets/portfolio.png",
@@ -88,20 +91,36 @@ const features = [
     {
         image: "/assets/integrations.png",
         title: "Integrations",
-        description: "Seamlessly integrate your favourite tools with Bitroot.",
-        textColor: "text-red-600"
+        description: "Connect your workflow with the tools you already love for a unified teaching experience.",
+        textColor: "text-slate-600",
+        hoverColor: "hover:bg-slate-700"
     },
     {
         image: "/assets/multicurrency.png",
-        title: "Multicurrency Payments",
-        description: "Sell to learners anywhere in the world from one app.",
-        textColor: "text-blue-600"
+        title: "Global Payments",
+        description: "Accept multicurrency payments and reach learners across the globe without financial borders.",
+        textColor: "text-emerald-600",
+        hoverColor: "hover:bg-emerald-700"
     },
     {
         image: "/assets/show-love.png",
         title: "Show Love",
-        description: "The best way to gift financial support to your students and followers.",
-        textColor: "text-pink-600"
+        description: "Empower your community with direct financial support and student sponsorship features.",
+        textColor: "text-pink-600",
+        hoverColor: "hover:bg-pink-700"
+    },
+    {
+        image: "/assets/retention.png",
+        title: "Active Engagement",
+        description: "Boost retention with gamified learning milestones and real-time interactive feedback loops.",
+        textColor: "text-orange-600",
+        hoverColor: "hover:bg-orange-700"
+    },
+    {
+        image: "/assets/toolkit.png",
+        title: "Masterclasses",
+        description: "Host and sell online, physical, or hybrid masterclasses, manage attendees, send reminders, offer replays, and more.",
+        textColor: "text-purple-600"
     },
     {
         image: "/assets/ticket.png",
@@ -120,7 +139,13 @@ const features = [
         title: "Bundles",
         description: "Sell digital products in bundles with different prices and files. Let learners choose the bundle that fits them best, helping you earn more per sale.",
         textColor: "text-yellow-600"
-    }
+    },
+    {
+        image: "/assets/ticket.png",
+        title: "Memberships",
+        description: "Sell members-only subscriptions on your community.",
+        textColor: "text-yellow-600"
+    },
 ]
 
 const ITEMS_PER_PAGE = 6
