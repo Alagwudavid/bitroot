@@ -11,42 +11,49 @@ const features = [
         title: "Discover",
         description: "Explore top-tier educators, masterclasses, and live workshops tailored to your goals.",
         textColor: "text-sky-500",
-        hoverColor: "hover:bg-green-700"
+        // resizeImage: "hover:bg-green-700"
     },
     {
         image: "/assets/learn.png",
         title: "Learn",
         description: "Master new skills through interactive learning paths, self-paced modules, and live sessions.",
         textColor: "text-yellow-600",
-        hoverColor: "hover:bg-yellow-700"
+        // resizeImage: "hover:bg-yellow-700"
     },
     {
         image: "/assets/community.png",
         title: "Community",
         description: "Network with global peers and engage your audience through real-time updates and collaboration.",
         textColor: "text-green-600",
-        hoverColor: "hover:bg-blue-700"
+        // resizeImage: "hover:bg-blue-700"
     },
     {
         image: "/assets/live-trivia.png",
         title: "Create",
         description: "Build engaging content with live trivias, automated quizzes, and comprehensive assessments.",
         textColor: "text-red-600",
-        hoverColor: "hover:bg-red-700"
+        // resizeImage: "hover:bg-red-700"
     },
     {
         image: "/assets/escrow-vault.png",
         title: "Digital Escrow",
         description: "Secure your high-value digital assets and paid content within our protected escrow vault.",
         textColor: "text-blue-600",
-        hoverColor: "hover:bg-purple-700"
+        // resizeImage: "hover:bg-purple-700"
     },
     {
         image: "/assets/join-rooms.png",
         title: "Classroom",
         description: "Host dedicated learning spaces or join active sessions instantly with a secure entry code.",
         textColor: "text-purple-600",
-        hoverColor: "hover:bg-purple-700"
+        // resizeImage: "scale-105"
+    },
+    {
+        image: "/assets/scheduling-system.png",
+        title: "Schedule & Track",
+        description: "Automate session scheduling and track real-time attendance with seamless student logging.",
+        textColor: "text-amber-600",
+        // resizeImage: "scale-110"
     },
     {
         image: "/assets/retention.png",
@@ -152,11 +159,11 @@ export function FeaturesGridSection() {
                         <FeatureCard
                             key={idx}
                             image={feature.image}
-                            icon={feature.icon}
+                            // icon={feature.icon}
                             title={feature.title}
                             description={feature.description}
                             textColor={feature.textColor}
-                            hoverColor={feature.hoverColor}
+                            resizeImage={feature.resizeImage}
                         />
                     ))}
                 </div>
@@ -208,14 +215,14 @@ function FeatureCard({
     title,
     description,
     textColor,
-    hoverColor
+    resizeImage
 }: {
     image?: string
     icon?: React.ReactNode
     title: string
     description: string
     textColor: string
-    hoverColor?: string
+    resizeImage?: string
 }) {
     if (image) {
         return (
@@ -224,7 +231,7 @@ function FeatureCard({
                     <h3 className={`text-3xl font-bold font-mono ${textColor}`}>{title}</h3>
                     <p className="text-foreground text-base">{description}</p>
                 </div>
-                <div className="w-44 h-44 absolute -bottom-5 -right-5 transform-3d rotate-12 select-none">
+                <div className={`w-44 h-44 ${resizeImage} absolute -bottom-5 -right-5 transform-3d rotate-12 select-none`}>
                     <Image
                         src={image}
                         alt={title}
