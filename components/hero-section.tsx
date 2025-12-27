@@ -57,6 +57,7 @@ export function HeroSection() {
             animate={isInView ? "visible" : "hidden"}
           >
             <div className="max-w-4xl mx-auto space-y-8">
+              <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-12 h-12 flex items-center mx-auto" />
               <motion.div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-none border border-primary mx-auto"
                 variants={itemVariants}
@@ -65,7 +66,7 @@ export function HeroSection() {
                 <span className="text-sm font-medium text-secondary">Join the waitlist for Q1 2026</span>
               </motion.div>
               <motion.div className="space-y-3" variants={itemVariants}>
-                <h2 className="text-4xl sm:text-6xl font-normal text-foreground leading-tight">Teach, engage, and learn</h2>
+                <h2 className="text-4xl sm:text-6xl font-semibold text-foreground leading-tight">Teach, engage, and learn</h2>
                 <h2 className="text-4xl sm:text-6xl font-normal text-secondary/50 leading-tight">all in one place</h2>
               </motion.div>
               <motion.p

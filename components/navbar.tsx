@@ -73,7 +73,7 @@ export function Navbar() {
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-1">
                     <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-8 h-8" />
-                    <span className="font-bold text-2xl font-mono text-foreground">root</span>
+                    <span className="font-bold text-2xl font-mono text-foreground">bitroot</span>
                 </Link>
 
                 {/* Navigation Links - Desktop */}
