@@ -43,7 +43,7 @@ const imageVariants = {
 
 export function HeroSection() {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
+  const isInView = useInView(ref, { once: false, amount: 0.2 });
 
   return (
     <section className="w-full min-h-screen px-4 sm:px-6 lg:px-8 py-12 flex items-center justify-center">
@@ -57,7 +57,9 @@ export function HeroSection() {
             animate={isInView ? "visible" : "hidden"}
           >
             <div className="max-w-4xl mx-auto space-y-8">
-              <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-12 h-12 flex items-center mx-auto" />
+              <motion.div variants={itemVariants} className="flex justify-center">
+                <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-12 h-12" />
+              </motion.div>
               <motion.div
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-none border border-primary mx-auto"
                 variants={itemVariants}
