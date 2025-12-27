@@ -18,8 +18,8 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="w-full px-4 sm:px-6 lg:px-8 py-16">
-      <div className="max-w-7xl mx-auto relative overflow-visible">
+    <section className="w-full h-screen px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-center">
+      <div className="container mx-auto relative overflow-visible">
         <div className="flex items-center justify-center">
           <div className="space-y-6 w-full mx-auto text-center">
             <div className="max-w-4xl mx-auto space-y-6">
@@ -77,10 +77,10 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-          <Image src="/assets/puzzles.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 -translate-y-1/3 top-0 left-0 animate-bounce" />
-          <Image src="/assets/multilingual.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute translate-x-1/3 -translate-y-1/3 top-0 right-0 animate-bounce" />
-          <Image src="/assets/time-management.png" alt="Icon for time management" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 translate-y-1/3 bottom-0 left-0 animate-bounce" />
-          <Image src="/assets/multicurrency.png" alt="Image of multicurrency" width={32} height={32} className="w-32 h-32 absolute translate-x-1/3 translate-y-1/3 bottom-0 right-0 animate-bounce" />
+        <Image src="/assets/puzzles.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 -translate-y-1/3 top-0 left-0 animate-float" />
+        <Image src="/assets/multilingual.png" alt="Image of puzzles" width={32} height={32} className="w-32 h-32 absolute translate-x-1/3 -translate-y-1/3 top-0 right-0 animate-float-delay-1" />
+        <Image src="/assets/time-management.png" alt="Icon for time management" width={32} height={32} className="w-32 h-32 absolute -translate-x-1/3 translate-y-1/3 bottom-0 left-0 animate-float-delay-2" />
+        <Image src="/assets/multicurrency.png" alt="Image of multicurrency" width={32} height={32} className="w-32 h-32 md:w-40 md:h-40 absolute translate-x-1/3 translate-y-1/3 bottom-0 right-0 animate-float-delay-3" />
       </div>
     </section>
   );

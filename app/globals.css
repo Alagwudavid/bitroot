@@ -11,13 +11,16 @@
   --card-foreground: 15 23 42;
   --popover: 255 255 255;
   --popover-foreground: 15 23 42;
-  --primary: 224 88 56; /* Deep Terra Cotta */
+  --primary: 224 88 56;
+  /* Deep Terra Cotta */
   --primary-foreground: 255 255 255;
-  --secondary: 15 23 42; /* Deep Navy */
+  --secondary: 15 23 42;
+  /* Deep Navy */
   --secondary-foreground: 255 255 255;
   --muted: 243 244 246;
   --muted-foreground: 107 114 128;
-  --accent: 224 88 56; /* Terra Cotta accent */
+  --accent: 224 88 56;
+  /* Terra Cotta accent */
   --accent-foreground: 255 255 255;
   --destructive: 239 68 68;
   --destructive-foreground: 255 255 255;
@@ -88,6 +91,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -123,4 +127,35 @@
 
 .backdrop-blur-custom {
   backdrop-filter: blur(8.25px);
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delay-1 {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+.animate-float-delay-2 {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-delay-3 {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1.5s;
 }

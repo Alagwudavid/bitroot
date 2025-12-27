@@ -1,231 +1,252 @@
 "use client"
 
-import React, { useState, useRef, useEffect } from "react"
-import { Compass, GraduationCap, MessagesSquare, Pencil, Hash, ChevronLeft, ChevronRight } from "lucide-react"
-import Link from "next/link"
+import React, { useState } from "react"
+import { Sparkles, Network, BookOpen, Users, FileText, Puzzle, CreditCard, Heart, Ticket, GraduationCap, Calendar, Package, ChevronLeft, ChevronRight } from "lucide-react"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
 
 const features = [
     {
-        icon: Compass,
+        image: "/assets/discover.png",
         title: "Discover",
-        description: "The best tutors and courses",
-        bgColor: "bg-green-600",
+        description: "Explore top-tier educators, masterclasses, and live workshops tailored to your goals.",
+        textColor: "text-sky-500",
         hoverColor: "hover:bg-green-700"
     },
     {
-        icon: GraduationCap,
+        image: "/assets/learn.png",
         title: "Learn",
-        description: "Active & interactive learning paths",
-        bgColor: "bg-yellow-600",
+        description: "Master new skills through interactive learning paths, self-paced modules, and live sessions.",
+        textColor: "text-yellow-600",
         hoverColor: "hover:bg-yellow-700"
     },
     {
-        icon: MessagesSquare,
+        image: "/assets/community.png",
         title: "Community",
-        description: "Engage your audience",
-        bgColor: "bg-blue-600",
+        description: "Network with global peers and engage your audience through real-time updates and collaboration.",
+        textColor: "text-green-600",
         hoverColor: "hover:bg-blue-700"
     },
     {
-        icon: Pencil,
-        title: "Make",
-        description: "Engaging content, quizzes & assignments",
-        bgColor: "bg-red-600",
+        image: "/assets/live-trivia.png",
+        title: "Create",
+        description: "Build engaging content with live trivias, automated quizzes, and comprehensive assessments.",
+        textColor: "text-red-600",
         hoverColor: "hover:bg-red-700"
     },
     {
-        icon: Hash,
-        title: "Classroom",
-        description: "Enter code to join active sessions",
-        bgColor: "bg-purple-600",
+        image: "/assets/escrow-vault.png",
+        title: "Digital Escrow",
+        description: "Secure your high-value digital assets and paid content within our protected escrow vault.",
+        textColor: "text-blue-600",
         hoverColor: "hover:bg-purple-700"
+    },
+    {
+        image: "/assets/join-rooms.png",
+        title: "Classroom",
+        description: "Host dedicated learning spaces or join active sessions instantly with a secure entry code.",
+        textColor: "text-purple-600",
+        hoverColor: "hover:bg-purple-700"
+    },
+    {
+        image: "/assets/retention.png",
+        title: "Retention Tools",
+        description: "Grow your retention score, grow your community and engage with learners.",
+        textColor: "text-blue-600"
+    },
+    {
+        image: "/assets/toolkit.png",
+        title: "Masterclasses",
+        description: "Host and sell online, physical, or hybrid masterclasses, manage attendees, send reminders, offer replays, and more.",
+        textColor: "text-purple-600"
+    },
+    {
+        image: "/assets/replays.png",
+        title: "Courses & live replays",
+        description: "Sell courses & webinar replays that your learners can watch directly on Bitroot.",
+        textColor: "text-green-600"
+    },
+    {
+        image: "/assets/ticket.png",
+        title: "Memberships",
+        description: "Sell members-only subscriptions on your community.",
+        textColor: "text-yellow-600"
+    },
+    {
+        image: "/assets/portfolio.png",
+        title: "Professional Portfolio",
+        description: "Get a curated and organized profile displaying your success.",
+        textColor: "text-sky-500"
+    },
+    {
+        image: "/assets/integrations.png",
+        title: "Integrations",
+        description: "Seamlessly integrate your favourite tools with Bitroot.",
+        textColor: "text-red-600"
+    },
+    {
+        image: "/assets/multicurrency.png",
+        title: "Multicurrency Payments",
+        description: "Sell to learners anywhere in the world from one app.",
+        textColor: "text-blue-600"
+    },
+    {
+        image: "/assets/show-love.png",
+        title: "Show Love",
+        description: "The best way to gift financial support to your students and followers.",
+        textColor: "text-pink-600"
+    },
+    {
+        image: "/assets/ticket.png",
+        title: "Event Tickets & Training",
+        description: "Sell tickets for all kinds of events and access to masterclasses, events, workshops, training, webinars, and even more.",
+        textColor: "text-purple-600"
+    },
+    {
+        image: "/assets/bookings.png",
+        title: "Bookings",
+        description: "Sell services like consultations and coaching sessions with automated scheduling, calendar integration, and reminders to keep appointments on track.",
+        textColor: "text-green-600"
+    },
+    {
+        image: "/assets/toolkit.png",
+        title: "Bundles",
+        description: "Sell digital products in bundles with different prices and files. Let learners choose the bundle that fits them best, helping you earn more per sale.",
+        textColor: "text-yellow-600"
     }
 ]
 
+const ITEMS_PER_PAGE = 6
+
 export function FeaturesGridSection() {
-    const [currentIndex, setCurrentIndex] = useState(0)
-    const scrollContainerRef = useRef<HTMLDivElement>(null)
-    const [isDragging, setIsDragging] = useState(false)
-    const [startX, setStartX] = useState(0)
-    const [scrollLeft, setScrollLeft] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
 
-    const nextSlide = () => {
-        if (currentIndex < features.length - 1) {
-            setCurrentIndex((prev) => prev + 1)
-        }
+    const totalPages = Math.ceil(features.length / ITEMS_PER_PAGE)
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+    const endIndex = startIndex + ITEMS_PER_PAGE
+    const currentFeatures = features.slice(startIndex, endIndex)
+
+    const handlePrevious = () => {
+        setCurrentPage(prev => Math.max(1, prev - 1))
     }
 
-    const prevSlide = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prev) => prev - 1)
-        }
-    }
-
-    useEffect(() => {
-        if (scrollContainerRef.current) {
-            const container = scrollContainerRef.current
-            const cardWidth = container.scrollWidth / features.length
-            container.scrollTo({
-                left: currentIndex * cardWidth,
-                behavior: "smooth"
-            })
-        }
-    }, [currentIndex])
-
-    const handleMouseDown = (e: React.MouseEvent) => {
-        setIsDragging(true)
-        setStartX(e.pageX - (scrollContainerRef.current?.offsetLeft || 0))
-        setScrollLeft(scrollContainerRef.current?.scrollLeft || 0)
-    }
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!isDragging) return
-        e.preventDefault()
-        const x = e.pageX - (scrollContainerRef.current?.offsetLeft || 0)
-        const walk = (x - startX) * 2
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollLeft = scrollLeft - walk
-        }
-    }
-
-    const handleMouseUp = () => {
-        setIsDragging(false)
-        if (scrollContainerRef.current) {
-            const container = scrollContainerRef.current
-            const cardWidth = container.scrollWidth / features.length
-            const newIndex = Math.round(container.scrollLeft / cardWidth)
-            setCurrentIndex(Math.min(Math.max(newIndex, 0), features.length - 1))
-        }
-    }
-
-    const handleMouseLeave = () => {
-        if (isDragging) {
-            handleMouseUp()
-        }
-    }
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        setStartX(e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0))
-        setScrollLeft(scrollContainerRef.current?.scrollLeft || 0)
-    }
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        const x = e.touches[0].pageX - (scrollContainerRef.current?.offsetLeft || 0)
-        const walk = (x - startX) * 2
-        if (scrollContainerRef.current) {
-            scrollContainerRef.current.scrollLeft = scrollLeft - walk
-        }
-    }
-
-    const handleTouchEnd = () => {
-        if (scrollContainerRef.current) {
-            const container = scrollContainerRef.current
-            const cardWidth = container.scrollWidth / features.length
-            const newIndex = Math.round(container.scrollLeft / cardWidth)
-            setCurrentIndex(Math.min(Math.max(newIndex, 0), features.length - 1))
-        }
+    const handleNext = () => {
+        setCurrentPage(prev => Math.min(totalPages, prev + 1))
     }
 
     return (
         <section className="w-full px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-sky-300/10">
+            <div className="mx-auto w-fit mb-4 flex items-center gap-2 px-4 py-2 rounded-full bg-none border border-primary">
+                <Sparkles className="w-5 h-5 text-primary" />
+                <span className="text-sm font-medium text-secondary">Our features</span>
+            </div>
             <div className="text-center mb-12 sm:mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold mb-3">Bitroot for every occasion.</h2>
+                <h2 className="text-3xl sm:text-4xl font-bold mb-3">What we offer.</h2>
                 <p className="text-muted-foreground text-lg">Bitroot makes learning easy and interactive with peers and the community.</p>
             </div>
 
-            <div className="relative w-full mx-auto">
-                {/* Left Arrow */}
-                <button
-                    onClick={prevSlide}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-background border-2 border-border rounded-full p-2 hover:bg-muted transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={currentIndex === 0}
-                    aria-label="Previous features"
-                >
-                    <ChevronLeft className="w-6 h-6" />
-                </button>
-
-                {/* Scrollable Container */}
-                <div
-                    ref={scrollContainerRef}
-                    className="overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
-                    onMouseDown={handleMouseDown}
-                    onMouseMove={handleMouseMove}
-                    onMouseUp={handleMouseUp}
-                    onMouseLeave={handleMouseLeave}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
-                    style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-                >
-                    <div className="flex gap-8 w-max">
-                        {features.map((feature, idx) => (
-                            <div key={idx} className="w-80 flex-shrink-0">
-                                <FeatureCard
-                                    icon={<feature.icon className="w-20 h-20" />}
-                                    title={feature.title}
-                                    description={feature.description}
-                                    bgColor={feature.bgColor}
-                                    hoverColor={feature.hoverColor}
-                                />
-                            </div>
-                        ))}
-                    </div>
+            {/* Grid Layout */}
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    {currentFeatures.map((feature, idx) => (
+                        <FeatureCard
+                            key={idx}
+                            image={feature.image}
+                            icon={feature.icon}
+                            title={feature.title}
+                            description={feature.description}
+                            textColor={feature.textColor}
+                            hoverColor={feature.hoverColor}
+                        />
+                    ))}
                 </div>
 
-                {/* Right Arrow */}
-                <button
-                    onClick={nextSlide}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-background border-2 border-border rounded-full p-2 hover:bg-muted transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled={currentIndex >= features.length - 1}
-                    aria-label="Next features"
-                >
-                    <ChevronRight className="w-6 h-6" />
-                </button>
-            </div>
+                {/* Pagination Controls */}
+                <div className="flex items-center justify-center gap-4 mt-8">
+                    <Button
+                        onClick={handlePrevious}
+                        disabled={currentPage === 1}
+                        variant="outline"
+                        size="icon"
+                        className="h-10 w-10"
+                    >
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center gap-2 mt-8">
-                {features.map((_, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => setCurrentIndex(idx)}
-                        className={`w-2 h-2 rounded-full transition-all ${currentIndex === idx
-                                ? "bg-primary w-8"
-                                : "bg-muted-foreground/30"
-                            }`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                    />
-                ))}
+                    <div className="flex items-center gap-2">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                            <Button
+                                key={page}
+                                onClick={() => setCurrentPage(page)}
+                                variant={currentPage === page ? "default" : "outline"}
+                                size="icon"
+                                className="h-10 w-10"
+                            >
+                                {page}
+                            </Button>
+                        ))}
+                    </div>
+
+                    <Button
+                        onClick={handleNext}
+                        disabled={currentPage === totalPages}
+                        variant="outline"
+                        size="icon"
+                        className="h-10 w-10"
+                    >
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
+                </div>
             </div>
         </section>
     )
 }
 
 function FeatureCard({
+    image,
     icon,
     title,
     description,
-    bgColor,
+    textColor,
     hoverColor
 }: {
-    icon: React.ReactNode
+    image?: string
+    icon?: React.ReactNode
     title: string
     description: string
-    bgColor: string
-    hoverColor: string
+    textColor: string
+    hoverColor?: string
 }) {
+    if (image) {
+        return (
+            <div className={`grid grid-cols-3 items-start gap-4 p-6 rounded-2xl cursor-pointer border shadow-lg hover:scale-90 bg-background transition-transform duration-300 text-foreground relative`}>
+                <div className="col-span-2">
+                    <h3 className={`text-3xl font-bold font-mono ${textColor}`}>{title}</h3>
+                    <p className="text-foreground text-base">{description}</p>
+                </div>
+                <div className="w-44 h-44 absolute -bottom-5 -right-5 transform-3d rotate-12 select-none">
+                    <Image
+                        src={image}
+                        alt={title}
+                        fill
+                        className="object-contain select-none"
+                    />
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div className={`flex flex-col items-start gap-4 p-6 rounded-2xl cursor-pointer border shadow-lg hover:scale-90 bg-background transition-all text-foreground relative h-44`}>
-            <div>
-                <h3 className="text-xl font-bold">{title}</h3>
-                <p className="text-foreground text-sm">{description}</p>
-            </div>
-            <div className={`flex items-center justify-center w-20 h-20 text-foreground absolute bottom-5 right-5`}>
+        <div className="p-6 rounded-lg hover:shadow-lg transition-shadow duration-300 bg-white border border-gray-100">
+            <div className={`mb-4 ${textColor}`}>
                 {icon}
             </div>
-            {/* <div className={`flex items-center justify-center w-12 h-12 ${bgColor} rounded-2xl absolute bottom-5 right-5`}>
-                {icon}
-            </div> */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                {title}
+            </h3>
+            <p className="text-gray-600 leading-relaxed">
+                {description}
+            </p>
         </div>
     )
 }

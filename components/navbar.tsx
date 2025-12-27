@@ -14,33 +14,6 @@ interface DropdownItem {
     description: string;
 }
 
-const featuresDropdownItems: DropdownItem[] = [
-    {
-        href: '/marketplace',
-        icon: ShoppingBag,
-        title: 'Marketplace',
-        description: 'courses and masterclass'
-    },
-    {
-        href: '/academy',
-        icon: GraduationCap,
-        title: 'Classroom',
-        description: 'Learn from the best'
-    },
-    {
-        href: '/updates',
-        icon: MessagesSquare,
-        title: 'Community',
-        description: 'Network with peers'
-    },
-    {
-        href: '/blog',
-        icon: WalletCards,
-        title: 'Escrow',
-        description: 'Build trust with our escrow vault'
-    }
-];
-
 const toolsDropdownItems: DropdownItem[] = [
     {
         href: '/marketplace',
@@ -71,7 +44,6 @@ const toolsDropdownItems: DropdownItem[] = [
 export function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [toolsDropdownOpen, setToolsDropdownOpen] = useState(false);
-    const [featuresDropdownOpen, setFeaturesDropdownOpen] = useState(false);
 
     const renderDropdownItems = (items: DropdownItem[], onClose: () => void) => {
         return items.map((item) => {
@@ -96,12 +68,12 @@ export function Navbar() {
     };
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <nav className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-1">
                     <Image src="/logo.png" alt="Bitroot Logo" width={32} height={32} className="w-8 h-8" />
-                    <span className="font-bold text-2xl font-mono text-primary">root</span>
+                    <span className="font-bold text-2xl font-mono text-foreground">root</span>
                 </Link>
 
                 {/* Navigation Links - Desktop */}
@@ -115,40 +87,6 @@ export function Navbar() {
                     <Link href="/contact-us" className="text-sm font-medium hover:text-primary transition">
                         Contact
                     </Link>
-                    <div
-                        className="relative"
-                        onMouseEnter={() => setFeaturesDropdownOpen(true)}
-                        onMouseLeave={() => setFeaturesDropdownOpen(false)}
-                    >
-                        <button
-                            className="flex items-center gap-1 text-sm font-medium hover:text-primary transition cursor-pointer"
-                            onClick={() => setFeaturesDropdownOpen(!featuresDropdownOpen)}
-                        >
-                            Features
-                            <ChevronDownCircle className={`w-4 h-4 transition-transform ${featuresDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        <AnimatePresence>
-                            {featuresDropdownOpen && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                                    transition={{ duration: 0.2, ease: "easeOut" }}
-                                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-background border border-border rounded-lg shadow-lg overflow-hidden"
-                                >
-                                    <div className="py-2">
-                                        {renderDropdownItems(featuresDropdownItems, () => setFeaturesDropdownOpen(false))}
-                                        <div className='p-2 w-full flex items-center justify-center'>
-                                            <Link href={"/features"} className="flex items-center text-center hover:underline text-primary">
-                                                View all
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
                     <div
                         className="relative"
                         onMouseEnter={() => setToolsDropdownOpen(true)}
@@ -233,37 +171,6 @@ export function Navbar() {
                             >
                                 Contact
                             </Link>
-                            <div className="space-y-2">
-                                <div className="text-sm font-semibold text-muted-foreground px-2 py-1">Features</div>
-                                {featuresDropdownItems.map((item) => {
-                                    const Icon = item.icon;
-                                    return (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            className="flex items-start gap-3 px-2 py-2 rounded-md transition"
-                                            onClick={() => setMobileMenuOpen(false)}
-                                        >
-                                            <div className="p-2 bg-primary/10 rounded-md">
-                                                <Icon className="w-5 h-5 text-primary" />
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="font-semibold text-sm mb-0.5">{item.title}</div>
-                                                <div className="text-xs text-muted-foreground">{item.description}</div>
-                                            </div>
-                                        </Link>
-                                    );
-                                })}
-                                <div className='px-2 py-1 w-full flex items-center justify-start'>
-                                    <Link
-                                        href={"/features"}
-                                        className="flex items-center gap-1 text-sm hover:underline text-primary"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                    >
-                                        View all <ArrowRight className="w-3 h-3" />
-                                    </Link>
-                                </div>
-                            </div>
 
                             <div className="space-y-2">
                                 <div className="text-sm font-semibold text-muted-foreground px-2 py-1">Tools</div>
